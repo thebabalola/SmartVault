@@ -143,11 +143,15 @@ That means you can:
 ```
 Smart-Vault/
 ├── README.md                 # This comprehensive project overview
-├── smart-contract/           # Rust implementation for Arbitrum Stylus
-│   ├── README.md            # Technical smart contract documentation
+├── smartvault-contract/      # ERC-4626 Smart Vault for Arbitrum Stylus
+│   ├── README.md            # Contract documentation with deployment details
 │   ├── src/                 # Rust source code
+│   │   ├── lib.rs          # Main Smart Vault contract
+│   │   ├── main.rs         # Entry point
+│   │   └── erc20.rs        # ERC-20 implementation
 │   ├── Cargo.toml          # Rust dependencies
-│   └── rust-toolchain.toml # Rust toolchain configuration
+│   ├── rust-toolchain.toml # Rust toolchain configuration
+│   └── .env                 # Environment variables
 └── frontend/                # Next.js frontend application
     ├── README.md           # Frontend-specific documentation
     ├── app/                # Next.js app directory
@@ -161,9 +165,10 @@ Smart-Vault/
 
 ### Smart Contract (Rust)
 ```bash
-cd smart-contract
-cargo build --target wasm32-unknown-unknown
-cargo test
+cd smartvault-contract
+cargo check
+cargo stylus export-abi
+cargo stylus deploy --private-key-path=./private_key.txt
 ```
 
 ### Frontend (Next.js)
