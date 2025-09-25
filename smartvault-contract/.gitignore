@@ -1,2 +1,39 @@
-/target
+# Rust
+/target/
+Cargo.lock
+
+# Environment variables
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Build artifacts
+*.wasm
+*.wasm.gz
+
+# Private keys and sensitive files
+private_key.txt
+*.pem
+*.key
+
+# Stylus specific
+.stylus/
