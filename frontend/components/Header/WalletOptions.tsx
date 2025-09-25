@@ -3,6 +3,7 @@
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function WalletOptions() {
   const { address, isConnected } = useAccount();
@@ -173,13 +174,15 @@ export default function WalletOptions() {
             <div className="w-full md:w-1/2 p-2 md:border-r border-gray-200">
               <div className="text-xs font-medium text-gray-500 mb-2 px-1">Installed</div>
               
-              {/* Kaia Recommendation */}
-              <div className="mb-2 p-2 bg-gradient-to-r from-[#ABFF27]/10 to-black/5 border border-[#ABFF27]/20 rounded-lg">
+              {/* Kaia Recommendation - COMMENTED OUT */}
+              {/* <div className="mb-2 p-2 bg-gradient-to-r from-[#ABFF27]/10 to-black/5 border border-[#ABFF27]/20 rounded-lg">
                 <div className="flex items-center space-x-2 mb-2">
                   <div className="w-6 h-6 bg-black rounded flex items-center justify-center">
-                    <img 
+                    <Image 
                       src="/kaia.png" 
                       alt="Kaia logo" 
+                      width={16}
+                      height={16}
                       className="w-4 h-4 rounded"
                     />
                   </div>
@@ -201,7 +204,7 @@ export default function WalletOptions() {
                   </svg>
                   Install Kaia-Wallet
                 </a>
-              </div>
+              </div> */}
               
               {connectors.map((connector) => (
                 <button
@@ -211,20 +214,33 @@ export default function WalletOptions() {
                 >
                   <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
                     {connector.name.toLowerCase().includes('walletconnect') ? (
-                      <img
-                        src="https://images.seeklogo.com/logo-png/43/1/walletconnect-logo-png_seeklogo-430923.png"
-                        alt="WalletConnect logo"
-                        className="w-6 h-6 rounded"
-                      />
+                      <div className="w-6 h-6 bg-blue-400 rounded flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">W</span>
+                      </div>
                     ) : connector.icon ? (
-                      <img
-                        src={connector.icon}
-                        alt={`${connector.name} logo`}
-                        className="w-6 h-6 rounded"
-                      />
+                      <div className="relative">
+                        <Image
+                          src={connector.icon.trim()}
+                          alt={`${connector.name} logo`}
+                          width={24}
+                          height={24}
+                          className="w-6 h-6 rounded"
+                          onError={(e) => {
+                            // Hide the image and show fallback
+                            e.currentTarget.style.display = 'none';
+                            const fallback = e.currentTarget.nextElementSibling as HTMLElement;
+                            if (fallback) fallback.style.display = 'flex';
+                          }}
+                        />
+                        <div className="w-6 h-6 bg-gradient-to-br from-gray-400 to-gray-600 rounded flex items-center justify-center absolute top-0 left-0 hidden">
+                          <span className="text-white text-xs font-bold">
+                            {connector.name.charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+                      </div>
                     ) : (
-                      <div className="w-6 h-6 bg-gray-300 rounded flex items-center justify-center">
-                        <span className="text-xs font-bold text-gray-600">
+                      <div className="w-6 h-6 bg-gradient-to-br from-gray-400 to-gray-600 rounded flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">
                           {connector.name.charAt(0).toUpperCase()}
                         </span>
                       </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { 
@@ -70,16 +71,16 @@ export default function SmartVaultLandingPage() {
     <div className="min-h-screen bg-white overflow-x-hidden">
       <Header />
       
-      {/* Hero Section */}
-      <section className="pt-24 bg-gradient-to-br from-[#144489] via-[#1a5ba8] to-[#EFAC20] text-white relative overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#EFAC20] rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
-        </div>
-        
+             {/* Hero Section */}
+       <section className="pt-24 bg-gradient-to-br from-[#144489] via-[#1a5ba8] to-[#EFAC20] text-white relative overflow-hidden">
+         {/* Animated background elements */}
+         <div className="absolute inset-0 opacity-10">
+           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse"></div>
+           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#EFAC20] rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+         </div>
+         
         {/* DeFi-related background icons */}
-        <div className="absolute inset-0 opacity-5">
+         <div className="absolute inset-0 opacity-5">
           {/* Crypto/DeFi Icons */}
           <div className="absolute top-20 left-20 text-6xl">₿</div>
           <div className="absolute top-40 right-32 text-4xl">💰</div>
@@ -92,23 +93,23 @@ export default function SmartVaultLandingPage() {
           {/* Yield/Investment Icons */}
           <div className="absolute top-1/2 right-20 text-4xl">🌱</div>
           <div className="absolute bottom-1/3 left-1/4 text-5xl">⚡</div>
-          
-          {/* Blockchain/Technology Icons */}
+           
+           {/* Blockchain/Technology Icons */}
           <div className="absolute top-1/3 right-1/3 text-4xl">🔗</div>
           <div className="absolute bottom-1/2 right-1/2 text-5xl">💎</div>
           
           {/* Smart Contract Icons */}
           <div className="absolute top-1/4 right-1/4 text-4xl">📋</div>
           <div className="absolute bottom-1/4 left-1/2 text-4xl">🤖</div>
-          
-          {/* Global/Connection Icons */}
+           
+           {/* Global/Connection Icons */}
           <div className="absolute top-1/2 left-1/2 text-4xl">🌍</div>
           <div className="absolute bottom-1/3 right-1/3 text-5xl">🤝</div>
           
           {/* Finance Icons */}
           <div className="absolute top-1/2 left-1/4 text-4xl">💳</div>
           <div className="absolute bottom-1/4 right-1/2 text-5xl">📊</div>
-        </div>
+         </div>
         
         <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-20 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]">
@@ -148,9 +149,11 @@ export default function SmartVaultLandingPage() {
             {/* Right Side - Hero Image */}
             <div className="flex justify-center lg:justify-end">
               <div className="relative">
-                <img 
+                <Image 
                   src="/hero-img.png" 
                   alt="Smart Vault DeFi platform for automated yield generation" 
+                  width={800}
+                  height={600}
                   className="w-full max-w-lg lg:max-w-xl xl:max-w-2xl rounded-2xl shadow-2xl"
                 />
                 {/* Subtle glow effect */}
@@ -285,10 +288,10 @@ export default function SmartVaultLandingPage() {
                 <div className="flex items-center py-3 font-bold text-lg">
                   <div className="w-2 h-2 bg-red-400 rounded-full mr-4"></div>
                   <span>Time-intensive process</span>
-                </div>
-              </div>
-            </div>
-
+                      </div>
+                    </div>
+                  </div>
+                  
             <div className="bg-gradient-to-br from-[#EFAC20] to-[#f4c050] text-[#144489] rounded-2xl p-8 shadow-lg">
               <h3 className="text-2xl font-bold mb-6">Smart Vault Platform</h3>
               <div className="space-y-4">
@@ -307,7 +310,7 @@ export default function SmartVaultLandingPage() {
                 <div className="flex items-center py-3 border-b border-[#144489]/20">
                   <div className="w-2 h-2 bg-green-500 rounded-full mr-4"></div>
                   <span>No technical knowledge needed</span>
-                </div>
+                  </div>
                 <div className="flex items-center py-3 font-bold text-lg">
                   <div className="w-2 h-2 bg-green-500 rounded-full mr-4"></div>
                   <span>Set-and-forget investing</span>
@@ -399,7 +402,7 @@ export default function SmartVaultLandingPage() {
                 </div>
               ))}
             </div>
-            
+
             <div className="mt-12">
               <a 
                 href="https://sepolia.arbiscan.io/address/0x89a2c29b55fb31e5739682f5b9ae3a004e7a1a54"
