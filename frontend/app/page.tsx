@@ -72,11 +72,11 @@ export default function SmartVaultLandingPage() {
       <Header />
       
              {/* Hero Section */}
-       <section className="pt-24 bg-gradient-to-br from-[#144489] via-[#1a5ba8] to-[#EFAC20] text-white relative overflow-hidden">
+       <section className="pt-24 bg-gradient-to-br from-[#213046] via-[#1a5ba8] to-[#EFAC20] text-white relative overflow-hidden">
          {/* Animated background elements */}
          <div className="absolute inset-0 opacity-10">
            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse"></div>
-           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#EFAC20] rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#49ABFE] rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
          </div>
          
         {/* DeFi-related background icons */}
@@ -117,7 +117,7 @@ export default function SmartVaultLandingPage() {
             <div className="text-left">
               <div className="mb-8">
                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-[#EFAC20] drop-shadow-lg">
-                  Smart Vault <span className="text-[#EFAC20] drop-shadow-2xl">DeFi</span>
+                  Smart Vault <span className="text-[#49ABFE] drop-shadow-2xl">DeFi</span>
                 </h1>
                 <p className="text-lg md:text-xl lg:text-2xl mb-2 opacity-95 font-semibold">
                   Automated Yield Generation for Everyone
@@ -132,14 +132,14 @@ export default function SmartVaultLandingPage() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link 
                   href="/vault"
-                  className="group bg-[#EFAC20] text-[#144489] px-6 py-3 rounded-xl font-bold text-base hover:bg-[#f4c050] transition-all duration-300 flex items-center justify-center border-2 border-transparent hover:border-[#f4c050]"
+                  className="group bg-[#49ABFE] text-[#213046] px-6 py-3 rounded-xl font-bold text-base hover:bg-[#9DCCED] transition-all duration-300 flex items-center justify-center border-2 border-transparent hover:border-[#9DCCED]"
                 >
                   Start Earning 
                   <ArrowRight className="ml-2" size={18} />
                 </Link>
                 <button 
                   onClick={() => scrollToSection('how-it-works')}
-                  className="group border-2 border-white text-white px-6 py-3 rounded-xl font-bold text-base hover:bg-white hover:text-[#144489] transition-all duration-300"
+                  className="group border-2 border-white text-white px-6 py-3 rounded-xl font-bold text-base hover:bg-white hover:text-[#213046] transition-all duration-300"
                 >
                   Learn More
                 </button>
@@ -157,7 +157,7 @@ export default function SmartVaultLandingPage() {
                   className="w-full max-w-lg lg:max-w-xl xl:max-w-2xl rounded-2xl shadow-2xl"
                 />
                 {/* Subtle glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-[#EFAC20]/20 to-transparent rounded-2xl -z-10 blur-xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-[#49ABFE]/20 to-transparent rounded-2xl -z-10 blur-xl"></div>
               </div>
             </div>
           </div>
@@ -175,7 +175,7 @@ export default function SmartVaultLandingPage() {
       <section id="how-it-works" className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-6xl mx-auto text-center">
           <AnimatedSection>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#144489] mb-6 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#213046] mb-6 leading-tight">
               How Smart Vault Works
             </h2>
             <p className="text-lg text-gray-700 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
@@ -192,10 +192,10 @@ export default function SmartVaultLandingPage() {
               { icon: DollarSign, title: "4. Withdraw", desc: "Redeem your shares for assets + yield anytime" }
             ].map(({ icon: Icon, title, desc }) => (
               <div key={title} className="bg-white rounded-2xl p-8 border border-gray-100 shadow-lg">
-                <div className="w-20 h-20 bg-gradient-to-br from-[#EFAC20] to-[#f4c050] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <div className="w-20 h-20 bg-gradient-to-br from-[#49ABFE] to-[#9DCCED] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
                   <Icon size={36} className="text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-[#144489] mb-3">{title}</h3>
+                <h3 className="text-xl font-bold text-[#213046] mb-3">{title}</h3>
                 <p className="text-gray-600 leading-relaxed font-medium">{desc}</p>
               </div>
             ))}
@@ -207,10 +207,10 @@ export default function SmartVaultLandingPage() {
       <section id="problem" className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-br from-blue-50 to-[#144489]/5">
         <div className="max-w-6xl mx-auto">
           <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#144489] mb-4 leading-tight">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#213046] mb-4 leading-tight">
               The DeFi Complexity Problem
             </h2>
-            <p className="text-[#EFAC20] text-lg font-bold text-xl">
+            <p className="text-[#49ABFE] text-lg font-bold text-xl">
               Traditional DeFi requires too much technical knowledge and time
             </p>
           </AnimatedSection>
@@ -242,7 +242,7 @@ export default function SmartVaultLandingPage() {
                     <Icon size={28} className="text-red-600" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-[#144489] mb-1">{title}</h3>
+                    <h3 className="text-xl font-bold text-[#213046] mb-1">{title}</h3>
                     <p className="text-red-600 font-bold text-2xl">{stat}</p>
                   </div>
                 </div>
@@ -254,20 +254,20 @@ export default function SmartVaultLandingPage() {
       </section>
 
       {/* Solution Section */}
-      <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-br from-[#144489] to-[#1a5ba8] text-white">
+      <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-br from-[#213046] to-[#49ABFE] text-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Smart Vault Solution
             </h2>
-            <p className="text-[#EFAC20] text-lg font-semibold">
+            <p className="text-[#49ABFE] text-lg font-semibold">
               Automated DeFi made simple and accessible
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <h3 className="text-2xl font-bold mb-6 text-[#EFAC20]">Traditional DeFi</h3>
+              <h3 className="text-2xl font-bold mb-6 text-[#49ABFE]">Traditional DeFi</h3>
               <div className="space-y-4">
                 <div className="flex items-center py-3 border-b border-white/20">
                   <div className="w-2 h-2 bg-red-400 rounded-full mr-4"></div>
@@ -292,7 +292,7 @@ export default function SmartVaultLandingPage() {
                     </div>
                   </div>
                   
-            <div className="bg-gradient-to-br from-[#EFAC20] to-[#f4c050] text-[#144489] rounded-2xl p-8 shadow-lg">
+            <div className="bg-gradient-to-br from-[#49ABFE] to-[#9DCCED] text-[#213046] rounded-2xl p-8 shadow-lg">
               <h3 className="text-2xl font-bold mb-6">Smart Vault Platform</h3>
               <div className="space-y-4">
                 <div className="flex items-center py-3 border-b border-[#144489]/20">
@@ -325,10 +325,10 @@ export default function SmartVaultLandingPage() {
       <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gray-50">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#144489] mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#213046] mb-4">
               Why Choose Smart Vault?
             </h2>
-            <p className="text-[#EFAC20] text-lg font-semibold">
+            <p className="text-[#49ABFE] text-lg font-semibold">
               Built on industry standards with user experience in mind
             </p>
           </div>
@@ -370,7 +370,7 @@ export default function SmartVaultLandingPage() {
                 <div className="w-16 h-16 bg-[#144489] rounded-2xl flex items-center justify-center mb-6">
                   <Icon size={32} className="text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-[#144489] mb-3">{title}</h3>
+                <h3 className="text-xl font-bold text-[#213046] mb-3">{title}</h3>
                 <p className="text-gray-600 leading-relaxed">{desc}</p>
               </div>
             ))}
@@ -379,13 +379,13 @@ export default function SmartVaultLandingPage() {
       </section>
 
       {/* Contract Info Section */}
-      <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-br from-[#144489] to-[#1a5ba8] text-white">
+      <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-br from-[#213046] to-[#49ABFE] text-white">
         <div className="max-w-6xl mx-auto text-center">
           <AnimatedSection>
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               Live on Arbitrum Sepolia
             </h2>
-            <p className="text-[#EFAC20] text-lg font-semibold mb-12">
+            <p className="text-[#49ABFE] text-lg font-semibold mb-12">
               Contract Address: 0x89a2c29b55fb31e5739682f5b9ae3a004e7a1a54
             </p>
             
@@ -408,7 +408,7 @@ export default function SmartVaultLandingPage() {
                 href="https://sepolia.arbiscan.io/address/0x89a2c29b55fb31e5739682f5b9ae3a004e7a1a54"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center bg-[#EFAC20] text-[#144489] px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#f4c050] transition-all duration-300"
+                className="inline-flex items-center bg-[#49ABFE] text-[#213046] px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#9DCCED] transition-all duration-300"
               >
                 View on Arbiscan
                 <ArrowRight className="ml-2" size={20} />

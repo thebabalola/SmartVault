@@ -9,26 +9,26 @@ declare module 'wagmi' {
 
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
 
-// Define Kaia testnet chain
-const kaiaTestnet = {
-  id: 1001,
-  name: 'Kaia Testnet',
+// Define Arbitrum Sepolia testnet chain
+const arbitrumSepolia = {
+  id: 421614,
+  name: 'Arbitrum Sepolia',
   nativeCurrency: {
     decimals: 18,
-    name: 'Kaia',
-    symbol: 'KAIA',
+    name: 'Ethereum',
+    symbol: 'ETH',
   },
   rpcUrls: {
-    default: { http: ['https://public-en-kairos.node.kaia.io'] },
-    public: { http: ['https://public-en-kairos.node.kaia.io'] },
+    default: { http: ['https://arbitrum-sepolia-rpc.publicnode.com'] },
+    public: { http: ['https://arbitrum-sepolia-rpc.publicnode.com'] },
   },
   blockExplorers: {
-    default: { name: 'Kaia Explorer', url: 'https://explorer.kaia.io' },
+    default: { name: 'Arbiscan', url: 'https://sepolia.arbiscan.io' },
   },
   testnet: true,
 } as const;
 
-export const supportedNetworks = [kaiaTestnet] as const;
+export const supportedNetworks = [arbitrumSepolia] as const;
 
 export const config = createConfig({
   chains: supportedNetworks,
@@ -36,8 +36,8 @@ export const config = createConfig({
     walletConnect({ projectId : projectId ?? ''}),
   ],
   transports: {
-    [kaiaTestnet.id]: fallback([
-      http('https://public-en-kairos.node.kaia.io'),
+    [arbitrumSepolia.id]: fallback([
+      http('https://arbitrum-sepolia-rpc.publicnode.com'),
     ]),
   },
 });

@@ -10,18 +10,18 @@ interface FooterProps {
 
 export default function Footer({ scrollToSection }: FooterProps) {
   return (
-    <footer className="bg-[#144489] text-white">
+    <footer className="bg-[#213046] text-white">
       <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo and Description */}
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
               <Image src="/manna-logo.png" alt="Manna logo" width={32} height={32} />
-              <span className="text-xl font-bold">Manna (만나)</span>
+              <span className="text-xl font-bold">Smart Vault DeFi</span>
             </div>
-            <p className="text-gray-300 text-sm leading-relaxed mb-4">
-              Bridging global passion to Korean creativity through instant, transparent KRW-S payments. 
-              Supporting Korean webtoon artists, musicians, streamers, and educators worldwide.
+            <p className="text-[#9DCCED] text-sm leading-relaxed mb-4">
+              Automated yield generation through ERC-4626 compliant Smart Vaults on Arbitrum.
+              Maximize your DeFi returns with institutional-grade strategies and transparent fee structures.
             </p>
           </div>
 
@@ -32,7 +32,7 @@ export default function Footer({ scrollToSection }: FooterProps) {
               <li>
                 <Link 
                   href="/user-profile"
-                  className="text-gray-300 hover:text-[#EFAC20] transition-colors"
+                  className="text-[#9DCCED] hover:text-[#49ABFE] transition-colors"
                 >
                   Live Demo
                 </Link>
@@ -40,7 +40,7 @@ export default function Footer({ scrollToSection }: FooterProps) {
               <li>
                 <button 
                   onClick={() => scrollToSection('roadmap')}
-                  className="text-gray-300 hover:text-[#EFAC20] transition-colors"
+                  className="text-[#9DCCED] hover:text-[#49ABFE] transition-colors"
                 >
                   Roadmap
                 </button>
@@ -48,7 +48,7 @@ export default function Footer({ scrollToSection }: FooterProps) {
               <li>
                 <Link 
                   href="/user-profile"
-                  className="text-gray-300 hover:text-[#EFAC20] transition-colors"
+                  className="text-[#9DCCED] hover:text-[#49ABFE] transition-colors"
                 >
                   User Profile
                 </Link>
@@ -56,7 +56,7 @@ export default function Footer({ scrollToSection }: FooterProps) {
               <li>
                 <button 
                   onClick={() => scrollToSection('market')}
-                  className="text-gray-300 hover:text-[#EFAC20] transition-colors"
+                  className="text-[#9DCCED] hover:text-[#49ABFE] transition-colors"
                 >
                   Market Opportunity
                 </button>
@@ -106,10 +106,10 @@ export default function Footer({ scrollToSection }: FooterProps) {
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-gray-700 mt-8 pt-8">
+        <div className="border-t border-[#49ABFE] mt-8 pt-8">
           <div className="text-center">
-            <p className="text-gray-400 text-sm">
-              © 2025 Manna (만나). All rights reserved.
+            <p className="text-[#9DCCED] text-sm">
+              © 2025 Smart Vault DeFi. All rights reserved. Built on Arbitrum Sepolia.
             </p>
           </div>
         </div>

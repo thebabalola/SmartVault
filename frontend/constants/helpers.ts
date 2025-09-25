@@ -1,5 +1,5 @@
 export const CONTRACTS = {
-    testnet: "0x89A2C29B55Fb31E5739682f5b9aE3a004E7a1a54"  // Manna KRW-S Contract on Kaia Testnet
+    testnet: "0x89A2C29B55Fb31E5739682f5b9aE3a004E7a1a54"  // Smart Vault Contract on Arbitrum Sepolia Testnet
 } as const;
 
 export type NetworkType = keyof typeof CONTRACTS;

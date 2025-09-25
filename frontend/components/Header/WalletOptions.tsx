@@ -62,7 +62,7 @@ export default function WalletOptions() {
     return (
       <div className="relative wallet-options">
         <button
-          className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-[#144489] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
+          className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-[#49ABFE] text-white rounded-lg hover:bg-[#9DCCED] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#9DCCED] focus:ring-offset-2 focus:ring-offset-[#213046]"
         >
           <div className="w-2 h-2 bg-green-400 rounded-full"></div>
           <span className="text-xs sm:text-sm font-medium">Loading...</span>
@@ -76,7 +76,7 @@ export default function WalletOptions() {
       <div className="relative wallet-options">
         <button
           onClick={() => setShowOptions(!showOptions)}
-          className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-[#144489] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
+          className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-[#49ABFE] text-white rounded-lg hover:bg-[#9DCCED] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#9DCCED] focus:ring-offset-2"
         >
           <div className="w-2 h-2 bg-green-400 rounded-full"></div>
           <span className="text-xs sm:text-sm font-medium">
@@ -136,7 +136,7 @@ export default function WalletOptions() {
     <div className="relative wallet-options">
       <button
         onClick={() => setShowOptions(!showOptions)}
-        className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-[#144489] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
+        className="flex items-center space-x-1 sm:space-x-2 px-3 sm:px-4 py-2 bg-[#49ABFE] text-white rounded-lg hover:bg-[#9DCCED] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#9DCCED] focus:ring-offset-2"
       >
         <svg width="14" height="14" className="sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M21 12V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -210,7 +210,7 @@ export default function WalletOptions() {
                 <button
                   key={connector.uid}
                   onClick={() => handleConnect(connector)}
-                  className="w-full flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#144489] focus:ring-offset-2"
+                  className="w-full flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#9DCCED] focus:ring-offset-2"
                 >
                   <div className="flex-shrink-0 w-6 h-6 flex items-center justify-center">
                     {connector.name.toLowerCase().includes('walletconnect') ? (

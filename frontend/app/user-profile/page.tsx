@@ -36,7 +36,7 @@ import {
 // Contract Configuration
 const MANNA_CONTRACT_ADDRESS = "0x89A2C29B55Fb31E5739682f5b9aE3a004E7a1a54" as `0x${string}`;
 const CREATOR_ADDRESS = "0xA421d9AE4945C63D4353F74a689a55813F993603" as `0x${string}`;
-const KAIA_BAOBAB_CHAIN_ID = 1001; // Kaia Testnet
+const ARBITRUM_SEPOLIA_CHAIN_ID = 421614; // Arbitrum Sepolia Testnet
 
 interface TipTransaction {
   from: string;
@@ -198,10 +198,10 @@ const UserProfile = () => {
 
   const handleSwitchNetwork = async () => {
     try {
-      await switchChain({ chainId: KAIA_BAOBAB_CHAIN_ID });
+      await switchChain({ chainId: ARBITRUM_SEPOLIA_CHAIN_ID });
     } catch (error: unknown) {
       console.error("Failed to switch network:", error);
-      setTransactionStatus("Failed to switch network. Please switch to Kaia Baobab manually.");
+      setTransactionStatus("Failed to switch network. Please switch to Arbitrum Sepolia manually.");
     }
   };
 
@@ -222,7 +222,7 @@ const UserProfile = () => {
     }
 
     if (isWrongNetwork) {
-      setTransactionStatus("Please switch to Kaia Baobab testnet.");
+      setTransactionStatus("Please switch to Arbitrum Sepolia testnet.");
       return;
     }
 
@@ -259,7 +259,7 @@ const UserProfile = () => {
 
 
 
-  const isWrongNetwork = isConnected && chain?.id !== KAIA_BAOBAB_CHAIN_ID;
+  const isWrongNetwork = isConnected && chain?.id !== ARBITRUM_SEPOLIA_CHAIN_ID;
   const canSendTip = tipAmount && creatorAddress && creatorAddress.length === 42 && !isTransferPending;
 
   const TabButton = ({ id, label, icon: Icon, isActive, onClick }: { id: string; label: string; icon: React.ComponentType<{ size?: number; className?: string }>; isActive: boolean; onClick: (id: string) => void }) => (
@@ -267,8 +267,8 @@ const UserProfile = () => {
       onClick={() => onClick(id)}
       className={`flex items-center px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
         isActive 
-          ? 'bg-[#144489] text-white shadow-lg transform scale-105' 
-          : 'text-gray-600 hover:text-[#144489] hover:bg-gray-100 hover:scale-102'
+          ? 'bg-[#49ABFE] text-white shadow-lg transform scale-105' 
+          : 'text-gray-600 hover:text-[#213046] hover:bg-gray-100 hover:scale-102'
       }`}
     >
       <Icon size={18} className="mr-2" />
@@ -286,7 +286,7 @@ const UserProfile = () => {
           <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-lg flex items-center justify-between">
             <div className="flex items-center">
               <AlertCircle className="text-amber-600 mr-3" size={20} />
-              <span className="text-amber-800 font-medium">Please switch to Kaia Baobab testnet</span>
+                      <span className="text-amber-800 font-medium">Please switch to Arbitrum Sepolia testnet</span>
             </div>
             <button 
               onClick={handleSwitchNetwork}
@@ -304,17 +304,17 @@ const UserProfile = () => {
               {/* Avatar Section */}
               <div className="text-center mb-6">
                 <div className="relative inline-block">
-                  <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#EFAC20] to-[#f4c050] flex items-center justify-center text-4xl hover:scale-110 transform transition-all duration-300 cursor-pointer shadow-lg">
+                  <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#49ABFE] to-[#9DCCED] flex items-center justify-center text-4xl hover:scale-110 transform transition-all duration-300 cursor-pointer shadow-lg">
                     {userData.avatar}
                   </div>
                   <button className="absolute bottom-2 right-2 bg-white p-2 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-110 transform">
-                    <Camera size={14} className="text-[#144489]" />
+                    <Camera size={14} className="text-[#213046]" />
                   </button>
                 </div>
                 
                 <div className="space-y-2">
-                                  <h1 className="text-xl font-bold text-[#144489]">{userData.name}</h1>
-                <p className="text-[#EFAC20] font-medium text-sm">{userData.username}</p>
+                                  <h1 className="text-xl font-bold text-[#213046]">{userData.name}</h1>
+                <p className="text-[#49ABFE] font-medium text-sm">{userData.username}</p>
                 <p className="text-xs text-gray-600">{userData.bio}</p>
                 </div>
               </div>
@@ -341,7 +341,7 @@ const UserProfile = () => {
               <div className="space-y-3">
                 <button 
                   onClick={() => setIsEditing(!isEditing)}
-                  className="w-full border-2 border-[#EFAC20] text-[#EFAC20] font-medium py-3 rounded-lg hover:bg-[#EFAC20] hover:text-white transition-all hover:shadow-lg transform hover:scale-105"
+                  className="w-full border-2 border-[#49ABFE] text-[#49ABFE] font-medium py-3 rounded-lg hover:bg-[#49ABFE] hover:text-white transition-all hover:shadow-lg transform hover:scale-105"
                 >
                   <Edit3 className="inline mr-2" size={18} />
                   Edit Profile
@@ -367,10 +367,10 @@ const UserProfile = () => {
                 {/* Creator Info Panel */}
                 <div className="bg-white rounded-2xl shadow-lg p-6">
                   <div className="text-center mb-6">
-                    <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#EFAC20] to-[#f4c050] flex items-center justify-center">
+                    <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#49ABFE] to-[#9DCCED] flex items-center justify-center">
                       <span className="text-4xl">🎨</span>
                     </div>
-                    <h2 className="text-xl font-bold text-[#144489] mb-1">Artist Kim (김작가)</h2>
+                    <h2 className="text-xl font-bold text-[#213046] mb-1">Artist Kim (김작가)</h2>
                     <p className="text-gray-600 mb-2 text-sm">@artist_kim_seoul</p>
                     <p className="text-xs text-gray-500 leading-relaxed">
                       Independent illustrator bringing Seoul stories to life. Creating webtoons that bridge cultures. 감사합니다! ✨
@@ -378,14 +378,14 @@ const UserProfile = () => {
                   </div>
 
                   {/* Creator Balance Display */}
-                  <div className={`bg-gradient-to-r from-[#144489] to-[#1a5ba8] text-white p-6 rounded-xl text-center mb-6 transition-all duration-1000 ${balanceAnimation ? 'scale-105 ring-4 ring-[#EFAC20]/30' : ''}`}>
+                  <div className={`bg-gradient-to-r from-[#213046] to-[#49ABFE] text-white p-6 rounded-xl text-center mb-6 transition-all duration-1000 ${balanceAnimation ? 'scale-105 ring-4 ring-[#EFAC20]/30' : ''}`}>
                     <p className="text-sm opacity-90 mb-1">Creator Balance</p>
                     <p className="text-2xl font-bold mb-1">
                       ₩{Math.floor(parseFloat(formatBalance(creatorBalance as bigint))).toLocaleString()} KRW-S
                     </p>
-                    <p className="text-xs opacity-75">Updates in real-time from Kaia Baobab</p>
+                            <p className="text-xs opacity-75">Updates in real-time from Arbitrum Sepolia</p>
                     {balanceAnimation && (
-                      <p className="text-[#EFAC20] text-sm mt-2 font-medium">✨ Just received your tip!</p>
+                      <p className="text-[#49ABFE] text-sm mt-2 font-medium">✨ Just received your tip!</p>
                     )}
                   </div>
 
@@ -409,8 +409,8 @@ const UserProfile = () => {
 
                 {/* Tip Panel */}
                 <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h2 className="text-xl font-bold text-[#144489] mb-6 flex items-center">
-                    <Zap className="mr-3 text-[#EFAC20]" size={24} />
+                  <h2 className="text-xl font-bold text-[#213046] mb-6 flex items-center">
+                    <Zap className="mr-3 text-[#49ABFE]" size={24} />
                     Send Gift (KRW-S)
                   </h2>
 
@@ -433,13 +433,13 @@ const UserProfile = () => {
 
                   {/* Creator Address Input */}
                   <div className="mb-6">
-                    <label htmlFor="creatorAddress" className="block text-sm font-bold text-[#144489] mb-3">
+                    <label htmlFor="creatorAddress" className="block text-sm font-bold text-[#213046] mb-3">
                       Creator Wallet Address
                     </label>
                     <input
                       type="text"
                       id="creatorAddress"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#144489] focus:border-[#144489] transition-colors text-lg font-semibold text-gray-900 placeholder-gray-600"
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#49ABFE] focus:border-[#49ABFE] transition-colors text-lg font-semibold text-gray-900 placeholder-gray-600"
                       placeholder="Enter creator's wallet address (0x...)"
                       value={creatorAddress}
                       onChange={(e) => setCreatorAddress(e.target.value as string)}
@@ -452,13 +452,13 @@ const UserProfile = () => {
 
                   {/* Amount Input */}
                   <div className="mb-6">
-                    <label htmlFor="amount" className="block text-sm font-bold text-[#144489] mb-3">
+                    <label htmlFor="amount" className="block text-sm font-bold text-[#213046] mb-3">
                       Gift Amount (KRW-S)
                     </label>
                     <input
                       type="number"
                       id="amount"
-                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#144489] focus:border-[#144489] transition-colors text-lg font-semibold text-gray-900 placeholder-gray-600"
+                      className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-[#49ABFE] focus:border-[#49ABFE] transition-colors text-lg font-semibold text-gray-900 placeholder-gray-600"
                       placeholder="Enter amount (e.g., 1000)"
                       value={tipAmount}
                       onChange={(e) => setTipAmount(e.target.value)}
@@ -468,14 +468,14 @@ const UserProfile = () => {
 
                   {/* Quick Tip Buttons */}
                   <div className="mb-6">
-                    <p className="text-sm font-bold text-[#144489] mb-4">Quick Tips:</p>
+                    <p className="text-sm font-bold text-[#213046] mb-4">Quick Tips:</p>
                     <div className="grid grid-cols-3 gap-3">
                       {[1000, 5000, 10000].map((amount) => (
                         <button
                           key={amount}
                           onClick={() => handleQuickTip(amount)}
                           disabled={false}
-                          className="px-4 py-3 border-2 border-[#EFAC20] text-[#EFAC20] rounded-lg hover:bg-[#EFAC20] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold text-base"
+                          className="px-4 py-3 border-2 border-[#49ABFE] text-[#49ABFE] rounded-lg hover:bg-[#49ABFE] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-bold text-base"
                         >
                           ₩{amount.toLocaleString()}
                         </button>
@@ -487,7 +487,7 @@ const UserProfile = () => {
                   <button
                     onClick={handleTip}
                     disabled={!canSendTip}
-                    className="w-full bg-[#144489] text-white font-bold py-4 px-6 rounded-lg hover:bg-[#1a5ba8] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-lg"
+                    className="w-full bg-[#49ABFE] text-white font-bold py-4 px-6 rounded-lg hover:bg-[#1a5ba8] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center text-lg"
                   >
                     {isTransferPending ? (
                       <>
@@ -519,15 +519,15 @@ const UserProfile = () => {
                 {/* Recent Activity */}
                 {recentTips.length > 0 && (
                   <div className="bg-white rounded-2xl shadow-lg p-6">
-                                          <h3 className="text-xl font-bold text-[#144489] mb-4 flex items-center">
-                        <TrendingUp className="mr-2 text-[#EFAC20]" size={24} />
+                                          <h3 className="text-xl font-bold text-[#213046] mb-4 flex items-center">
+                        <TrendingUp className="mr-2 text-[#49ABFE]" size={24} />
                         Recent Gifts
                       </h3>
                     <div className="space-y-3">
                                               {recentTips.map((tip) => (
                           <div key={`tip-${tip.timestamp}`} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                           <div className="flex items-center">
-                            <div className="w-8 h-8 bg-[#EFAC20] rounded-full flex items-center justify-center mr-3">
+                            <div className="w-8 h-8 bg-[#49ABFE] rounded-full flex items-center justify-center mr-3">
                               <span className="text-white text-sm">🎉</span>
                             </div>
                             <div>
@@ -536,7 +536,7 @@ const UserProfile = () => {
                             </div>
                           </div>
                           <div className="text-right">
-                            <p className="font-bold text-[#144489]">₩{parseInt(tip.amount).toLocaleString()}</p>
+                            <p className="font-bold text-[#213046]">₩{parseInt(tip.amount).toLocaleString()}</p>
                             <p className="text-xs text-gray-500">KRW-S</p>
                           </div>
                         </div>
@@ -553,8 +553,8 @@ const UserProfile = () => {
                 {/* Personal Information */}
                 <div className="bg-white rounded-2xl shadow-lg p-6">
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-bold text-[#144489] flex items-center">
-                      <User className="mr-3 text-[#EFAC20]" size={24} />
+                    <h2 className="text-2xl font-bold text-[#213046] flex items-center">
+                      <User className="mr-3 text-[#49ABFE]" size={24} />
                       Personal Information
                     </h2>
                     {isEditing && (
@@ -586,7 +586,7 @@ const UserProfile = () => {
                             type="text"
                             value={userData.name}
                             onChange={(e) => setUserData({...userData, name: e.target.value})}
-                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#144489] focus:ring-4 focus:ring-[#144489]/10 transition-all text-gray-800 placeholder-gray-500"
+                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#49ABFE] focus:ring-4 focus:ring-[#49ABFE]/10 transition-all text-gray-800 placeholder-gray-500"
                             placeholder="Enter your display name"
                           />
                         ) : (
@@ -601,7 +601,7 @@ const UserProfile = () => {
                             type="text"
                             value={userData.username}
                             onChange={(e) => setUserData({...userData, username: e.target.value})}
-                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#144489] focus:ring-4 focus:ring-[#144489]/10 transition-all text-gray-800 placeholder-gray-500"
+                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#49ABFE] focus:ring-4 focus:ring-[#49ABFE]/10 transition-all text-gray-800 placeholder-gray-500"
                             placeholder="@yourusername"
                           />
                         ) : (
@@ -616,7 +616,7 @@ const UserProfile = () => {
                             type="email"
                             value={userData.email}
                             onChange={(e) => setUserData({...userData, email: e.target.value})}
-                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#144489] focus:ring-4 focus:ring-[#144489]/10 transition-all text-gray-800 placeholder-gray-500"
+                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#49ABFE] focus:ring-4 focus:ring-[#49ABFE]/10 transition-all text-gray-800 placeholder-gray-500"
                             placeholder="your.email@example.com"
                           />
                         ) : (
@@ -633,7 +633,7 @@ const UserProfile = () => {
                             type="text"
                             value={userData.location}
                             onChange={(e) => setUserData({...userData, location: e.target.value})}
-                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#144489] focus:ring-4 focus:ring-[#144489]/10 transition-all text-gray-800 placeholder-gray-500"
+                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#49ABFE] focus:ring-4 focus:ring-[#49ABFE]/10 transition-all text-gray-800 placeholder-gray-500"
                             placeholder="City, Country"
                           />
                         ) : (
@@ -659,7 +659,7 @@ const UserProfile = () => {
                             value={userData.bio}
                             onChange={(e) => setUserData({...userData, bio: e.target.value})}
                             rows={3}
-                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#144489] focus:ring-4 focus:ring-[#144489]/10 transition-all resize-none text-gray-800 placeholder-gray-500"
+                            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#49ABFE] focus:ring-4 focus:ring-[#49ABFE]/10 transition-all resize-none text-gray-800 placeholder-gray-500"
                             placeholder="Tell us about yourself..."
                           />
                         ) : (
@@ -672,19 +672,19 @@ const UserProfile = () => {
 
                 {/* Statistics Overview */}
                 <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h3 className="text-xl font-bold text-[#144489] mb-6 flex items-center">
-                    <TrendingUp className="mr-2 text-[#EFAC20]" size={24} />
+                  <h3 className="text-xl font-bold text-[#213046] mb-6 flex items-center">
+                    <TrendingUp className="mr-2 text-[#49ABFE]" size={24} />
                     Activity Overview
                   </h3>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="text-center p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl hover:shadow-md transition-all">
-                      <Gift className="mx-auto mb-2 text-[#144489]" size={24} />
-                      <p className="text-2xl font-bold text-[#144489]">{mockStats.giftsSent}</p>
+                      <Gift className="mx-auto mb-2 text-[#213046]" size={24} />
+                      <p className="text-2xl font-bold text-[#213046]">{mockStats.giftsSent}</p>
                       <p className="text-sm text-gray-600">Gifts Sent</p>
                     </div>
                     <div className="text-center p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-xl hover:shadow-md transition-all">
-                      <Heart className="mx-auto mb-2 text-[#EFAC20]" size={24} />
-                      <p className="text-2xl font-bold text-[#EFAC20]">₩{(mockStats.totalGifted / 1000)}K</p>
+                      <Heart className="mx-auto mb-2 text-[#49ABFE]" size={24} />
+                      <p className="text-2xl font-bold text-[#49ABFE]">₩{(mockStats.totalGifted / 1000)}K</p>
                       <p className="text-sm text-gray-600">Total Gifted</p>
                     </div>
                     <div className="text-center p-4 bg-gradient-to-r from-green-50 to-green-100 rounded-xl hover:shadow-md transition-all">
@@ -706,15 +706,15 @@ const UserProfile = () => {
             {activeTab === 'activity' && (
               <div className="space-y-6 animate-fadeIn">
                 <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h3 className="text-xl font-bold text-[#144489] mb-6 flex items-center">
-                    <Activity className="mr-2 text-[#EFAC20]" size={24} />
+                  <h3 className="text-xl font-bold text-[#213046] mb-6 flex items-center">
+                    <Activity className="mr-2 text-[#49ABFE]" size={24} />
                     Recent Activity
                   </h3>
                   <div className="space-y-4">
                     {mockTransactions.map((tx) => (
                       <div key={tx.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:shadow-md transition-all hover:scale-102 transform">
                         <div className="flex items-center">
-                          <div className="w-10 h-10 bg-[#EFAC20] rounded-full flex items-center justify-center mr-4">
+                          <div className="w-10 h-10 bg-[#49ABFE] rounded-full flex items-center justify-center mr-4">
                             <Gift className="text-white" size={18} />
                           </div>
                           <div>
@@ -723,7 +723,7 @@ const UserProfile = () => {
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="font-bold text-[#144489]">₩{tx.amount.toLocaleString()}</p>
+                          <p className="font-bold text-[#213046]">₩{tx.amount.toLocaleString()}</p>
                           <p className="text-xs text-gray-500">KRW-S</p>
                         </div>
                       </div>
@@ -737,8 +737,8 @@ const UserProfile = () => {
             {activeTab === 'creators' && (
               <div className="space-y-6 animate-fadeIn">
                 <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h3 className="text-xl font-bold text-[#144489] mb-6 flex items-center">
-                    <Heart className="mr-2 text-[#EFAC20]" size={24} />
+                  <h3 className="text-xl font-bold text-[#213046] mb-6 flex items-center">
+                    <Heart className="mr-2 text-[#49ABFE]" size={24} />
                     Supported Creators
                   </h3>
                   <div className="grid md:grid-cols-2 gap-4">
@@ -753,7 +753,7 @@ const UserProfile = () => {
                             </div>
                           </div>
                           <div className="text-right">
-                            <p className="font-bold text-[#144489]">₩{creator.gifted.toLocaleString()}</p>
+                            <p className="font-bold text-[#213046]">₩{creator.gifted.toLocaleString()}</p>
                             <p className="text-xs text-gray-500">Total Gifted</p>
                           </div>
                         </div>
@@ -768,14 +768,14 @@ const UserProfile = () => {
             {activeTab === 'settings' && (
               <div className="space-y-6 animate-fadeIn">
                 <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h3 className="text-xl font-bold text-[#144489] mb-6 flex items-center">
-                    <Settings className="mr-2 text-[#EFAC20]" size={24} />
+                  <h3 className="text-xl font-bold text-[#213046] mb-6 flex items-center">
+                    <Settings className="mr-2 text-[#49ABFE]" size={24} />
                     Account Settings
                   </h3>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:shadow-md transition-all">
                       <div className="flex items-center">
-                        <Bell className="mr-3 text-[#144489]" size={20} />
+                        <Bell className="mr-3 text-[#213046]" size={20} />
                         <div>
                           <p className="font-semibold text-gray-800">Notifications</p>
                           <p className="text-sm text-gray-500">Manage your notification preferences</p>
@@ -786,7 +786,7 @@ const UserProfile = () => {
                     
                     <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:shadow-md transition-all">
                       <div className="flex items-center">
-                        <Shield className="mr-3 text-[#144489]" size={20} />
+                        <Shield className="mr-3 text-[#213046]" size={20} />
                         <div>
                           <p className="font-semibold text-gray-800">Privacy & Security</p>
                           <p className="text-sm text-gray-500">Control your privacy settings</p>
@@ -797,7 +797,7 @@ const UserProfile = () => {
                     
                     <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:shadow-md transition-all">
                       <div className="flex items-center">
-                        <CreditCard className="mr-3 text-[#144489]" size={20} />
+                        <CreditCard className="mr-3 text-[#213046]" size={20} />
                         <div>
                           <p className="font-semibold text-gray-800">Payment Methods</p>
                           <p className="text-sm text-gray-500">Manage wallets and payment options</p>
@@ -817,10 +817,10 @@ const UserProfile = () => {
       {showSuccess && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[9999] backdrop-blur-sm">
           <div className="bg-white p-8 rounded-2xl text-center max-w-md mx-4 relative overflow-hidden shadow-2xl border border-gray-200">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#144489]/5 to-[#EFAC20]/5"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#213046]/5 to-[#EFAC20]/5"></div>
             <div className="relative">
               <div className="text-6xl mb-4 animate-bounce">🎉</div>
-              <h3 className="text-2xl font-bold text-[#144489] mb-2">Tip Sent Successfully!</h3>
+              <h3 className="text-2xl font-bold text-[#213046] mb-2">Tip Sent Successfully!</h3>
               <p className="text-gray-600 mb-4">Your support arrived instantly to the creator</p>
               <div className="flex items-center justify-center space-x-4 text-sm text-gray-500">
                 <div className="flex items-center">
