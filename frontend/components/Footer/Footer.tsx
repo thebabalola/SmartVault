@@ -16,7 +16,7 @@ export default function Footer({ scrollToSection }: FooterProps) {
           {/* Logo and Description */}
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <Image src="/manna-logo.png" alt="Manna logo" width={32} height={32} />
+              <Image src="/logo.png" alt="logo" width={32} height={32} />
               <span className="text-xl font-bold">Smart Vault DeFi</span>
             </div>
             <p className="text-[#9DCCED] text-sm leading-relaxed mb-4">

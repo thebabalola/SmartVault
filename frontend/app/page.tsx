@@ -72,7 +72,7 @@ export default function SmartVaultLandingPage() {
       <Header />
       
              {/* Hero Section */}
-       <section className="pt-24 bg-gradient-to-br from-[#213046] via-[#1a5ba8] to-[#EFAC20] text-white relative overflow-hidden">
+       <section className="pt-20 bg-gradient-to-br from-[#213046] via-[#1a5ba8] to-[#EFAC20] text-white relative overflow-hidden">
          {/* Animated background elements */}
          <div className="absolute inset-0 opacity-10">
            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse"></div>
@@ -111,8 +111,8 @@ export default function SmartVaultLandingPage() {
           <div className="absolute bottom-1/4 right-1/2 text-5xl">📊</div>
          </div>
         
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-20 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-16 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[60vh]">
             {/* Left Side - Text Content */}
             <div className="text-left">
               <div className="mb-8">
@@ -266,31 +266,15 @@ export default function SmartVaultLandingPage() {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <h3 className="text-2xl font-bold mb-6 text-[#49ABFE]">Traditional DeFi</h3>
-              <div className="space-y-4">
-                <div className="flex items-center py-3 border-b border-white/20">
-                  <div className="w-2 h-2 bg-red-400 rounded-full mr-4"></div>
-                  <span>Manual strategy management</span>
-                </div>
-                <div className="flex items-center py-3 border-b border-white/20">
-                  <div className="w-2 h-2 bg-red-400 rounded-full mr-4"></div>
-                  <span>High gas costs for rebalancing</span>
-                </div>
-                <div className="flex items-center py-3 border-b border-white/20">
-                  <div className="w-2 h-2 bg-red-400 rounded-full mr-4"></div>
-                  <span>Complex protocol interactions</span>
-                </div>
-                <div className="flex items-center py-3 border-b border-white/20">
-                  <div className="w-2 h-2 bg-red-400 rounded-full mr-4"></div>
-                  <span>Technical knowledge required</span>
-                </div>
-                <div className="flex items-center py-3 font-bold text-lg">
-                  <div className="w-2 h-2 bg-red-400 rounded-full mr-4"></div>
-                  <span>Time-intensive process</span>
-                      </div>
-                    </div>
-                  </div>
+            <div className="flex justify-center items-center">
+              <Image 
+                src="/section-img.png" 
+                alt="Traditional DeFi complexity illustration" 
+                width={500}
+                height={400}
+                className="w-full max-w-md lg:max-w-lg rounded-2xl shadow-2xl"
+              />
+            </div>
                   
             <div className="bg-gradient-to-br from-[#49ABFE] to-[#9DCCED] text-[#213046] rounded-2xl p-8 shadow-lg">
               <h3 className="text-2xl font-bold mb-6">Smart Vault Platform</h3>
@@ -378,45 +362,6 @@ export default function SmartVaultLandingPage() {
         </div>
       </section>
 
-      {/* Contract Info Section */}
-      <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-br from-[#213046] to-[#49ABFE] text-white">
-        <div className="max-w-6xl mx-auto text-center">
-          <AnimatedSection>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Live on Arbitrum Sepolia
-            </h2>
-            <p className="text-[#49ABFE] text-lg font-semibold mb-12">
-              Contract Address: 0x89a2c29b55fb31e5739682f5b9ae3a004e7a1a54
-            </p>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { label: "Network", value: "Arbitrum Sepolia" },
-                { label: "Chain ID", value: "421614" },
-                { label: "Standard", value: "ERC-4626" },
-                { label: "Status", value: "Live" }
-              ].map(({ label, value }) => (
-                <div key={label} className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
-                  <p className="text-sm text-gray-300 mb-2">{label}</p>
-                  <p className="text-lg font-bold">{value}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-12">
-              <a 
-                href="https://sepolia.arbiscan.io/address/0x89a2c29b55fb31e5739682f5b9ae3a004e7a1a54"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center bg-[#49ABFE] text-[#213046] px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#9DCCED] transition-all duration-300"
-              >
-                View on Arbiscan
-                <ArrowRight className="ml-2" size={20} />
-              </a>
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
 
       {/* Footer */}
       <AnimatedSection>
