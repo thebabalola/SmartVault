@@ -6,5 +6,6 @@ pub extern "C" fn main() {}
 
 #[cfg(feature = "export-abi")]
 fn main() {
-    smartvault_contract::print_from_args();
+    use stylus_sdk::abi::export::print_from_args;
+    print_from_args::<vault_factory::VaultFactory>();
 }

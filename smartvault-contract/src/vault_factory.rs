@@ -1,0 +1,241 @@
+use alloc::{vec::Vec, string::{String, ToString}};
+use stylus_sdk::{
+    alloy_primitives::{U256, Address},
+    alloy_sol_types::sol,
+    prelude::*,
+};
+
+sol_storage! {
+    #[entrypoint]
+    pub struct VaultFactory {
+        /// Mapping of user to their vaults
+        mapping(address => address[]) user_vaults;
+        /// Vault owners
+        mapping(address => address) vault_owners;
+        /// Vault creation timestamps
+        mapping(address => uint256) vault_created_at;
+        /// Vault usernames (as hashes)
+        mapping(address => bytes32) vault_username_hashes;
+        /// Vault bios (as hashes)
+        mapping(address => bytes32) vault_bio_hashes;
+        /// Total number of vaults created
+        uint256 total_vaults;
+        
+        /// Protocol addresses (set by admin)
+        address aave_lending_pool;
+        address compound_comptroller;
+        address uniswap_router;
+        address weth_address;
+        
+        /// Admin address
+        address admin;
+    }
+}
+
+sol! {
+    event VaultCreated(
+        address indexed owner,
+        address indexed vault,
+        uint256 timestamp
+    );
+    event ProtocolAddressSet(
+        string protocol,
+        address indexed newAddress
+    );
+}
+
+#[public]
+impl VaultFactory {
+    /// Creates a new vault for a user
+    pub fn create_vault(
+        &mut self,
+        username: String,
+        bio: String,
+    ) -> Result<Address, Vec<u8>> {
+        if username.len() > 20 {
+            return Err("Username too long".into());
+        }
+
+        if bio.len() > 30 {
+            return Err("Bio too long".into());
+        }
+
+        // Generate vault address (simplified - in production, use CREATE2)
+        let vault_address = self._generate_vault_address();
+        
+        // Store vault info
+        let user = self.vm().msg_sender();
+        let timestamp = U256::from(self.vm().block_timestamp());
+        
+        self.vault_owners.setter(vault_address).set(user);
+        self.vault_created_at.setter(vault_address).set(timestamp);
+        let username_hash = _hash_string(&username).into();
+        let bio_hash = _hash_string(&bio).into();
+        self.vault_username_hashes.setter(vault_address).set(username_hash);
+        self.vault_bio_hashes.setter(vault_address).set(bio_hash);
+        
+        // Add to user's vault list
+        let mut vaults = self.user_vaults.setter(user);
+        vaults.push(vault_address);
+        
+        // Update total vaults
+        self.total_vaults.set(self.total_vaults.get() + U256::ONE);
+        
+        // Emit event
+        log(self.vm(), VaultCreated {
+            owner: user,
+            vault: vault_address,
+            timestamp,
+        });
+
+        Ok(vault_address)
+    }
+
+    /// Gets all vaults for a user
+    pub fn get_user_vaults(&self, user: Address) -> Result<Vec<Address>, Vec<u8>> {
+        let vaults = self.user_vaults.get(user);
+        let mut result = Vec::new();
+        for i in 0..vaults.len() {
+            if let Some(vault) = vaults.get(i) {
+                result.push(vault);
+            }
+        }
+        Ok(result)
+    }
+
+    /// Gets vault owner
+    pub fn get_vault_owner(&self, vault: Address) -> Result<Address, Vec<u8>> {
+        let owner = self.vault_owners.get(vault);
+        if owner == Address::ZERO {
+            return Err("Vault not found".into());
+        }
+        Ok(owner)
+    }
+
+    /// Gets the total number of vaults created
+    pub fn get_total_vaults(&self) -> Result<U256, Vec<u8>> {
+        Ok(self.total_vaults.get())
+    }
+
+    /// Gets vault creation timestamp
+    pub fn get_vault_created_at(&self, vault: Address) -> Result<U256, Vec<u8>> {
+        Ok(self.vault_created_at.get(vault))
+    }
+
+    /// Gets vault username hash
+    pub fn get_vault_username_hash(&self, vault: Address) -> Result<[u8; 32], Vec<u8>> {
+        Ok(self.vault_username_hashes.get(vault).into())
+    }
+
+    /// Gets vault bio hash
+    pub fn get_vault_bio_hash(&self, vault: Address) -> Result<[u8; 32], Vec<u8>> {
+        Ok(self.vault_bio_hashes.get(vault).into())
+    }
+
+    // ===== ADMIN FUNCTIONS =====
+
+    /// Sets the admin address
+    pub fn set_admin(&mut self, new_admin: Address) -> Result<(), Vec<u8>> {
+        if self.admin.get() == Address::ZERO {
+            self.admin.set(new_admin);
+        } else if self.vm().msg_sender() == self.admin.get() {
+            self.admin.set(new_admin);
+        } else {
+            return Err("Not authorized".into());
+        }
+        Ok(())
+    }
+
+    /// Sets Aave lending pool address
+    pub fn set_aave_address(&mut self, aave_address: Address) -> Result<(), Vec<u8>> {
+        if self.vm().msg_sender() != self.admin.get() {
+            return Err("Not authorized".into());
+        }
+        self.aave_lending_pool.set(aave_address);
+        log(self.vm(), ProtocolAddressSet {
+            protocol: "aave".to_string(),
+            newAddress: aave_address,
+        });
+        Ok(())
+    }
+
+    /// Sets Compound comptroller address
+    pub fn set_compound_address(&mut self, compound_address: Address) -> Result<(), Vec<u8>> {
+        if self.vm().msg_sender() != self.admin.get() {
+            return Err("Not authorized".into());
+        }
+        self.compound_comptroller.set(compound_address);
+        log(self.vm(), ProtocolAddressSet {
+            protocol: "compound".to_string(),
+            newAddress: compound_address,
+        });
+        Ok(())
+    }
+
+    /// Sets Uniswap router address
+    pub fn set_uniswap_address(&mut self, uniswap_address: Address) -> Result<(), Vec<u8>> {
+        if self.vm().msg_sender() != self.admin.get() {
+            return Err("Not authorized".into());
+        }
+        self.uniswap_router.set(uniswap_address);
+        log(self.vm(), ProtocolAddressSet {
+            protocol: "uniswap".to_string(),
+            newAddress: uniswap_address,
+        });
+        Ok(())
+    }
+
+    /// Sets WETH address
+    pub fn set_weth_address(&mut self, weth_address: Address) -> Result<(), Vec<u8>> {
+        if self.vm().msg_sender() != self.admin.get() {
+            return Err("Not authorized".into());
+        }
+        self.weth_address.set(weth_address);
+        log(self.vm(), ProtocolAddressSet {
+            protocol: "weth".to_string(),
+            newAddress: weth_address,
+        });
+        Ok(())
+    }
+
+    /// Gets protocol addresses
+    pub fn get_aave_address(&self) -> Result<Address, Vec<u8>> {
+        Ok(self.aave_lending_pool.get())
+    }
+
+    pub fn get_compound_address(&self) -> Result<Address, Vec<u8>> {
+        Ok(self.compound_comptroller.get())
+    }
+
+    pub fn get_uniswap_address(&self) -> Result<Address, Vec<u8>> {
+        Ok(self.uniswap_router.get())
+    }
+
+    pub fn get_weth_address(&self) -> Result<Address, Vec<u8>> {
+        Ok(self.weth_address.get())
+    }
+
+    // ===== INTERNAL FUNCTIONS =====
+
+    /// Generates a vault address (simplified - in production, use CREATE2)
+    fn _generate_vault_address(&self) -> Address {
+        let mut data = Vec::new();
+        data.extend_from_slice(self.vm().msg_sender().as_slice());
+        data.extend_from_slice(&self.total_vaults.get().to_be_bytes::<32>());
+        data.extend_from_slice(&self.vm().block_timestamp().to_be_bytes());
+        
+        use stylus_sdk::crypto::keccak;
+        let hash = keccak(&data);
+        
+        let mut addr_bytes = [0u8; 20];
+        addr_bytes.copy_from_slice(&hash[12..32]);
+        Address::from(addr_bytes)
+    }
+}
+
+/// Internal function to hash strings
+fn _hash_string(input: &str) -> [u8; 32] {
+    use stylus_sdk::crypto::keccak;
+    let bytes = input.as_bytes();
+    *keccak(bytes)
+}

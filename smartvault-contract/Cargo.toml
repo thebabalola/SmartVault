@@ -1,12 +1,12 @@
 [package]
-name = "smartvault-contract"
-version = "0.1.0"
+name = "vault-factory"
+version = "0.2.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
-homepage = "https://github.com/SmartVault/smartvault-contract"
-repository = "https://github.com/SmartVault/smartvault-contract"
-keywords = ["arbitrum", "ethereum", "stylus", "defi", "vault", "erc4626", "yield"]
-description = "ERC-4626 compliant Smart Vault for automated yield generation"
+homepage = "https://github.com/thebabalola/SmartVault"
+repository = "https://github.com/thebabalola/SmartVault"
+keywords = ["vault", "factory", "defi", "arbitrum", "ethereum", "stylus", "alloy", "erc4626", "yield"]
+description = "User-controlled Vault Factory with strategy integration for automated yield generation"
 
 [dependencies]
 alloy-primitives = "=0.8.20"
@@ -29,7 +29,7 @@ debug = ["stylus-sdk/debug"]
 mini-alloc = ["stylus-sdk/mini-alloc"]
 
 [[bin]]
-name = "smartvault-contract"
+name = "vault-factory"
 path = "src/main.rs"
 
 [lib]
