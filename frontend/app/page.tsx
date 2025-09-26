@@ -8,11 +8,7 @@ import Footer from "../components/Footer/Footer";
 import { 
   ArrowRight, 
   DollarSign, 
-  Clock, 
-  Eye, 
-  Zap, 
   Globe, 
-  Users, 
   TrendingUp,
   Shield,
   Lock,
@@ -132,14 +128,14 @@ export default function SmartVaultLandingPage() {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link 
                   href="/vault"
-                  className="group bg-[#49ABFE] text-[#213046] px-6 py-3 rounded-xl font-bold text-base hover:bg-[#9DCCED] transition-all duration-300 flex items-center justify-center border-2 border-transparent hover:border-[#9DCCED]"
+                  className="group bg-[#49ABFE] text-[#213046] px-6 py-2 rounded-xl font-bold text-base hover:bg-[#9DCCED] transition-all duration-300 flex items-center justify-center border-2 border-transparent hover:border-[#9DCCED]"
                 >
                   Start Earning 
                   <ArrowRight className="ml-2" size={18} />
                 </Link>
                 <button 
                   onClick={() => scrollToSection('how-it-works')}
-                  className="group border-2 border-white text-white px-6 py-3 rounded-xl font-bold text-base hover:bg-white hover:text-[#213046] transition-all duration-300"
+                  className="group border-2 border-white text-white px-4 py-1.5 rounded-lg font-medium text-sm hover:bg-white hover:text-[#213046] transition-all duration-300"
                 >
                   Learn More
                 </button>
@@ -171,82 +167,156 @@ export default function SmartVaultLandingPage() {
         </div>
       </section>
 
-      {/* How It Works Section */}
+      {/* How It Works Section - Updated with Circles and Modern Layout */}
       <section id="how-it-works" className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-6xl mx-auto text-center">
+        <div className="max-w-7xl mx-auto">
           <AnimatedSection>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#213046] mb-6 leading-tight">
-              How Smart Vault Works
+            <div className="text-center mb-12">
+              <h2 className="text-2xl md:text-3xl font-bold text-[#213046] mb-4 leading-tight">
+                How Smart Vault Works
             </h2>
-            <p className="text-lg text-gray-700 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
-              Our ERC-4626 compliant vaults automatically invest your assets in yield-generating strategies, 
-              giving you passive returns without the complexity of manual DeFi management.
-            </p>
+              <p className="text-base md:text-lg text-gray-700 mb-4 max-w-3xl mx-auto leading-relaxed font-medium">
+                Our ERC-4626 compliant vaults automatically invest your assets in yield-generating strategies, 
+                giving you passive returns without the complexity of manual DeFi management.
+              </p>
+              <div className="w-20 h-1 bg-gradient-to-r from-[#49ABFE] to-[#EFAC20] mx-auto rounded-full"></div>
+            </div>
           </AnimatedSection>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {[
-              { icon: Wallet, title: "1. Deposit", desc: "Connect your wallet and deposit ERC-20 tokens" },
-              { icon: BarChart3, title: "2. Auto-Invest", desc: "Vault automatically deploys to yield strategies" },
-              { icon: TrendingUp, title: "3. Earn Yield", desc: "Watch your assets grow with automated returns" },
-              { icon: DollarSign, title: "4. Withdraw", desc: "Redeem your shares for assets + yield anytime" }
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="bg-white rounded-2xl p-8 border border-gray-100 shadow-lg">
-                <div className="w-20 h-20 bg-gradient-to-br from-[#49ABFE] to-[#9DCCED] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                  <Icon size={36} className="text-white" />
+             {/* Modern Step Process with Circles */}
+          <div className="relative">
+            {/* Connection Lines - Desktop */}
+            <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-[#49ABFE]/30 via-[#9DCCED]/50 to-[#EFAC20]/30 transform -translate-y-1/2 z-0"></div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4 relative z-10">
+              {[
+                { 
+                  icon: Wallet, 
+                  title: "Deposit", 
+                  desc: "Connect your wallet and deposit ERC-20 tokens",
+                  color: "from-[#49ABFE] to-[#9DCCED]",
+                  step: "01"
+                },
+                { 
+                  icon: BarChart3, 
+                  title: "Auto-Invest", 
+                  desc: "Vault automatically deploys to yield strategies",
+                  color: "from-[#9DCCED] to-[#49ABFE]",
+                  step: "02"
+                },
+                { 
+                  icon: TrendingUp, 
+                  title: "Earn Yield", 
+                  desc: "Watch your assets grow with automated returns",
+                  color: "from-[#49ABFE] to-[#9DCCED]",
+                  step: "03"
+                },
+                { 
+                  icon: DollarSign, 
+                  title: "Withdraw", 
+                  desc: "Redeem your shares for assets + yield anytime",
+                  color: "from-[#9DCCED] to-[#49ABFE]",
+                  step: "04"
+                }
+              ].map(({ icon: Icon, title, desc, color, step }) => (
+                <div key={title} className="flex flex-col items-center text-center group">
+                  {/* Step Number */}
+                  <div className="text-[#49ABFE]/30 text-lg font-bold mb-4">{step}</div>
+                  
+                  {/* Circular Icon Container */}
+                  <div className="relative mb-6">
+                    {/* Outer Ring */}
+                    <div className={`w-32 h-32 bg-gradient-to-br ${color} rounded-full flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300 relative overflow-hidden`}>
+                      {/* Inner Glow Effect */}
+                      <div className="absolute inset-2 bg-white/20 rounded-full"></div>
+                      
+                      {/* Icon */}
+                      <Icon size={48} className="text-white relative z-10 drop-shadow-lg" />
+                      
+                      {/* Animated Border */}
+                      <div className="absolute inset-0 rounded-full border-4 border-white/30 group-hover:border-white/60 transition-colors duration-300"></div>
+                    </div>
+                    
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="max-w-xs">
+                    <h3 className="text-xl md:text-2xl font-bold text-[#213046] mb-4">{title}</h3>
+                    <p className="text-gray-600 leading-relaxed font-medium text-base">{desc}</p>
+                  </div>
+                  
+                  {/* Connection Dot for Mobile */}
+                  <div className="lg:hidden w-2 h-2 bg-[#49ABFE] rounded-full mt-8 mb-4"></div>
                 </div>
-                <h3 className="text-xl font-bold text-[#213046] mb-3">{title}</h3>
-                <p className="text-gray-600 leading-relaxed font-medium">{desc}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+                    
+          {/* Call-to-Action */}
+          <AnimatedSection className="text-center mt-16">
+            <div className="relative max-w-2xl mx-auto">
+              {/* Blurred Background */}
+              <div className="absolute inset-0 bg-white/20 backdrop-blur-md rounded-3xl border-2 border-gray-200/50"></div>
+              
+              {/* Content Container */}
+              <div className="relative z-10 p-8">
+                <h3 className="text-2xl font-bold text-[#213046] mb-4">Ready to Start Earning?</h3>
+                <p className="text-gray-600 mb-6">Join other users already earning passive yield with Smart Vault</p>
+                <Link 
+                  href="/vault"
+                  className="inline-flex items-center bg-[#213046] text-white px-8 py-3 rounded-xl font-bold text-lg hover:bg-[#213046]/90 hover:shadow-lg transition-all duration-300 transform hover:scale-105"
+                >
+                  Get Started Now 
+                  <ArrowRight className="ml-2" size={20} />
+                </Link>
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
-      {/* Problem Section */}
-      <section id="problem" className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-br from-blue-50 to-[#144489]/5">
-        <div className="max-w-6xl mx-auto">
-          <AnimatedSection className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#213046] mb-4 leading-tight">
-              The DeFi Complexity Problem
+      {/* Problem Section - Enhanced Layout */}
+      <section id="problem" className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-br from-blue-50 to-[#144489]/5 relative overflow-hidden">
+        {/* Background Decorative Elements */}
+        <div className="absolute top-20 right-20 w-32 h-32 bg-[#49ABFE]/10 rounded-full blur-2xl"></div>
+        <div className="absolute bottom-20 left-20 w-48 h-48 bg-[#EFAC20]/10 rounded-full blur-3xl"></div>
+        
+        <div className="max-w-4xl mx-auto relative z-10">
+          <AnimatedSection className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#213046] mb-4">
+              The Traditional Vault Problem
             </h2>
-            <p className="text-[#49ABFE] text-lg font-bold text-xl">
-              Traditional DeFi requires too much technical knowledge and time
+            <p className="text-[#49ABFE] text-base md:text-lg font-bold mb-4">
+              Traditional approaches offer no growth - just storage and complexity
             </p>
+            <div className="w-16 h-1 bg-gradient-to-r from-[#EA4E2A] to-[#EA4E2A]/80 mx-auto rounded-full"></div>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               {
-                icon: Clock,
-                title: "Time Intensive",
-                stat: "Hours Daily",
-                desc: "Manual yield farming requires constant monitoring, rebalancing, and strategy adjustments across multiple protocols."
-              },
-              {
-                icon: Eye,
-                title: "Technical Barriers",
-                stat: "Complex Setup",
-                desc: "Average users can't navigate complex DeFi protocols, smart contract interactions, and yield optimization strategies."
+                icon: Shield,
+                title: "Storage Only",
+                desc: "Purely for storage and safety. Your money stays locked and untouched until you withdraw.",
+                accent: "from-[#EA4E2A] to-[#EA4E2A]/90"
               },
               {
                 icon: DollarSign,
-                title: "High Gas Costs",
-                stat: "Expensive",
-                desc: "Frequent transactions and manual rebalancing result in high gas fees that eat into your potential returns."
+                title: "No Growth",
+                desc: "If you put in $100, you only get $100 back. No returns, no yield, no growth.",
+                accent: "from-[#EA4E2A] to-[#EA4E2A]/90"
               }
-            ].map(({ icon: Icon, title, stat, desc }) => (
-              <div key={title} className="bg-white rounded-2xl p-8 shadow-lg border border-red-100">
-                <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-red-100 to-red-200 rounded-2xl flex items-center justify-center mr-4 shadow-md">
-                    <Icon size={28} className="text-red-600" />
+            ].map(({ icon: Icon, title, desc, accent }) => (
+              <div key={title} className="group">
+                <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 h-full">
+                  <div className="flex items-center mb-4">
+                    <div className={`w-12 h-12 bg-gradient-to-br ${accent} rounded-full flex items-center justify-center mr-4 shadow-md`}>
+                      <Icon size={24} className="text-white" />
                   </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-[#213046] mb-1">{title}</h3>
-                    <p className="text-red-600 font-bold text-2xl">{stat}</p>
+                    <h3 className="text-lg font-bold text-[#213046]">{title}</h3>
                   </div>
+                  <p className="text-gray-600 text-sm leading-relaxed">{desc}</p>
                 </div>
-                <p className="text-gray-700 leading-relaxed font-medium">{desc}</p>
               </div>
             ))}
           </div>
@@ -270,13 +340,13 @@ export default function SmartVaultLandingPage() {
               <Image 
                 src="/section-img.png" 
                 alt="Traditional DeFi complexity illustration" 
-                width={500}
-                height={400}
-                className="w-full max-w-md lg:max-w-lg rounded-2xl shadow-2xl"
+                width={400}
+                height={320}
+                className="w-full max-w-sm lg:max-w-md rounded-2xl shadow-2xl"
               />
-            </div>
+                  </div>
                   
-            <div className="bg-gradient-to-br from-[#49ABFE] to-[#9DCCED] text-[#213046] rounded-2xl p-8 shadow-lg">
+            <div className="bg-gradient-to-br from-[#49ABFE] to-[#9DCCED] text-[#213046] rounded-2xl p-8 shadow-lg max-w-md mx-auto lg:mx-0">
               <h3 className="text-2xl font-bold mb-6">Smart Vault Platform</h3>
               <div className="space-y-4">
                 <div className="flex items-center py-3 border-b border-[#144489]/20">
@@ -305,63 +375,95 @@ export default function SmartVaultLandingPage() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gray-50">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#213046] mb-4">
+      {/* Features Section - Enhanced Grid Layout */}
+      <section className="py-20 px-8 sm:px-12 md:px-16 lg:px-24 xl:px-32 bg-gray-50 relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute top-10 left-10 w-20 h-20 border-4 border-[#49ABFE] rounded-full"></div>
+          <div className="absolute top-40 right-20 w-16 h-16 border-4 border-[#EFAC20] rounded-full"></div>
+          <div className="absolute bottom-40 left-32 w-12 h-12 border-4 border-[#49ABFE] rounded-full"></div>
+          <div className="absolute bottom-20 right-40 w-24 h-24 border-4 border-[#EFAC20] rounded-full"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-20">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#213046] mb-6">
               Why Choose Smart Vault?
             </h2>
-            <p className="text-[#49ABFE] text-lg font-semibold">
+            <p className="text-[#49ABFE] text-lg md:text-xl font-semibold mb-4">
               Built on industry standards with user experience in mind
             </p>
+            <div className="w-24 h-1 bg-gradient-to-r from-[#49ABFE] to-[#EFAC20] mx-auto rounded-full"></div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
                 icon: Shield,
                 title: "ERC-4626 Compliant",
-                desc: "Built on the industry standard for tokenized vaults, ensuring interoperability and security."
+                desc: "Built on the industry standard for tokenized vaults, ensuring interoperability and security.",
+                color: "text-[#144489]"
               },
               {
                 icon: Lock,
                 title: "Secure & Audited",
-                desc: "Smart contracts deployed on Arbitrum Stylus with comprehensive security measures."
+                desc: "Smart contracts deployed on Arbitrum Stylus with comprehensive security measures.",
+                color: "text-[#144489]"
               },
               {
-                icon: Zap,
+                icon: TrendingUp,
                 title: "Automated Yield",
-                desc: "Your assets work 24/7 generating returns through optimized DeFi strategies."
+                desc: "Your assets work 24/7 generating returns through optimized DeFi strategies.",
+                color: "text-[#144489]"
               },
               {
                 icon: Globe,
                 title: "Multi-Asset Support",
-                desc: "Deposit various ERC-20 tokens and earn yield across different asset classes."
+                desc: "Deposit various ERC-20 tokens and earn yield across different asset classes.",
+                color: "text-[#144489]"
               },
               {
                 icon: BarChart3,
                 title: "Transparent Returns",
-                desc: "Track your vault performance and yield generation with real-time analytics."
-              },
-              {
-                icon: Users,
-                title: "Community Driven",
-                desc: "Governed by the community with decentralized decision-making for vault strategies."
+                desc: "Track your vault performance and yield generation with real-time analytics.",
+                color: "text-[#144489]"
               }
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-                <div className="w-16 h-16 bg-[#144489] rounded-2xl flex items-center justify-center mb-6">
-                  <Icon size={32} className="text-white" />
+            ].map(({ icon: Icon, title, desc, color }) => (
+              <div key={title} className="flex items-start space-x-4">
+                <Icon size={24} className={`${color} mt-1 flex-shrink-0`} />
+                <div>
+                  <h3 className="text-lg font-bold text-[#213046] mb-2">{title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{desc}</p>
                 </div>
-                <h3 className="text-xl font-bold text-[#213046] mb-3">{title}</h3>
-                <p className="text-gray-600 leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
+          
+          {/* Bottom CTA Section */}
+          <AnimatedSection className="mt-20">
+            <div className="text-center bg-gradient-to-r from-[#213046] to-[#49ABFE] rounded-3xl p-12 text-white shadow-2xl">
+              <h3 className="text-2xl md:text-3xl font-bold mb-4">Start Your DeFi Journey Today</h3>
+              <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
+                Join the future of automated yield generation with Smart Vaults ERC-4626 compliant vaults
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link 
+                  href="/vault"
+                  className="bg-white text-[#213046] px-6 py-2 rounded-lg font-medium text-base hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                  Launch App
+                </Link>
+                <button 
+                  onClick={() => scrollToSection('how-it-works')}
+                  className="border-2 border-white text-white px-6 py-2 rounded-lg font-medium text-base hover:bg-white hover:text-[#213046] transition-all duration-300"
+                >
+                  Learn More
+                </button>
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
-
 
       {/* Footer */}
       <AnimatedSection>

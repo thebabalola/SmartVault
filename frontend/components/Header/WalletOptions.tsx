@@ -333,7 +333,7 @@ export default function WalletOptions() {
                 href="https://www.youtube.com/watch?v=SQyg9pyJ1Ac"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center space-x-1 px-2 py-1.5 bg-[#ABFF27] text-black text-xs font-medium rounded hover:bg-[#ABFF27]/80 transition-colors mb-2"
+                className="w-full flex items-center justify-center space-x-1 px-2 py-1.5 bg-[#EA4E2A] text-white text-xs font-medium rounded hover:bg-[#EA4E2A]/80 transition-colors mb-2"
               >
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M8 5v14l11-7z" fill="currentColor"/>
@@ -345,7 +345,7 @@ export default function WalletOptions() {
                 href="https://ethereum.org/en/wallets/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs text-[#ABFF27] hover:underline text-center block"
+                className="text-xs text-[#EA4E2A] hover:underline text-center block"
               >
                 Learn More
               </a>
