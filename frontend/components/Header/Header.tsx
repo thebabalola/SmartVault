@@ -14,7 +14,7 @@ export default function Header() {
             <Link href="/" className="flex items-center space-x-2">
               <Image src={"/logo.png"} alt="logo" width={28} height={28} className="sm:w-8 sm:h-8"/>
               <span className="text-lg sm:text-xl font-bold text-white">
-                Smart Vault <span className="hidden sm:inline">DeFi</span>
+                SmartVault
               </span>
             </Link>
           </div>

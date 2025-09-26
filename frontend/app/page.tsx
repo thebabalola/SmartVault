@@ -69,10 +69,10 @@ export default function SmartVaultLandingPage() {
       
              {/* Hero Section */}
        <section className="pt-20 bg-gradient-to-br from-[#213046] via-[#1a5ba8] to-[#EFAC20] text-white relative overflow-hidden">
-         {/* Animated background elements */}
+         {/* Static background elements */}
          <div className="absolute inset-0 opacity-10">
-           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse"></div>
-           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#49ABFE] rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white rounded-full blur-3xl"></div>
+           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#49ABFE] rounded-full blur-3xl"></div>
          </div>
          
         {/* DeFi-related background icons */}
@@ -112,10 +112,11 @@ export default function SmartVaultLandingPage() {
             {/* Left Side - Text Content */}
             <div className="text-left">
               <div className="mb-8">
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-[#EFAC20] drop-shadow-lg">
-                  Smart Vault <span className="text-[#49ABFE] drop-shadow-2xl">DeFi</span>
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-[#EFAC20] drop-shadow-lg">
+                  {/* <span className="text-[#49ABFE] drop-shadow-2xl">DeFi</span>   */}
+                  SmartVault 
                 </h1>
-                <p className="text-lg md:text-xl lg:text-2xl mb-2 opacity-95 font-semibold">
+                <p className="text-sm md:text-base lg:text-lg mb-2 opacity-95 font-semibold">
                   Automated Yield Generation for Everyone
                 </p>
               </div>
@@ -148,9 +149,9 @@ export default function SmartVaultLandingPage() {
                 <Image 
                   src="/hero-img.png" 
                   alt="Smart Vault DeFi platform for automated yield generation" 
-                  width={800}
-                  height={600}
-                  className="w-full max-w-lg lg:max-w-xl xl:max-w-2xl rounded-2xl shadow-2xl"
+                  width={900}
+                  height={675}
+                  className="w-full max-w-xl lg:max-w-2xl xl:max-w-3xl rounded-2xl shadow-2xl"
                 />
                 {/* Subtle glow effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-[#49ABFE]/20 to-transparent rounded-2xl -z-10 blur-xl"></div>
@@ -161,7 +162,7 @@ export default function SmartVaultLandingPage() {
         
         {/* Enhanced Wave decoration */}
         <div className="relative">
-          <svg viewBox="0 0 1440 120" className="w-full h-20 fill-white animate-pulse">
+          <svg viewBox="0 0 1440 120" className="w-full h-20 fill-white">
             <path d="M0,96L48,80C96,64,192,32,288,42.7C384,53,480,107,576,128C672,149,768,139,864,122.7C960,107,1056,85,1152,90.7C1248,96,1344,128,1392,144L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
           </svg>
         </div>
