@@ -173,7 +173,7 @@ const VaultManagement: React.FC<VaultManagementProps> = ({ vaultAddress, vaultIn
             </div>
           ) : (
             <div className="text-center py-8 text-gray-500">
-              <p>Click "Edit" to modify vault configuration</p>
+              <p>Click &quot;Edit&quot; to modify vault configuration</p>
             </div>
           )}
         </div>

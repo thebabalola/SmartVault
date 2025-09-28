@@ -11,8 +11,6 @@ interface VaultCardProps {
 const VaultCard: React.FC<VaultCardProps> = ({ vaultAddress, vaultIndex }) => {
   const {
     name,
-    symbol,
-    totalAssets,
     userValue,
     apy,
     isPending

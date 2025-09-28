@@ -193,14 +193,14 @@ const VaultInfo: React.FC<VaultInfoProps> = ({ vaultAddress, vaultIndex }) => {
       </div>
 
       {/* Vault Info Raw Data (if available) */}
-      {vaultInfo && (
+      {vaultInfo ? (
         <div className="mt-6 p-4 bg-gray-50 rounded-lg">
           <h4 className="text-lg font-semibold text-gray-800 mb-3">Raw Vault Data</h4>
           <div className="text-xs font-mono text-gray-600 break-all">
             <pre>{JSON.stringify(vaultInfo, null, 2)}</pre>
           </div>
         </div>
-      )}
+      ) : null}
     </div>
   );
 };
