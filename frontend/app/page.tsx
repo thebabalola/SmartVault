@@ -128,14 +128,14 @@ export default function SmartVaultLandingPage() {
               
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link 
-                  href="/vault"
+                  href="/user-acct"
                   className="group bg-[#49ABFE] text-[#213046] px-6 py-2 rounded-xl font-bold text-base hover:bg-[#9DCCED] transition-all duration-300 flex items-center justify-center border-2 border-transparent hover:border-[#9DCCED]"
                 >
                   Start Earning 
                   <ArrowRight className="ml-2" size={18} />
                 </Link>
                 <button 
-                  onClick={() => scrollToSection('how-it-works')}
+                  onClick={() => scrollToSection('features')}
                   className="group border-2 border-white text-white px-4 py-1.5 rounded-lg font-medium text-sm hover:bg-white hover:text-[#213046] transition-all duration-300"
                 >
                   Learn More
@@ -377,7 +377,7 @@ export default function SmartVaultLandingPage() {
       </section>
 
       {/* Features Section - Enhanced Grid Layout */}
-      <section className="py-20 px-8 sm:px-12 md:px-16 lg:px-24 xl:px-32 bg-gray-50 relative overflow-hidden">
+      <section id="features" className="py-20 px-8 sm:px-12 md:px-16 lg:px-24 xl:px-32 bg-gray-50 relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-10 left-10 w-20 h-20 border-4 border-[#49ABFE] rounded-full"></div>
@@ -447,19 +447,13 @@ export default function SmartVaultLandingPage() {
               <p className="text-lg mb-8 opacity-90 max-w-2xl mx-auto">
                 Join the future of automated yield generation with Smart Vaults ERC-4626 compliant vaults
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex justify-center">
                 <Link 
-                  href="/vault"
-                  className="bg-white text-[#213046] px-6 py-2 rounded-lg font-medium text-base hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  href="/user-acct"
+                  className="bg-white text-[#213046] px-8 py-3 rounded-lg font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
                 >
-                  Launch App
+                  Start Earning Now
                 </Link>
-                <button 
-                  onClick={() => scrollToSection('how-it-works')}
-                  className="border-2 border-white text-white px-6 py-2 rounded-lg font-medium text-base hover:bg-white hover:text-[#213046] transition-all duration-300"
-                >
-                  Learn More
-                </button>
               </div>
             </div>
           </AnimatedSection>
