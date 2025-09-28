@@ -8,7 +8,7 @@ interface VaultManagementProps {
   vaultIndex: number;
 }
 
-const VaultManagement: React.FC<VaultManagementProps> = ({ vaultAddress, vaultIndex }) => {
+const VaultManagement: React.FC<VaultManagementProps> = ({ vaultAddress }) => {
   const {
     name,
     symbol,

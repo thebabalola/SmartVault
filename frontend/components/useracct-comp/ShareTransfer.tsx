@@ -9,9 +9,8 @@ interface ShareTransferProps {
   vaultIndex: number;
 }
 
-const ShareTransfer: React.FC<ShareTransferProps> = ({ vaultAddress, vaultIndex }) => {
+const ShareTransfer: React.FC<ShareTransferProps> = ({ vaultAddress }) => {
   const {
-    name,
     symbol,
     userBalance,
     transferShares,

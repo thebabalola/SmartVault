@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FileText, BookOpen, Github } from "lucide-react";
+// Removed unused imports
 
 interface FooterProps {
   scrollToSection: (id: string) => void;

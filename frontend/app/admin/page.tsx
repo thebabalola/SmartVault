@@ -182,7 +182,7 @@ const AdminDashboard = () => {
   const TabButton = ({ id, label, icon: Icon, isActive, onClick }: { 
     id: string; 
     label: string; 
-    icon: any; 
+    icon: React.ComponentType<{ className?: string }>; 
     isActive: boolean; 
     onClick: (id: string) => void 
   }) => (
