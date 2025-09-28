@@ -2,6 +2,17 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAccount } from "wagmi";
+import { 
+  Briefcase, 
+  Building2, 
+  Lightbulb, 
+  BarChart3, 
+  Plus, 
+  Settings, 
+  Target, 
+  TrendingUp,
+  ChevronDown
+} from 'lucide-react';
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import ProfileCard from "../../components/useracct-comp/ProfileCard";
@@ -286,7 +297,7 @@ const UserProfile = () => {
                 {/* Portfolio Summary */}
                 <div className="bg-white rounded-2xl shadow-lg p-6">
                   <h2 className="text-2xl font-bold text-[#213046] mb-6 flex items-center">
-                    <span className="mr-3">💼</span>
+                    <Briefcase className="mr-3 w-6 h-6 text-[#49ABFE]" />
                     Portfolio Overview
                   </h2>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -312,12 +323,14 @@ const UserProfile = () => {
                 {/* Vault List */}
                 <div className="bg-white rounded-2xl shadow-lg p-6">
                   <h3 className="text-xl font-bold text-[#213046] mb-6 flex items-center">
-                    <span className="mr-2">🏦</span>
+                    <Building2 className="mr-2 w-5 h-5 text-[#49ABFE]" />
                     Your Vaults
                   </h3>
                   {userVaults.length === 0 ? (
                     <div className="text-center py-12">
-                      <div className="text-6xl mb-4">🏦</div>
+                      <div className="flex justify-center mb-4">
+                        <Building2 className="w-16 h-16 text-gray-400" />
+                      </div>
                       <h3 className="text-xl font-semibold text-gray-600 mb-2">No Vaults Created Yet</h3>
                       <p className="text-gray-500 mb-6">Create your first Smart Vault to start earning yield</p>
                         <button
@@ -340,11 +353,11 @@ const UserProfile = () => {
                   )}
                   
                   {/* Pro Tip: How Smart Vault Works */}
-                  <div className="mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-200">
+                  <div className="mt-6 rounded-2xl border border-gray-200" style={{ backgroundColor: '#F9FAFB' }}>
                     <div className="p-6">
                       <div className="flex items-center justify-between mb-4">
                         <h4 className="text-lg font-bold text-blue-800 flex items-center">
-                          <span className="mr-2">💡</span>
+                          <Lightbulb className="mr-2 w-5 h-5" />
                           Pro Tip: How Your Smart Vault Works
                         </h4>
                         <button
@@ -354,14 +367,9 @@ const UserProfile = () => {
                           <span className="mr-1 text-sm font-medium">
                             {showProTip ? 'Hide' : 'Show'} Guide
                           </span>
-                          <svg 
+                          <ChevronDown 
                             className={`w-4 h-4 transition-transform ${showProTip ? 'rotate-180' : ''}`}
-                            fill="none" 
-                            stroke="currentColor" 
-                            viewBox="0 0 24 24"
-                          >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </svg>
+                          />
                         </button>
                       </div>
                       
@@ -375,7 +383,10 @@ const UserProfile = () => {
                             <div className="flex items-start space-x-3">
                               <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
                               <div>
-                                <h5 className="font-semibold text-blue-800">📊 Overview</h5>
+                                <h5 className="font-semibold text-blue-800 flex items-center">
+                                  <BarChart3 className="mr-2 w-4 h-4" />
+                                  Overview
+                                </h5>
                                 <p className="text-sm text-blue-700">View your portfolio stats, total value, and all created vaults</p>
                               </div>
                             </div>
@@ -383,7 +394,10 @@ const UserProfile = () => {
                             <div className="flex items-start space-x-3">
                               <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
                               <div>
-                                <h5 className="font-semibold text-blue-800">➕ Create Vault</h5>
+                                <h5 className="font-semibold text-blue-800 flex items-center">
+                                  <Plus className="mr-2 w-4 h-4" />
+                                  Create Vault
+                                </h5>
                                 <p className="text-sm text-blue-700">Deploy new ERC-4626 vaults with custom names and strategies</p>
                               </div>
                             </div>
@@ -391,7 +405,10 @@ const UserProfile = () => {
                             <div className="flex items-start space-x-3">
                               <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
                               <div>
-                                <h5 className="font-semibold text-blue-800">⚙️ Manage Assets</h5>
+                                <h5 className="font-semibold text-blue-800 flex items-center">
+                                  <Settings className="mr-2 w-4 h-4" />
+                                  Manage Assets
+                                </h5>
                                 <p className="text-sm text-blue-700">Deposit/withdraw assets, transfer shares, and configure vault settings</p>
                               </div>
                             </div>
@@ -399,7 +416,10 @@ const UserProfile = () => {
                             <div className="flex items-start space-x-3">
                               <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</div>
                               <div>
-                                <h5 className="font-semibold text-blue-800">🎯 Strategy</h5>
+                                <h5 className="font-semibold text-blue-800 flex items-center">
+                                  <Target className="mr-2 w-4 h-4" />
+                                  Strategy
+                                </h5>
                                 <p className="text-sm text-blue-700">Set protocol allocations (Aave, Compound, Uniswap) for yield generation</p>
                               </div>
                             </div>
@@ -407,15 +427,19 @@ const UserProfile = () => {
                             <div className="flex items-start space-x-3">
                               <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</div>
                               <div>
-                                <h5 className="font-semibold text-blue-800">📈 Activity</h5>
+                                <h5 className="font-semibold text-blue-800 flex items-center">
+                                  <TrendingUp className="mr-2 w-4 h-4" />
+                                  Activity
+                                </h5>
                                 <p className="text-sm text-blue-700">Monitor vault performance, financial data, and compliance status</p>
                               </div>
                             </div>
                           </div>
                           
                           <div className="mt-4 p-3 bg-blue-100 rounded-lg">
-                            <p className="text-sm text-blue-800">
-                              <strong>💡 Quick Start:</strong> Create a vault → Deposit assets → Set strategy allocations → Watch your yield grow automatically!
+                            <p className="text-sm text-blue-800 flex items-center">
+                              <Lightbulb className="mr-2 w-4 h-4" />
+                              <strong>Quick Start:</strong> Create a vault → Deposit assets → Set strategy allocations → Watch your yield grow automatically!
                             </p>
                           </div>
                         </div>

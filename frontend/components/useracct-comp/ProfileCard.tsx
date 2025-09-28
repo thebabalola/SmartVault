@@ -3,7 +3,8 @@
 import React from 'react';
 import { 
   Copy, 
-  Check
+  Check,
+  User
 } from 'lucide-react';
 
 interface ProfileCardProps {
@@ -37,8 +38,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
     <div className={`bg-white rounded-2xl shadow-lg p-6 sticky top-32 transform transition-all duration-500 ${animationClass}`}>
       {/* User Info Section */}
       <div className="text-center mb-6">
-        <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#49ABFE] to-[#9DCCED] flex items-center justify-center text-4xl hover:scale-110 transform transition-all duration-300 cursor-pointer shadow-lg">
-          👤
+        <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#49ABFE] to-[#9DCCED] flex items-center justify-center hover:scale-110 transform transition-all duration-300 cursor-pointer shadow-lg">
+          <User size={40} className="text-white" />
         </div>
         
         <div className="space-y-2">
