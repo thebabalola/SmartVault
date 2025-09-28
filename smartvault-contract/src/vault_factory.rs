@@ -27,8 +27,16 @@ sol_storage! {
         address uniswap_router;
         address weth_address;
         
-        /// Admin address
-        address admin;
+        /// Admin system
+        address deployer_admin;
+        mapping(address => bool) admin_list;
+        uint256 admin_count;
+        
+        /// User registration system
+        mapping(address => bool) registered_users;
+        mapping(address => bytes32) user_username_hashes;
+        mapping(address => bytes32) user_bio_hashes;
+        mapping(address => uint256) user_registration_timestamps;
     }
 }
 
@@ -42,16 +50,37 @@ sol! {
         string protocol,
         address indexed newAddress
     );
+    event AdminAdded(
+        address indexed admin,
+        address indexed addedBy
+    );
+    event AdminRemoved(
+        address indexed admin,
+        address indexed removedBy
+    );
+    event UserRegistered(
+        address indexed user,
+        uint256 timestamp
+    );
 }
 
 #[public]
 impl VaultFactory {
-    /// Creates a new vault for a user
-    pub fn create_vault(
+    /// Constructor - automatically sets deployer as admin
+    pub fn init(&mut self) -> Result<(), Vec<u8>> {
+        let deployer = self.vm().msg_sender();
+        self.deployer_admin.set(deployer);
+        self.admin_list.insert(deployer, true);
+        self.admin_count.set(U256::from(1));
+        Ok(())
+    }
+
+    /// Registers a new user (username + bio + timestamp)
+    pub fn register_user(
         &mut self,
         username: String,
         bio: String,
-    ) -> Result<Address, Vec<u8>> {
+    ) -> Result<(), Vec<u8>> {
         if username.len() > 20 {
             return Err("Username too long".into());
         }
@@ -60,17 +89,52 @@ impl VaultFactory {
             return Err("Bio too long".into());
         }
 
+        let user = self.vm().msg_sender();
+        
+        // Check if user is already registered
+        if self.registered_users.get(user) {
+            return Err("User already registered".into());
+        }
+
+        // Store user profile data
+        let username_hash = _hash_string(&username).into();
+        let bio_hash = _hash_string(&bio).into();
+        let timestamp = U256::from(self.vm().block_timestamp());
+        
+        self.registered_users.insert(user, true);
+        self.user_username_hashes.insert(user, username_hash);
+        self.user_bio_hashes.insert(user, bio_hash);
+        self.user_registration_timestamps.insert(user, timestamp);
+        
+        log(self.vm(), UserRegistered {
+            user,
+            timestamp,
+        });
+        
+        Ok(())
+    }
+
+    /// Creates a new vault for a registered user
+    pub fn create_vault(&mut self) -> Result<Address, Vec<u8>> {
+        let user = self.vm().msg_sender();
+        
+        // Check if user is registered
+        if !self.registered_users.get(user) {
+            return Err("User not registered".into());
+        }
+
         // Generate vault address (simplified - in production, use CREATE2)
         let vault_address = self._generate_vault_address();
         
         // Store vault info
-        let user = self.vm().msg_sender();
         let timestamp = U256::from(self.vm().block_timestamp());
         
         self.vault_owners.setter(vault_address).set(user);
         self.vault_created_at.setter(vault_address).set(timestamp);
-        let username_hash = _hash_string(&username).into();
-        let bio_hash = _hash_string(&bio).into();
+        
+        // Get user's profile data from registration
+        let username_hash = self.user_username_hashes.get(user);
+        let bio_hash = self.user_bio_hashes.get(user);
         self.vault_username_hashes.setter(vault_address).set(username_hash);
         self.vault_bio_hashes.setter(vault_address).set(bio_hash);
         
@@ -134,21 +198,60 @@ impl VaultFactory {
 
     // ===== ADMIN FUNCTIONS =====
 
-    /// Sets the admin address
-    pub fn set_admin(&mut self, new_admin: Address) -> Result<(), Vec<u8>> {
-        if self.admin.get() == Address::ZERO {
-            self.admin.set(new_admin);
-        } else if self.vm().msg_sender() == self.admin.get() {
-            self.admin.set(new_admin);
-        } else {
+    /// Check if address is admin
+    fn is_admin(&self, addr: Address) -> bool {
+        self.admin_list.get(addr)
+    }
+
+    /// Add admin to admin list
+    pub fn add_admin(&mut self, new_admin: Address) -> Result<(), Vec<u8>> {
+        if !self.is_admin(self.vm().msg_sender()) {
             return Err("Not authorized".into());
         }
+        
+        if self.is_admin(new_admin) {
+            return Err("Already an admin".into());
+        }
+        
+        self.admin_list.insert(new_admin, true);
+        self.admin_count.set(self.admin_count.get() + U256::from(1));
+        
+        log(self.vm(), AdminAdded {
+            admin: new_admin,
+            addedBy: self.vm().msg_sender(),
+        });
+        
+        Ok(())
+    }
+
+    /// Remove admin from admin list
+    pub fn remove_admin(&mut self, admin_to_remove: Address) -> Result<(), Vec<u8>> {
+        if !self.is_admin(self.vm().msg_sender()) {
+            return Err("Not authorized".into());
+        }
+        
+        if admin_to_remove == self.deployer_admin.get() {
+            return Err("Cannot remove deployer admin".into());
+        }
+        
+        if !self.is_admin(admin_to_remove) {
+            return Err("Not an admin".into());
+        }
+        
+        self.admin_list.insert(admin_to_remove, false);
+        self.admin_count.set(self.admin_count.get() - U256::from(1));
+        
+        log(self.vm(), AdminRemoved {
+            admin: admin_to_remove,
+            removedBy: self.vm().msg_sender(),
+        });
+        
         Ok(())
     }
 
     /// Sets Aave lending pool address
     pub fn set_aave_address(&mut self, aave_address: Address) -> Result<(), Vec<u8>> {
-        if self.vm().msg_sender() != self.admin.get() {
+        if !self.is_admin(self.vm().msg_sender()) {
             return Err("Not authorized".into());
         }
         self.aave_lending_pool.set(aave_address);
@@ -161,7 +264,7 @@ impl VaultFactory {
 
     /// Sets Compound comptroller address
     pub fn set_compound_address(&mut self, compound_address: Address) -> Result<(), Vec<u8>> {
-        if self.vm().msg_sender() != self.admin.get() {
+        if !self.is_admin(self.vm().msg_sender()) {
             return Err("Not authorized".into());
         }
         self.compound_comptroller.set(compound_address);
@@ -174,7 +277,7 @@ impl VaultFactory {
 
     /// Sets Uniswap router address
     pub fn set_uniswap_address(&mut self, uniswap_address: Address) -> Result<(), Vec<u8>> {
-        if self.vm().msg_sender() != self.admin.get() {
+        if !self.is_admin(self.vm().msg_sender()) {
             return Err("Not authorized".into());
         }
         self.uniswap_router.set(uniswap_address);
@@ -187,7 +290,7 @@ impl VaultFactory {
 
     /// Sets WETH address
     pub fn set_weth_address(&mut self, weth_address: Address) -> Result<(), Vec<u8>> {
-        if self.vm().msg_sender() != self.admin.get() {
+        if !self.is_admin(self.vm().msg_sender()) {
             return Err("Not authorized".into());
         }
         self.weth_address.set(weth_address);
@@ -213,6 +316,52 @@ impl VaultFactory {
 
     pub fn get_weth_address(&self) -> Result<Address, Vec<u8>> {
         Ok(self.weth_address.get())
+    }
+
+    /// Gets deployer admin address
+    pub fn get_deployer_admin(&self) -> Result<Address, Vec<u8>> {
+        Ok(self.deployer_admin.get())
+    }
+
+    /// Check if address is admin
+    pub fn check_is_admin(&self, addr: Address) -> Result<bool, Vec<u8>> {
+        Ok(self.is_admin(addr))
+    }
+
+    /// Get admin count
+    pub fn get_admin_count(&self) -> Result<U256, Vec<u8>> {
+        Ok(self.admin_count.get())
+    }
+
+    // ===== USER REGISTRATION FUNCTIONS =====
+
+    /// Check if user is registered
+    pub fn is_user_registered(&self, user: Address) -> Result<bool, Vec<u8>> {
+        Ok(self.registered_users.get(user))
+    }
+
+    /// Get user registration timestamp
+    pub fn get_user_registration_timestamp(&self, user: Address) -> Result<U256, Vec<u8>> {
+        if !self.registered_users.get(user) {
+            return Err("User not registered".into());
+        }
+        Ok(self.user_registration_timestamps.get(user))
+    }
+
+    /// Get user username hash
+    pub fn get_user_username_hash(&self, user: Address) -> Result<[u8; 32], Vec<u8>> {
+        if !self.registered_users.get(user) {
+            return Err("User not registered".into());
+        }
+        Ok(self.user_username_hashes.get(user).into())
+    }
+
+    /// Get user bio hash
+    pub fn get_user_bio_hash(&self, user: Address) -> Result<[u8; 32], Vec<u8>> {
+        if !self.registered_users.get(user) {
+            return Err("User not registered".into());
+        }
+        Ok(self.user_bio_hashes.get(user).into())
     }
 
     // ===== INTERNAL FUNCTIONS =====

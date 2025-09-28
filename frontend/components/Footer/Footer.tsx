@@ -109,7 +109,7 @@ export default function Footer({ scrollToSection }: FooterProps) {
         <div className="border-t border-[#49ABFE] mt-8 pt-8">
           <div className="text-center">
             <p className="text-[#9DCCED] text-sm">
-              © 2025 Smart Vault DeFi. All rights reserved. Built on Arbitrum Sepolia.
+              © 2025 <Link href="/admin" className="text-[#49ABFE] hover:text-[#9DCCED] transition-colors font-semibold">SmartVault</Link> DeFi. All rights reserved. Built on Arbitrum Sepolia.
             </p>
           </div>
         </div>

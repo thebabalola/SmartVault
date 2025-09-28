@@ -2,6 +2,14 @@
 
 A comprehensive ERC-4626 compliant Smart Vault implementation for Arbitrum Stylus, providing automated yield generation through DeFi strategies.
 
+## 📍 Contract Address
+
+**VaultFactory Contract**: `0xfb8b95b90c19990ebe64741e35eacdbe0fd30bcf`  
+**Network**: Arbitrum Sepolia Testnet  
+**Contract Size**: 18.6 KiB (19,027 bytes)
+
+> **Note**: When redeploying, update the address in `frontend/constants/contractAddresses.ts`
+
 ## 🎯 Overview
 
 This smart contract implements a fully compliant ERC-4626 vault that automatically invests user deposits into yield-generating strategies. Users receive vault shares (ERC-20 tokens) representing their proportional ownership of the vault's assets and yield.
@@ -90,11 +98,11 @@ smart-contract/
 ## 🚀 Deployment Information
 
 ### **Live Contract Details**
-- **Contract Address**: `0x89a2c29b55fb31e5739682f5b9ae3a004e7a1a54`
-- **Deployment TX**: `0x8b6fce53cc1b55257af773cfb46695889993019bb6a926c14a560d2920647d02`
-- **Activation TX**: `0x918569b5948f8a8843505a5805749d95fd97500153cdc626993509b3d40bd919`
+- **Contract Address**: `0xfb8b95b90c19990ebe64741e35eacdbe0fd30bcf`
+- **Deployment TX**: `0x9480b49dd46075512237a8d534deb8ffd628df0657198a95e9a4fc148d52fb62`
+- **Activation TX**: `0x8f791f163c2965e2ea9486035de24d8095207bf09b33c34445ce1314d95dd8c0`
 - **Network**: Arbitrum Sepolia Testnet
-- **Explorer**: [View on Arbiscan](https://sepolia.arbiscan.io/address/0x89a2c29b55fb31e5739682f5b9ae3a004e7a1a54)
+- **Explorer**: [View on Arbiscan](https://sepolia.arbiscan.io/address/0xfb8b95b90c19990ebe64741e35eacdbe0fd30bcf)
 
 ## 🚀 Quick Start
 

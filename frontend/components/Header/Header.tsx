@@ -28,7 +28,7 @@ export default function Header() {
               Home
             </Link>
             <Link 
-              href="/user-profile" 
+              href="/user-acct" 
               className="text-[#9DCCED] hover:text-white font-medium transition-colors"
             >
               Dashboard

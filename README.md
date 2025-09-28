@@ -2,6 +2,14 @@
 
 A comprehensive implementation of a DeFi Smart Vault system, providing automated yield generation and standardized asset management through ERC-4626 compliance. This project includes both a Rust smart contract for Arbitrum Stylus and a modern Next.js frontend interface.
 
+## 📍 Contract Address
+
+**VaultFactory Contract**: `0xfb8b95b90c19990ebe64741e35eacdbe0fd30bcf`  
+**Network**: Arbitrum Sepolia Testnet  
+**Contract Size**: 18.6 KiB (19,027 bytes)
+
+> **Note**: Contract addresses are centrally managed in `frontend/constants/contractAddresses.ts`
+
 ## 🎯 The Problem Smart Vaults Solve
 
 In traditional finance and basic DeFi, users face several challenges:
