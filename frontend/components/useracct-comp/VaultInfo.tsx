@@ -51,8 +51,7 @@ const VaultInfo: React.FC<VaultInfoProps> = ({ vaultAddress, vaultIndex }) => {
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6">
       <div className="mb-8">
-        <h3 className="text-2xl font-bold text-[#213046] flex items-center mb-2">
-          <span className="mr-3">📊</span>
+        <h3 className="text-2xl font-bold text-[#213046] mb-2">
           Vault Information - {name} #{vaultIndex + 1}
         </h3>
         <p className="text-gray-600">Detailed vault statistics and configuration</p>
@@ -66,8 +65,7 @@ const VaultInfo: React.FC<VaultInfoProps> = ({ vaultAddress, vaultIndex }) => {
           
           {/* Basic Information Card */}
           <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
-            <h4 className="text-xl font-bold text-blue-800 mb-4 flex items-center">
-              <span className="mr-2">ℹ️</span>
+            <h4 className="text-xl font-bold text-blue-800 mb-4">
               Basic Information
             </h4>
             <div className="grid grid-cols-2 gap-4">
@@ -102,8 +100,7 @@ const VaultInfo: React.FC<VaultInfoProps> = ({ vaultAddress, vaultIndex }) => {
 
           {/* Financial Data Card */}
           <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
-            <h4 className="text-xl font-bold text-green-800 mb-4 flex items-center">
-              <span className="mr-2">💰</span>
+            <h4 className="text-xl font-bold text-green-800 mb-4">
               Financial Data
             </h4>
             <div className="grid grid-cols-2 gap-4">
@@ -141,8 +138,7 @@ const VaultInfo: React.FC<VaultInfoProps> = ({ vaultAddress, vaultIndex }) => {
           
           {/* Protocol Allocations Card */}
           <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-6 border border-purple-100">
-            <h4 className="text-xl font-bold text-purple-800 mb-4 flex items-center">
-              <span className="mr-2">🎯</span>
+            <h4 className="text-xl font-bold text-purple-800 mb-4">
               Protocol Allocations
             </h4>
             <div className="space-y-4">
@@ -171,8 +167,7 @@ const VaultInfo: React.FC<VaultInfoProps> = ({ vaultAddress, vaultIndex }) => {
 
           {/* Transaction Limits Card */}
           <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-100">
-            <h4 className="text-xl font-bold text-orange-800 mb-4 flex items-center">
-              <span className="mr-2">⚡</span>
+            <h4 className="text-xl font-bold text-orange-800 mb-4">
               Transaction Limits
             </h4>
             <div className="grid grid-cols-2 gap-4">
@@ -197,8 +192,7 @@ const VaultInfo: React.FC<VaultInfoProps> = ({ vaultAddress, vaultIndex }) => {
 
           {/* Asset Information Card */}
           <div className="bg-gradient-to-br from-gray-50 to-slate-50 rounded-xl p-6 border border-gray-100">
-            <h4 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-              <span className="mr-2">🔧</span>
+            <h4 className="text-xl font-bold text-gray-800 mb-4">
               Asset Information
             </h4>
             <div className="space-y-3">

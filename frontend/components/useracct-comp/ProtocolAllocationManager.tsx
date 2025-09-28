@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useUserVault } from '../../hooks/useUserVault';
+import { Target } from 'lucide-react';
 
 interface ProtocolAllocationManagerProps {
   vaultAddress: `0x${string}`;
@@ -68,7 +69,7 @@ const ProtocolAllocationManager: React.FC<ProtocolAllocationManagerProps> = ({ v
     <div className="bg-white rounded-2xl shadow-lg p-6">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-bold text-[#213046] flex items-center">
-          <span className="mr-2">🎯</span>
+          <Target className="mr-2 w-5 h-5 text-[#49ABFE]" />
           Protocol Allocations - Vault #{vaultIndex + 1}
         </h3>
         <button

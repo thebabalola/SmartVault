@@ -11,7 +11,8 @@ import {
   Settings, 
   Target, 
   TrendingUp,
-  ChevronDown
+  ChevronDown,
+  RotateCcw
 } from 'lucide-react';
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
@@ -351,7 +352,7 @@ const UserProfile = () => {
                       ))}
                     </div>
                   )}
-                  
+
                   {/* Pro Tip: How Smart Vault Works */}
                   <div className="mt-6 rounded-2xl border border-gray-200" style={{ backgroundColor: '#F9FAFB' }}>
                     <div className="p-6">
@@ -376,7 +377,7 @@ const UserProfile = () => {
                       {showProTip && (
                         <div className="space-y-4 animate-fadeIn">
                           <p className="text-blue-700 font-medium">
-                            Your Smart Vault automatically generates yield by deploying assets across multiple DeFi protocols. Here's how to navigate:
+                            Your Smart Vault automatically generates yield by deploying assets across multiple DeFi protocols. Here&apos;s how to navigate:
                           </p>
                           
                           <div className="space-y-3">
@@ -388,9 +389,9 @@ const UserProfile = () => {
                                   Overview
                                 </h5>
                                 <p className="text-sm text-blue-700">View your portfolio stats, total value, and all created vaults</p>
-                              </div>
-                            </div>
-                            
+                    </div>
+                  </div>
+
                             <div className="flex items-start space-x-3">
                               <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
                               <div>
@@ -410,9 +411,9 @@ const UserProfile = () => {
                                   Manage Assets
                                 </h5>
                                 <p className="text-sm text-blue-700">Deposit/withdraw assets, transfer shares, and configure vault settings</p>
-                              </div>
-                            </div>
-                            
+                    </div>
+                </div>
+
                             <div className="flex items-start space-x-3">
                               <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</div>
                               <div>
@@ -426,7 +427,7 @@ const UserProfile = () => {
                             
                             <div className="flex items-start space-x-3">
                               <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</div>
-                              <div>
+                            <div>
                                 <h5 className="font-semibold text-blue-800 flex items-center">
                                   <TrendingUp className="mr-2 w-4 h-4" />
                                   Activity
@@ -455,7 +456,7 @@ const UserProfile = () => {
               <div className="space-y-6 animate-fadeIn">
                 <div className="bg-white rounded-2xl shadow-lg p-6">
                   <h2 className="text-2xl font-bold text-[#213046] mb-6 flex items-center">
-                    <span className="mr-3">➕</span>
+                    <Plus className="mr-3 w-6 h-6 text-[#49ABFE]" />
                     Create New Vault
                     </h2>
                   
@@ -564,7 +565,9 @@ const UserProfile = () => {
               <div className="space-y-6 animate-fadeIn">
                 {userVaults.length === 0 ? (
                   <div className="text-center py-12">
-                    <div className="text-6xl mb-4">⚙️</div>
+                    <div className="flex justify-center mb-4">
+                      <Settings className="w-16 h-16 text-gray-400" />
+                    </div>
                     <h3 className="text-xl font-semibold text-gray-600 mb-2">No Vaults to Manage</h3>
                     <p className="text-gray-500 mb-6">Create a vault first to access management features</p>
                     <button 
@@ -579,7 +582,7 @@ const UserProfile = () => {
                     {/* Vault Selection */}
                 <div className="bg-white rounded-2xl shadow-lg p-6">
                       <h2 className="text-2xl font-bold text-[#213046] mb-6 flex items-center">
-                        <span className="mr-3">⚙️</span>
+                        <Settings className="mr-3 w-6 h-6 text-[#49ABFE]" />
                         Manage Vaults
                       </h2>
                       <div>
@@ -612,7 +615,7 @@ const UserProfile = () => {
                           <div className="p-6">
                             <div className="flex items-center justify-between mb-4">
                               <h3 className="text-xl font-bold text-[#213046] flex items-center">
-                                <span className="mr-2">🔄</span>
+                                <RotateCcw className="mr-2 w-5 h-5 text-[#49ABFE]" />
                                 Share Transfers - Vault #{userVaults.indexOf(selectedVault) + 1}
                   </h3>
                               <button
@@ -637,7 +640,7 @@ const UserProfile = () => {
                             <div className="flex items-center justify-between mb-4">
                           <div>
                                 <h3 className="text-xl font-bold text-[#213046] flex items-center">
-                                  <span className="mr-2">⚙️</span>
+                                  <Settings className="mr-2 w-5 h-5 text-[#49ABFE]" />
                                   Vault Management - Vault #{userVaults.indexOf(selectedVault) + 1}
                                 </h3>
                                 <p className="text-sm text-gray-600 mt-1">
@@ -671,7 +674,9 @@ const UserProfile = () => {
               <div className="space-y-6 animate-fadeIn">
                 {userVaults.length === 0 ? (
                   <div className="text-center py-12">
-                    <div className="text-6xl mb-4">🎯</div>
+                    <div className="flex justify-center mb-4">
+                      <Target className="w-16 h-16 text-gray-400" />
+                    </div>
                     <h3 className="text-xl font-semibold text-gray-600 mb-2">No Vaults to Configure</h3>
                     <p className="text-gray-500 mb-6">Create a vault first to configure protocol allocations</p>
                     <button 

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useUserVault } from '../../hooks/useUserVault';
+import { ArrowUp, Users, Check } from 'lucide-react';
 
 interface ShareTransferProps {
   vaultAddress: `0x${string}`;
@@ -86,14 +87,14 @@ const ShareTransfer: React.FC<ShareTransferProps> = ({ vaultAddress, vaultIndex 
               className={`w-full p-3 rounded-lg border-2 transition-all text-left ${
                 transferType === 'transfer'
                   ? 'border-[#49ABFE] bg-blue-50 text-[#49ABFE]'
-                  : 'border-gray-200 hover:border-gray-300'
+                  : 'border-gray-200 hover:border-gray-300 text-gray-800 hover:text-gray-900'
               }`}
             >
               <div className="flex items-center">
-                <span className="text-2xl mr-3">📤</span>
+                <ArrowUp className={`w-6 h-6 mr-3 ${transferType === 'transfer' ? 'text-[#49ABFE]' : 'text-gray-600'}`} />
                 <div>
                   <div className="font-medium">Direct Transfer</div>
-                  <div className="text-sm text-gray-500">Transfer your own shares</div>
+                  <div className={`text-sm ${transferType === 'transfer' ? 'text-blue-600' : 'text-gray-500'}`}>Transfer your own shares</div>
                 </div>
               </div>
             </button>
@@ -102,14 +103,14 @@ const ShareTransfer: React.FC<ShareTransferProps> = ({ vaultAddress, vaultIndex 
               className={`w-full p-3 rounded-lg border-2 transition-all text-left ${
                 transferType === 'transferFrom'
                   ? 'border-[#49ABFE] bg-blue-50 text-[#49ABFE]'
-                  : 'border-gray-200 hover:border-gray-300'
+                  : 'border-gray-200 hover:border-gray-300 text-gray-800 hover:text-gray-900'
               }`}
             >
               <div className="flex items-center">
-                <span className="text-2xl mr-3">👥</span>
+                <Users className={`w-6 h-6 mr-3 ${transferType === 'transferFrom' ? 'text-[#49ABFE]' : 'text-gray-600'}`} />
                 <div>
                   <div className="font-medium">Transfer From</div>
-                  <div className="text-sm text-gray-500">Transfer on behalf of others</div>
+                  <div className={`text-sm ${transferType === 'transferFrom' ? 'text-blue-600' : 'text-gray-500'}`}>Transfer on behalf of others</div>
                 </div>
               </div>
             </button>
@@ -118,14 +119,14 @@ const ShareTransfer: React.FC<ShareTransferProps> = ({ vaultAddress, vaultIndex 
               className={`w-full p-3 rounded-lg border-2 transition-all text-left ${
                 transferType === 'approve'
                   ? 'border-[#49ABFE] bg-blue-50 text-[#49ABFE]'
-                  : 'border-gray-200 hover:border-gray-300'
+                  : 'border-gray-200 hover:border-gray-300 text-gray-800 hover:text-gray-900'
               }`}
             >
               <div className="flex items-center">
-                <span className="text-2xl mr-3">✅</span>
+                <Check className={`w-6 h-6 mr-3 ${transferType === 'approve' ? 'text-[#49ABFE]' : 'text-gray-600'}`} />
                 <div>
                   <div className="font-medium">Approve</div>
-                  <div className="text-sm text-gray-500">Allow others to spend your shares</div>
+                  <div className={`text-sm ${transferType === 'approve' ? 'text-blue-600' : 'text-gray-500'}`}>Allow others to spend your shares</div>
                 </div>
               </div>
             </button>

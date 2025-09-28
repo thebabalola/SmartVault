@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useUserVault } from '../../hooks/useUserVault';
+import { DollarSign, ArrowDown, ArrowUp, Coins, ArrowLeftRight } from 'lucide-react';
 
 interface VaultOperationsProps {
   vaultAddress: `0x${string}`;
@@ -101,7 +102,7 @@ const VaultOperations: React.FC<VaultOperationsProps> = ({ vaultAddress, vaultIn
     <div className="bg-white rounded-2xl shadow-lg p-6">
       <div className="mb-6">
         <h3 className="text-xl font-bold text-[#213046] flex items-center mb-2">
-          <span className="mr-2">💰</span>
+          <DollarSign className="mr-2 w-5 h-5 text-[#49ABFE]" />
           Vault Operations - {name} #{vaultIndex + 1}
         </h3>
         <p className="text-gray-600">Manage your vault deposits and withdrawals</p>
@@ -121,7 +122,7 @@ const VaultOperations: React.FC<VaultOperationsProps> = ({ vaultAddress, vaultIn
               }`}
             >
               <div className="text-center">
-                <div className="text-2xl mb-1">📥</div>
+                <ArrowDown className="w-6 h-6 mb-1 mx-auto" />
                 <div className="font-medium">Deposit</div>
               </div>
             </button>
@@ -134,7 +135,7 @@ const VaultOperations: React.FC<VaultOperationsProps> = ({ vaultAddress, vaultIn
               }`}
             >
               <div className="text-center">
-                <div className="text-2xl mb-1">📤</div>
+                <ArrowUp className="w-6 h-6 mb-1 mx-auto" />
                 <div className="font-medium">Withdraw</div>
               </div>
             </button>
@@ -147,7 +148,7 @@ const VaultOperations: React.FC<VaultOperationsProps> = ({ vaultAddress, vaultIn
               }`}
             >
               <div className="text-center">
-                <div className="text-2xl mb-1">🪙</div>
+                <Coins className="w-6 h-6 mb-1 mx-auto" />
                 <div className="font-medium">Mint</div>
               </div>
             </button>
@@ -160,7 +161,7 @@ const VaultOperations: React.FC<VaultOperationsProps> = ({ vaultAddress, vaultIn
               }`}
             >
               <div className="text-center">
-                <div className="text-2xl mb-1">💱</div>
+                <ArrowLeftRight className="w-6 h-6 mb-1 mx-auto" />
                 <div className="font-medium">Redeem</div>
               </div>
             </button>
