@@ -50,145 +50,175 @@ const VaultInfo: React.FC<VaultInfoProps> = ({ vaultAddress, vaultIndex }) => {
 
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6">
-      <div className="mb-6">
-        <h3 className="text-xl font-bold text-[#213046] flex items-center mb-2">
-          <span className="mr-2">📊</span>
+      <div className="mb-8">
+        <h3 className="text-2xl font-bold text-[#213046] flex items-center mb-2">
+          <span className="mr-3">📊</span>
           Vault Information - {name} #{vaultIndex + 1}
         </h3>
         <p className="text-gray-600">Detailed vault statistics and configuration</p>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Basic Information */}
-        <div className="space-y-4">
-          <h4 className="text-lg font-semibold text-gray-800">Basic Information</h4>
-          <div className="space-y-3">
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Name:</span>
-              <span className="font-bold text-gray-900">{name}</span>
+      {/* Main Content Grid */}
+      <div className="grid lg:grid-cols-2 gap-8">
+        
+        {/* Left Column */}
+        <div className="space-y-8">
+          
+          {/* Basic Information Card */}
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+            <h4 className="text-xl font-bold text-blue-800 mb-4 flex items-center">
+              <span className="mr-2">ℹ️</span>
+              Basic Information
+            </h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <span className="text-sm text-blue-600 font-medium">Name</span>
+                <p className="text-lg font-bold text-blue-900">{name}</p>
+              </div>
+              <div className="space-y-2">
+                <span className="text-sm text-blue-600 font-medium">Symbol</span>
+                <p className="text-lg font-bold text-blue-900">{symbol}</p>
+              </div>
+              <div className="space-y-2">
+                <span className="text-sm text-blue-600 font-medium">Decimals</span>
+                <p className="text-lg font-bold text-blue-900">{decimals}</p>
+              </div>
+              <div className="space-y-2">
+                <span className="text-sm text-blue-600 font-medium">Status</span>
+                <span className={`inline-block px-3 py-1 rounded-full text-sm font-bold ${
+                  vaultStatus.color === 'green' ? 'bg-green-100 text-green-800' :
+                  vaultStatus.color === 'red' ? 'bg-red-100 text-red-800' :
+                  'bg-gray-100 text-gray-800'
+                }`}>
+                  {vaultStatus.status}
+                </span>
+              </div>
             </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Symbol:</span>
-              <span className="font-bold text-gray-900">{symbol}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Decimals:</span>
-              <span className="font-bold text-gray-900">{decimals}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Status:</span>
-              <span className={`px-2 py-1 rounded-full text-xs font-bold ${
-                vaultStatus.color === 'green' ? 'bg-green-100 text-green-800' :
-                vaultStatus.color === 'red' ? 'bg-red-100 text-red-800' :
-                'bg-gray-100 text-gray-800'
-              }`}>
-                {vaultStatus.status}
-              </span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Vault Address:</span>
-              <span className="font-mono text-sm font-bold text-gray-900">{formatAddress(vaultAddress)}</span>
+            <div className="mt-4 pt-4 border-t border-blue-200">
+              <span className="text-sm text-blue-600 font-medium">Vault Address</span>
+              <p className="font-mono text-sm font-bold text-blue-900 mt-1">{formatAddress(vaultAddress)}</p>
             </div>
           </div>
+
+          {/* Financial Data Card */}
+          <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
+            <h4 className="text-xl font-bold text-green-800 mb-4 flex items-center">
+              <span className="mr-2">💰</span>
+              Financial Data
+            </h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <span className="text-sm text-green-600 font-medium">Total Assets</span>
+                <p className="text-lg font-bold text-green-900">{totalAssets} tokens</p>
+              </div>
+              <div className="space-y-2">
+                <span className="text-sm text-green-600 font-medium">Total Supply</span>
+                <p className="text-lg font-bold text-green-900">{totalSupply} {symbol}</p>
+              </div>
+              <div className="space-y-2">
+                <span className="text-sm text-green-600 font-medium">Your Balance</span>
+                <p className="text-lg font-bold text-green-900">{userBalance} {symbol}</p>
+              </div>
+              <div className="space-y-2">
+                <span className="text-sm text-green-600 font-medium">Your Value</span>
+                <p className="text-lg font-bold text-green-900">${userValue}</p>
+              </div>
+              <div className="space-y-2">
+                <span className="text-sm text-green-600 font-medium">Your Share %</span>
+                <p className="text-lg font-bold text-green-900">{calculateUserPercentage()}%</p>
+              </div>
+              <div className="space-y-2">
+                <span className="text-sm text-green-600 font-medium">APY</span>
+                <p className="text-lg font-bold text-green-700">{apy}</p>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        {/* Financial Data */}
-        <div className="space-y-4">
-          <h4 className="text-lg font-semibold text-gray-800">Financial Data</h4>
-          <div className="space-y-3">
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Total Assets:</span>
-              <span className="font-bold text-gray-900">{totalAssets} tokens</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Total Supply:</span>
-              <span className="font-bold text-gray-900">{totalSupply} {symbol}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Your Balance:</span>
-              <span className="font-bold text-gray-900">{userBalance} {symbol}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Your Value:</span>
-              <span className="font-bold text-gray-900">${userValue}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Your Share %:</span>
-              <span className="font-bold text-gray-900">{calculateUserPercentage()}%</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">APY:</span>
-              <span className="font-bold text-green-700">{apy}</span>
+        {/* Right Column */}
+        <div className="space-y-8">
+          
+          {/* Protocol Allocations Card */}
+          <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-xl p-6 border border-purple-100">
+            <h4 className="text-xl font-bold text-purple-800 mb-4 flex items-center">
+              <span className="mr-2">🎯</span>
+              Protocol Allocations
+            </h4>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center py-2">
+                <span className="text-purple-600 font-medium">Aave (Lending)</span>
+                <span className="font-bold text-purple-900">{aaveAllocation} tokens</span>
+              </div>
+              <div className="flex justify-between items-center py-2">
+                <span className="text-purple-600 font-medium">Compound (Lending)</span>
+                <span className="font-bold text-purple-900">{compoundAllocation} tokens</span>
+              </div>
+              <div className="flex justify-between items-center py-2">
+                <span className="text-purple-600 font-medium">Uniswap (Liquidity)</span>
+                <span className="font-bold text-purple-900">{uniswapAllocation} tokens</span>
+              </div>
+              <div className="border-t border-purple-200 pt-3 mt-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-purple-700 font-bold">Total Allocated</span>
+                  <span className="font-bold text-purple-900">
+                    {(parseFloat(aaveAllocation) + parseFloat(compoundAllocation) + parseFloat(uniswapAllocation)).toFixed(2)} tokens
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Protocol Allocations */}
-        <div className="space-y-4">
-          <h4 className="text-lg font-semibold text-gray-800">Protocol Allocations</h4>
-          <div className="space-y-3">
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Aave:</span>
-              <span className="font-bold text-gray-900">{aaveAllocation} tokens</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Compound:</span>
-              <span className="font-bold text-gray-900">{compoundAllocation} tokens</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Uniswap:</span>
-              <span className="font-bold text-gray-900">{uniswapAllocation} tokens</span>
-            </div>
-            <div className="flex justify-between border-t pt-2">
-              <span className="text-gray-700 font-bold">Total Allocated:</span>
-              <span className="font-bold text-gray-900">
-                {(parseFloat(aaveAllocation) + parseFloat(compoundAllocation) + parseFloat(uniswapAllocation)).toFixed(2)} tokens
-              </span>
+          {/* Transaction Limits Card */}
+          <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-6 border border-orange-100">
+            <h4 className="text-xl font-bold text-orange-800 mb-4 flex items-center">
+              <span className="mr-2">⚡</span>
+              Transaction Limits
+            </h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <span className="text-sm text-orange-600 font-medium">Max Deposit</span>
+                <p className="text-sm font-bold text-orange-900">{maxDeposit} assets</p>
+              </div>
+              <div className="space-y-2">
+                <span className="text-sm text-orange-600 font-medium">Max Withdraw</span>
+                <p className="text-sm font-bold text-orange-900">{maxWithdraw} assets</p>
+              </div>
+              <div className="space-y-2">
+                <span className="text-sm text-orange-600 font-medium">Max Mint</span>
+                <p className="text-sm font-bold text-orange-900">{maxMint} shares</p>
+              </div>
+              <div className="space-y-2">
+                <span className="text-sm text-orange-600 font-medium">Max Redeem</span>
+                <p className="text-sm font-bold text-orange-900">{maxRedeem} shares</p>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Limits and Advanced Info */}
-      <div className="mt-6 grid md:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <h4 className="text-lg font-semibold text-gray-800">Transaction Limits</h4>
-          <div className="space-y-3">
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Max Deposit:</span>
-              <span className="font-bold text-gray-900">{maxDeposit} assets</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Max Withdraw:</span>
-              <span className="font-bold text-gray-900">{maxWithdraw} assets</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Max Mint:</span>
-              <span className="font-bold text-gray-900">{maxMint} shares</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Max Redeem:</span>
-              <span className="font-bold text-gray-900">{maxRedeem} shares</span>
+          {/* Asset Information Card */}
+          <div className="bg-gradient-to-br from-gray-50 to-slate-50 rounded-xl p-6 border border-gray-100">
+            <h4 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+              <span className="mr-2">🔧</span>
+              Asset Information
+            </h4>
+            <div className="space-y-3">
+              <div className="space-y-2">
+                <span className="text-sm text-gray-600 font-medium">Underlying Asset</span>
+                <p className="font-mono text-sm font-bold text-gray-900">{formatAddress(asset)}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <span className="text-sm text-gray-600 font-medium">Asset Type</span>
+                  <p className="text-sm font-bold text-gray-900">ERC-20 Token</p>
+                </div>
+                <div className="space-y-2">
+                  <span className="text-sm text-gray-600 font-medium">Vault Type</span>
+                  <p className="text-sm font-bold text-gray-900">ERC-4626 Compliant</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="space-y-4">
-          <h4 className="text-lg font-semibold text-gray-800">Asset Information</h4>
-          <div className="space-y-3">
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Underlying Asset:</span>
-              <span className="font-mono text-sm font-bold text-gray-900">{formatAddress(asset)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Asset Type:</span>
-              <span className="font-bold text-gray-900">ERC-20 Token</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-700 font-medium">Vault Type:</span>
-              <span className="font-bold text-gray-900">ERC-4626 Compliant</span>
-            </div>
-          </div>
         </div>
       </div>
 

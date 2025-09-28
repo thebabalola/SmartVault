@@ -22,6 +22,7 @@ const UserProfile = () => {
   const [isProfileSetupComplete, setIsProfileSetupComplete] = useState(false);
   const [selectedVault, setSelectedVault] = useState<`0x${string}` | null>(null);
   const [activeDropdown, setActiveDropdown] = useState<'shareTransfer' | 'vaultManagement' | null>(null);
+  const [showProTip, setShowProTip] = useState(false);
 
   // Helper function to format timestamp
   const formatRegistrationDate = (timestamp: number) => {
@@ -337,6 +338,90 @@ const UserProfile = () => {
                       ))}
                     </div>
                   )}
+                  
+                  {/* Pro Tip: How Smart Vault Works */}
+                  <div className="mt-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl border border-blue-200">
+                    <div className="p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="text-lg font-bold text-blue-800 flex items-center">
+                          <span className="mr-2">💡</span>
+                          Pro Tip: How Your Smart Vault Works
+                        </h4>
+                        <button
+                          onClick={() => setShowProTip(!showProTip)}
+                          className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+                        >
+                          <span className="mr-1 text-sm font-medium">
+                            {showProTip ? 'Hide' : 'Show'} Guide
+                          </span>
+                          <svg 
+                            className={`w-4 h-4 transition-transform ${showProTip ? 'rotate-180' : ''}`}
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+                      </div>
+                      
+                      {showProTip && (
+                        <div className="space-y-4 animate-fadeIn">
+                          <p className="text-blue-700 font-medium">
+                            Your Smart Vault automatically generates yield by deploying assets across multiple DeFi protocols. Here's how to navigate:
+                          </p>
+                          
+                          <div className="space-y-3">
+                            <div className="flex items-start space-x-3">
+                              <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                              <div>
+                                <h5 className="font-semibold text-blue-800">📊 Overview</h5>
+                                <p className="text-sm text-blue-700">View your portfolio stats, total value, and all created vaults</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-start space-x-3">
+                              <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                              <div>
+                                <h5 className="font-semibold text-blue-800">➕ Create Vault</h5>
+                                <p className="text-sm text-blue-700">Deploy new ERC-4626 vaults with custom names and strategies</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-start space-x-3">
+                              <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                              <div>
+                                <h5 className="font-semibold text-blue-800">⚙️ Manage Assets</h5>
+                                <p className="text-sm text-blue-700">Deposit/withdraw assets, transfer shares, and configure vault settings</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-start space-x-3">
+                              <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</div>
+                              <div>
+                                <h5 className="font-semibold text-blue-800">🎯 Strategy</h5>
+                                <p className="text-sm text-blue-700">Set protocol allocations (Aave, Compound, Uniswap) for yield generation</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex items-start space-x-3">
+                              <div className="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</div>
+                              <div>
+                                <h5 className="font-semibold text-blue-800">📈 Activity</h5>
+                                <p className="text-sm text-blue-700">Monitor vault performance, financial data, and compliance status</p>
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div className="mt-4 p-3 bg-blue-100 rounded-lg">
+                            <p className="text-sm text-blue-800">
+                              <strong>💡 Quick Start:</strong> Create a vault → Deposit assets → Set strategy allocations → Watch your yield grow automatically!
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                   </div>
               </div>
             )}
@@ -468,7 +553,7 @@ const UserProfile = () => {
                 ) : (
                   <>
                     {/* Vault Selection */}
-                    <div className="bg-white rounded-2xl shadow-lg p-6">
+                <div className="bg-white rounded-2xl shadow-lg p-6">
                       <h2 className="text-2xl font-bold text-[#213046] mb-6 flex items-center">
                         <span className="mr-3">⚙️</span>
                         Manage Vaults
@@ -505,7 +590,7 @@ const UserProfile = () => {
                               <h3 className="text-xl font-bold text-[#213046] flex items-center">
                                 <span className="mr-2">🔄</span>
                                 Share Transfers - Vault #{userVaults.indexOf(selectedVault) + 1}
-                              </h3>
+                  </h3>
                               <button
                                 onClick={() => setActiveDropdown(activeDropdown === 'shareTransfer' ? null : 'shareTransfer')}
                                 className="px-4 py-2 bg-[#49ABFE] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors"
@@ -526,7 +611,7 @@ const UserProfile = () => {
                         <div className="bg-white rounded-2xl shadow-lg">
                           <div className="p-6">
                             <div className="flex items-center justify-between mb-4">
-                              <div>
+                          <div>
                                 <h3 className="text-xl font-bold text-[#213046] flex items-center">
                                   <span className="mr-2">⚙️</span>
                                   Vault Management - Vault #{userVaults.indexOf(selectedVault) + 1}
@@ -571,7 +656,7 @@ const UserProfile = () => {
                     >
                       Create Your First Vault
                     </button>
-                  </div>
+                            </div>
                 ) : (
                   <div className="space-y-6">
                     {userVaults.map((vault, index) => (
@@ -600,7 +685,7 @@ const UserProfile = () => {
                     >
                       Create Your First Vault
                     </button>
-                  </div>
+                        </div>
                 ) : (
                   <div className="space-y-6">
                     {userVaults.map((vault, index) => (

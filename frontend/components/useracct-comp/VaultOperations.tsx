@@ -117,7 +117,7 @@ const VaultOperations: React.FC<VaultOperationsProps> = ({ vaultAddress, vaultIn
               className={`p-3 rounded-lg border-2 transition-all ${
                 operation === 'deposit'
                   ? 'border-[#49ABFE] bg-blue-50 text-[#49ABFE]'
-                  : 'border-gray-200 hover:border-gray-300'
+                  : 'border-gray-200 hover:border-gray-300 text-gray-800 hover:text-gray-900'
               }`}
             >
               <div className="text-center">
@@ -130,7 +130,7 @@ const VaultOperations: React.FC<VaultOperationsProps> = ({ vaultAddress, vaultIn
               className={`p-3 rounded-lg border-2 transition-all ${
                 operation === 'withdraw'
                   ? 'border-[#49ABFE] bg-blue-50 text-[#49ABFE]'
-                  : 'border-gray-200 hover:border-gray-300'
+                  : 'border-gray-200 hover:border-gray-300 text-gray-800 hover:text-gray-900'
               }`}
             >
               <div className="text-center">
@@ -143,7 +143,7 @@ const VaultOperations: React.FC<VaultOperationsProps> = ({ vaultAddress, vaultIn
               className={`p-3 rounded-lg border-2 transition-all ${
                 operation === 'mint'
                   ? 'border-[#49ABFE] bg-blue-50 text-[#49ABFE]'
-                  : 'border-gray-200 hover:border-gray-300'
+                  : 'border-gray-200 hover:border-gray-300 text-gray-800 hover:text-gray-900'
               }`}
             >
               <div className="text-center">
@@ -156,7 +156,7 @@ const VaultOperations: React.FC<VaultOperationsProps> = ({ vaultAddress, vaultIn
               className={`p-3 rounded-lg border-2 transition-all ${
                 operation === 'redeem'
                   ? 'border-[#49ABFE] bg-blue-50 text-[#49ABFE]'
-                  : 'border-gray-200 hover:border-gray-300'
+                  : 'border-gray-200 hover:border-gray-300 text-gray-800 hover:text-gray-900'
               }`}
             >
               <div className="text-center">
