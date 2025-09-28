@@ -38,7 +38,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
       {/* User Info Section */}
       <div className="text-center mb-6">
         <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#49ABFE] to-[#9DCCED] flex items-center justify-center text-4xl hover:scale-110 transform transition-all duration-300 cursor-pointer shadow-lg">
-          🏦
+          👤
         </div>
         
         <div className="space-y-2">
@@ -49,11 +49,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           <p className="text-xs text-gray-600">
             {userProfile?.bio || (isConnected ? 'Wallet Connected' : 'Connect Wallet to Create Vaults')}
           </p>
-          {registrationDate && registrationDate !== "Unknown" && (
-            <p className="text-xs text-gray-500 mt-1">
-              Joined: {registrationDate}
-            </p>
-          )}
+          <p className="text-xs text-gray-500 mt-1">
+            {registrationDate && registrationDate !== "Unknown" 
+              ? `Joined: ${registrationDate}` 
+              : "Registration date loading..."}
+          </p>
         </div>
       </div>
 

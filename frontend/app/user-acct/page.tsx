@@ -17,6 +17,7 @@ const UserProfile = () => {
 
   // Helper function to format timestamp
   const formatRegistrationDate = (timestamp: number) => {
+    console.log('Registration timestamp:', timestamp); // Debug log
     if (!timestamp || timestamp === 0) return "Unknown";
     const date = new Date(timestamp * 1000); // Convert from seconds to milliseconds
     return date.toLocaleDateString('en-US', {
