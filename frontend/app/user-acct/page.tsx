@@ -7,6 +7,11 @@ import Footer from "../../components/Footer/Footer";
 import ProfileCard from "../../components/useracct-comp/ProfileCard";
 import UserProfileSetup from "../../components/useracct-comp/UserProfileSetup";
 import VaultCard from "../../components/useracct-comp/VaultCard";
+import VaultManagement from "../../components/useracct-comp/VaultManagement";
+import ProtocolAllocationManager from "../../components/useracct-comp/ProtocolAllocationManager";
+import VaultOperations from "../../components/useracct-comp/VaultOperations";
+import ShareTransfer from "../../components/useracct-comp/ShareTransfer";
+import VaultInfo from "../../components/useracct-comp/VaultInfo";
 import { useVaultFactory } from "../../hooks/useVaultFactory";
 
 const UserProfile = () => {
@@ -15,6 +20,7 @@ const UserProfile = () => {
   const [animationClass, setAnimationClass] = useState('');
   const [userProfile, setUserProfile] = useState<{username: string, bio: string} | null>(null);
   const [isProfileSetupComplete, setIsProfileSetupComplete] = useState(false);
+  const [selectedVault, setSelectedVault] = useState<`0x${string}` | null>(null);
 
   // Helper function to format timestamp
   const formatRegistrationDate = (timestamp: number) => {
@@ -446,118 +452,11 @@ const UserProfile = () => {
             {/* Manage Assets Tab */}
             {activeTab === 'manage' && (
               <div className="space-y-6 animate-fadeIn">
-                <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h2 className="text-2xl font-bold text-[#213046] mb-6 flex items-center">
-                    <span className="mr-3">⚙️</span>
-                    Manage Assets
-                  </h2>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="p-4 bg-green-50 rounded-lg">
-                      <h3 className="font-semibold text-green-800 mb-3">Deposit Assets</h3>
-                      <div className="space-y-3">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Select Vault</label>
-                          <select className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 font-medium">
-                            <option>USDC Yield Vault</option>
-                            <option>ETH Growth Vault</option>
-                            <option>Stablecoin Index</option>
-                          </select>
-                          </div>
-                          <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Amount</label>
-                          <input type="number" className="w-full px-3 py-2 border border-gray-300 rounded-lg placeholder:text-gray-500 placeholder:font-medium text-gray-900 font-medium" placeholder="0.00" />
-                        </div>
-                        <button className="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">
-                          Deposit
-                        </button>
-                      </div>
-                          </div>
-                    <div className="p-4 bg-red-50 rounded-lg">
-                      <h3 className="font-semibold text-red-800 mb-3">Withdraw Assets</h3>
-                      <div className="space-y-3">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Select Vault</label>
-                          <select className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 font-medium">
-                            <option>USDC Yield Vault</option>
-                            <option>ETH Growth Vault</option>
-                            <option>Stablecoin Index</option>
-                          </select>
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Amount</label>
-                          <input type="number" className="w-full px-3 py-2 border border-gray-300 rounded-lg placeholder:text-gray-500 placeholder:font-medium text-gray-900 font-medium" placeholder="0.00" />
-                        </div>
-                        <button className="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors">
-                          Withdraw
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Strategy Tab */}
-            {activeTab === 'strategy' && (
-              <div className="space-y-6 animate-fadeIn">
-                <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h2 className="text-2xl font-bold text-[#213046] mb-6 flex items-center">
-                    <span className="mr-3">🎯</span>
-                    Protocol Allocations
-                  </h2>
-                  
-                  {userVaults.length === 0 ? (
-                    <div className="text-center py-12">
-                      <div className="text-6xl mb-4">🎯</div>
-                      <h3 className="text-xl font-semibold text-gray-600 mb-2">No Vaults to Configure</h3>
-                      <p className="text-gray-500 mb-6">Create a vault first to configure protocol allocations</p>
-                      <button 
-                        onClick={() => setActiveTab('create')}
-                        className="bg-[#49ABFE] text-white px-6 py-3 rounded-lg hover:bg-[#1a5ba8] transition-colors"
-                      >
-                        Create Your First Vault
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="space-y-6">
-                      {userVaults.map((vault, index) => (
-                        <div key={index} className="p-4 bg-gray-50 rounded-lg">
-                          <h3 className="font-semibold text-gray-800 mb-4">Vault #{index + 1}</h3>
-                          <div className="grid grid-cols-3 gap-4">
-                            <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-1">Aave (Lending)</label>
-                              <input type="number" className="w-full px-3 py-2 border border-gray-300 rounded-lg placeholder:text-gray-500 placeholder:font-medium text-gray-900 font-medium" placeholder="40" disabled />
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-1">Compound (Lending)</label>
-                              <input type="number" className="w-full px-3 py-2 border border-gray-300 rounded-lg placeholder:text-gray-500 placeholder:font-medium text-gray-900 font-medium" placeholder="30" disabled />
-                            </div>
-                            <div>
-                              <label className="block text-sm font-medium text-gray-700 mb-1">Uniswap (Liquidity)</label>
-                              <input type="number" className="w-full px-3 py-2 border border-gray-300 rounded-lg placeholder:text-gray-500 placeholder:font-medium text-gray-900 font-medium" placeholder="30" disabled />
-                            </div>
-                          </div>
-                          <p className="text-xs text-gray-500 mt-2">Protocol allocation configuration coming soon</p>
-                      </div>
-                    ))}
-                  </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {/* Activity Tab */}
-            {activeTab === 'activity' && (
-              <div className="space-y-6 animate-fadeIn">
-                <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h3 className="text-xl font-bold text-[#213046] mb-6 flex items-center">
-                    <span className="mr-2">📈</span>
-                    Transaction History
-                  </h3>
+                {userVaults.length === 0 ? (
                   <div className="text-center py-12">
-                    <div className="text-6xl mb-4">📈</div>
-                    <h3 className="text-xl font-semibold text-gray-600 mb-2">No Transactions Yet</h3>
-                    <p className="text-gray-500 mb-6">Transaction history will appear here once you start using your vaults</p>
+                    <div className="text-6xl mb-4">⚙️</div>
+                    <h3 className="text-xl font-semibold text-gray-600 mb-2">No Vaults to Manage</h3>
+                    <p className="text-gray-500 mb-6">Create a vault first to access management features</p>
                     <button 
                       onClick={() => setActiveTab('create')}
                       className="bg-[#49ABFE] text-white px-6 py-3 rounded-lg hover:bg-[#1a5ba8] transition-colors"
@@ -565,7 +464,108 @@ const UserProfile = () => {
                       Create Your First Vault
                     </button>
                   </div>
-                </div>
+                ) : (
+                  <>
+                    {/* Vault Selection */}
+                    <div className="bg-white rounded-2xl shadow-lg p-6">
+                      <h2 className="text-2xl font-bold text-[#213046] mb-6 flex items-center">
+                        <span className="mr-3">⚙️</span>
+                        Manage Vaults
+                      </h2>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">Select Vault to Manage</label>
+                        <select 
+                          value={selectedVault || ''}
+                          onChange={(e) => setSelectedVault(e.target.value as `0x${string}`)}
+                          className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#49ABFE] focus:ring-2 focus:ring-[#49ABFE]/10 text-gray-900 font-medium"
+                        >
+                          <option value="">Choose a vault...</option>
+                          {userVaults.map((vault, index) => (
+                            <option key={vault} value={vault}>
+                              Vault #{index + 1} - {vault.slice(0, 6)}...{vault.slice(-4)}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Vault Management Components */}
+                    {selectedVault && (
+                      <div className="space-y-6">
+                        <VaultOperations 
+                          vaultAddress={selectedVault} 
+                          vaultIndex={userVaults.indexOf(selectedVault)} 
+                        />
+                        <VaultManagement 
+                          vaultAddress={selectedVault} 
+                          vaultIndex={userVaults.indexOf(selectedVault)} 
+                        />
+                        <ShareTransfer 
+                          vaultAddress={selectedVault} 
+                          vaultIndex={userVaults.indexOf(selectedVault)} 
+                        />
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* Strategy Tab */}
+            {activeTab === 'strategy' && (
+              <div className="space-y-6 animate-fadeIn">
+                {userVaults.length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="text-6xl mb-4">🎯</div>
+                    <h3 className="text-xl font-semibold text-gray-600 mb-2">No Vaults to Configure</h3>
+                    <p className="text-gray-500 mb-6">Create a vault first to configure protocol allocations</p>
+                    <button 
+                      onClick={() => setActiveTab('create')}
+                      className="bg-[#49ABFE] text-white px-6 py-3 rounded-lg hover:bg-[#1a5ba8] transition-colors"
+                    >
+                      Create Your First Vault
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {userVaults.map((vault, index) => (
+                      <ProtocolAllocationManager 
+                        key={vault} 
+                        vaultAddress={vault} 
+                        vaultIndex={index} 
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Activity Tab */}
+            {activeTab === 'activity' && (
+              <div className="space-y-6 animate-fadeIn">
+                {userVaults.length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="text-6xl mb-4">📈</div>
+                    <h3 className="text-xl font-semibold text-gray-600 mb-2">No Vaults Yet</h3>
+                    <p className="text-gray-500 mb-6">Create a vault first to view detailed information and activity</p>
+                    <button 
+                      onClick={() => setActiveTab('create')}
+                      className="bg-[#49ABFE] text-white px-6 py-3 rounded-lg hover:bg-[#1a5ba8] transition-colors"
+                    >
+                      Create Your First Vault
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {userVaults.map((vault, index) => (
+                      <VaultInfo 
+                        key={vault} 
+                        vaultAddress={vault} 
+                        vaultIndex={index} 
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>
