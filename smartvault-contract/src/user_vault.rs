@@ -679,7 +679,7 @@ impl UserVault {
 
     /// Internal function to cache protocol addresses from factory
     fn _cache_protocol_addresses(&mut self) -> Result<(), Vec<u8>> {
-        let factory = self.factory.get();
+        let _factory = self.factory.get();
         
         // Call factory to get protocol addresses
         // This is a simplified implementation - in practice you'd call specific getter functions

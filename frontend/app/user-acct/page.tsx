@@ -14,6 +14,17 @@ const UserProfile = () => {
   const [animationClass, setAnimationClass] = useState('');
   const [userProfile, setUserProfile] = useState<{username: string, bio: string} | null>(null);
   const [isProfileSetupComplete, setIsProfileSetupComplete] = useState(false);
+
+  // Helper function to format timestamp
+  const formatRegistrationDate = (timestamp: number) => {
+    if (!timestamp || timestamp === 0) return "Unknown";
+    const date = new Date(timestamp * 1000); // Convert from seconds to milliseconds
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
   
   // Get connected wallet address
   const { address, isConnected } = useAccount();
@@ -24,6 +35,7 @@ const UserProfile = () => {
     userVaults,
     protocolAddresses,
     isUserRegistered,
+    userRegistrationTimestamp,
     registerUser,
     createVault,
     isPending,
@@ -80,19 +92,38 @@ const UserProfile = () => {
   useEffect(() => {
     if (isConnected && isUserRegistered) {
       setIsProfileSetupComplete(true);
-      // Since username/bio are stored as hashes in the contract,
-      // we'll show a generic profile for registered users
-      setUserProfile({ 
-        username: "Registered User", 
-        bio: "Profile loaded from registration" 
-      });
+      
+      // Get user profile from localStorage (since contract stores hashes)
+      const storedProfile = localStorage.getItem(`userProfile_${address}`);
+      if (storedProfile) {
+        try {
+          const profile = JSON.parse(storedProfile);
+          setUserProfile(profile);
+        } catch (error) {
+          console.error('Error parsing stored profile:', error);
+          setUserProfile({ 
+            username: "Registered User", 
+            bio: "Profile loaded from registration" 
+          });
+        }
+      } else {
+        setUserProfile({ 
+          username: "Registered User", 
+          bio: "Profile loaded from registration" 
+        });
+      }
     }
-  }, [isConnected, isUserRegistered]);
+  }, [isConnected, isUserRegistered, address]);
 
   const handleProfileComplete = async (username: string, bio: string) => {
     try {
-      // Register the user with username and bio
+      // Register the user with username and bio (contract stores hashes)
       await registerUser(username, bio);
+      
+      // Store the actual strings in localStorage for display
+      const profileData = { username, bio };
+      localStorage.setItem(`userProfile_${address}`, JSON.stringify(profileData));
+      
       setUserProfile({ username, bio });
       setIsProfileSetupComplete(true);
     } catch (error) {
@@ -171,6 +202,7 @@ const UserProfile = () => {
               userVaults={userVaults}
               isConnected={isConnected}
               userProfile={userProfile}
+              registrationDate={formatRegistrationDate(userRegistrationTimestamp)}
             />
           </div>
 
@@ -345,7 +377,7 @@ const UserProfile = () => {
                       <select 
                         value={vaultForm.asset}
                         onChange={(e) => setVaultForm(prev => ({ ...prev, asset: e.target.value }))}
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#49ABFE] focus:ring-2 focus:ring-[#49ABFE]/10 transition-all"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#49ABFE] focus:ring-2 focus:ring-[#49ABFE]/10 transition-all text-gray-900 font-medium"
                         disabled={!isConnected}
                       >
                         <option>USDC</option>
@@ -370,7 +402,7 @@ const UserProfile = () => {
                       <select 
                         value={vaultForm.strategy}
                         onChange={(e) => setVaultForm(prev => ({ ...prev, strategy: e.target.value }))}
-                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#49ABFE] focus:ring-2 focus:ring-[#49ABFE]/10 transition-all"
+                        className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#49ABFE] focus:ring-2 focus:ring-[#49ABFE]/10 transition-all text-gray-900 font-medium"
                         disabled={!isConnected}
                       >
                         <option>Lending (Aave + Compound)</option>
@@ -386,25 +418,25 @@ const UserProfile = () => {
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div>
                         <span className="text-gray-600">Aave:</span>
-                        <code className="ml-2 text-xs bg-gray-200 px-2 py-1 rounded">
+                        <code className="ml-2 text-xs bg-gray-200 px-2 py-1 rounded text-gray-800 font-medium">
                           {protocolAddresses.aave === "0x0000000000000000000000000000000000000000" ? "Not set" : `${protocolAddresses.aave.slice(0, 6)}...${protocolAddresses.aave.slice(-4)}`}
                         </code>
                       </div>
                       <div>
                         <span className="text-gray-600">Compound:</span>
-                        <code className="ml-2 text-xs bg-gray-200 px-2 py-1 rounded">
+                        <code className="ml-2 text-xs bg-gray-200 px-2 py-1 rounded text-gray-800 font-medium">
                           {protocolAddresses.compound === "0x0000000000000000000000000000000000000000" ? "Not set" : `${protocolAddresses.compound.slice(0, 6)}...${protocolAddresses.compound.slice(-4)}`}
                         </code>
                       </div>
                       <div>
                         <span className="text-gray-600">Uniswap:</span>
-                        <code className="ml-2 text-xs bg-gray-200 px-2 py-1 rounded">
+                        <code className="ml-2 text-xs bg-gray-200 px-2 py-1 rounded text-gray-800 font-medium">
                           {protocolAddresses.uniswap === "0x0000000000000000000000000000000000000000" ? "Not set" : `${protocolAddresses.uniswap.slice(0, 6)}...${protocolAddresses.uniswap.slice(-4)}`}
                         </code>
                       </div>
                       <div>
                         <span className="text-gray-600">WETH:</span>
-                        <code className="ml-2 text-xs bg-gray-200 px-2 py-1 rounded">
+                        <code className="ml-2 text-xs bg-gray-200 px-2 py-1 rounded text-gray-800 font-medium">
                           {protocolAddresses.weth === "0x0000000000000000000000000000000000000000" ? "Not set" : `${protocolAddresses.weth.slice(0, 6)}...${protocolAddresses.weth.slice(-4)}`}
                         </code>
                     </div>
@@ -436,7 +468,7 @@ const UserProfile = () => {
                       <div className="space-y-3">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Select Vault</label>
-                          <select className="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                          <select className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 font-medium">
                             <option>USDC Yield Vault</option>
                             <option>ETH Growth Vault</option>
                             <option>Stablecoin Index</option>
@@ -456,7 +488,7 @@ const UserProfile = () => {
                       <div className="space-y-3">
                         <div>
                           <label className="block text-sm font-medium text-gray-700 mb-1">Select Vault</label>
-                          <select className="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                          <select className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-900 font-medium">
                             <option>USDC Yield Vault</option>
                             <option>ETH Growth Vault</option>
                             <option>Stablecoin Index</option>

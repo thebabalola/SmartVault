@@ -4,7 +4,7 @@ A comprehensive implementation of a DeFi Smart Vault system, providing automated
 
 ## 📍 Contract Address
 
-**VaultFactory Contract**: `0xfb8b95b90c19990ebe64741e35eacdbe0fd30bcf`  
+**VaultFactory Contract**: `0x013afa35ae6860a0ff04b00ee20f3332523fca82`  
 **Network**: Arbitrum Sepolia Testnet  
 **Contract Size**: 18.6 KiB (19,027 bytes)
 

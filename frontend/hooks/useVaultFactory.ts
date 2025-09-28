@@ -103,6 +103,19 @@ export const useVaultFactory = () => {
     },
   });
 
+  const { data: userRegistrationTimestamp } = useReadContract({
+    address: VAULT_FACTORY_ADDRESS,
+    abi: VaultFactoryABI,
+    functionName: 'getUserRegistrationTimestamp',
+    args: [address as `0x${string}`],
+    query: {
+      enabled: !!address && !!VAULT_FACTORY_ADDRESS && !!isUserRegistered,
+    },
+  });
+
+  // Note: We'll use localStorage for username/bio since Stylus doesn't support string storage
+  // The contract stores hashes for verification, but we need localStorage for display
+
   // Write functions
   const registerUser = async (username: string, bio: string) => {
     if (!isConnected) {
@@ -300,6 +313,7 @@ export const useVaultFactory = () => {
     
     // User registration
     isUserRegistered: isUserRegistered || false,
+    userRegistrationTimestamp: userRegistrationTimestamp ? Number(userRegistrationTimestamp) : 0,
     
     // Write functions
     registerUser,

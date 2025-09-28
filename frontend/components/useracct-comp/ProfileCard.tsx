@@ -14,6 +14,7 @@ interface ProfileCardProps {
   userVaults: `0x${string}`[];
   isConnected: boolean;
   userProfile: {username: string, bio: string} | null;
+  registrationDate: string;
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = ({
@@ -23,7 +24,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
   animationClass,
   userVaults,
   isConnected,
-  userProfile
+  userProfile,
+  registrationDate
 }) => {
 
   const formatAddress = (addr: string): string => {
@@ -47,6 +49,11 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
           <p className="text-xs text-gray-600">
             {userProfile?.bio || (isConnected ? 'Wallet Connected' : 'Connect Wallet to Create Vaults')}
           </p>
+          {registrationDate && registrationDate !== "Unknown" && (
+            <p className="text-xs text-gray-500 mt-1">
+              Joined: {registrationDate}
+            </p>
+          )}
         </div>
       </div>
 
