@@ -6,6 +6,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import ProfileCard from "../../components/useracct-comp/ProfileCard";
 import UserProfileSetup from "../../components/useracct-comp/UserProfileSetup";
+import VaultCard from "../../components/useracct-comp/VaultCard";
 import { useVaultFactory } from "../../hooks/useVaultFactory";
 
 const UserProfile = () => {
@@ -321,24 +322,11 @@ const UserProfile = () => {
                   ) : (
                     <div className="space-y-4">
                       {userVaults.map((vault, index) => (
-                        <div key={index} className="p-4 bg-gray-50 rounded-lg hover:shadow-md transition-all">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                              <div className="w-12 h-12 bg-[#49ABFE] rounded-full flex items-center justify-center mr-4">
-                                <span className="text-white text-lg">🏦</span>
-                    </div>
-                              <div>
-                                <p className="font-semibold text-gray-800">Vault #{index + 1}</p>
-                                <p className="text-sm text-gray-500 font-mono">{vault.slice(0, 6)}...{vault.slice(-4)}</p>
-                </div>
-                            </div>
-                            <div className="text-right">
-                              <p className="font-bold text-[#213046]">Loading...</p>
-                              <p className="text-sm text-green-600">Loading yield...</p>
-                              <p className="text-xs text-gray-500">Click Manage to view details</p>
-                            </div>
-                          </div>
-                        </div>
+                        <VaultCard 
+                          key={index} 
+                          vaultAddress={vault} 
+                          vaultIndex={index} 
+                        />
                       ))}
                     </div>
                   )}
