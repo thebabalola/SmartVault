@@ -228,15 +228,15 @@ const VaultOperations: React.FC<VaultOperationsProps> = ({ vaultAddress, vaultIn
 
       {/* Current Balance */}
       <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-        <h5 className="font-semibold text-gray-800 mb-2">Your Vault Position</h5>
+        <h5 className="font-semibold text-gray-900 mb-3">Your Vault Position</h5>
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
-            <span className="text-gray-600">Shares:</span>
-            <span className="ml-2 font-medium">{userBalance} {symbol}</span>
+            <span className="text-gray-700 font-medium">Shares:</span>
+            <span className="ml-2 font-bold text-gray-900">{userBalance} {symbol}</span>
           </div>
           <div>
-            <span className="text-gray-600">Value:</span>
-            <span className="ml-2 font-medium">${userValue}</span>
+            <span className="text-gray-700 font-medium">Value:</span>
+            <span className="ml-2 font-bold text-gray-900">${userValue}</span>
           </div>
         </div>
       </div>

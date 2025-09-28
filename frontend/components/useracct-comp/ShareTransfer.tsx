@@ -220,10 +220,10 @@ const ShareTransfer: React.FC<ShareTransferProps> = ({ vaultAddress, vaultIndex 
 
       {/* Current Balance */}
       <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-        <h5 className="font-semibold text-gray-800 mb-2">Your Share Balance</h5>
+        <h5 className="font-semibold text-gray-900 mb-3">Your Share Balance</h5>
         <div className="text-center">
-          <span className="text-2xl font-bold text-[#213046]">{userBalance}</span>
-          <span className="text-lg text-gray-600 ml-2">{symbol}</span>
+          <span className="text-2xl font-bold text-gray-900">{userBalance}</span>
+          <span className="text-lg text-gray-700 font-medium ml-2">{symbol}</span>
         </div>
       </div>
     </div>
