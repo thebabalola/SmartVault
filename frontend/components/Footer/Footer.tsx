@@ -25,81 +25,49 @@ export default function Footer({ scrollToSection }: FooterProps) {
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Navigation */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4">Navigation</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link 
-                  href="/user-profile"
-                  className="text-[#9DCCED] hover:text-[#49ABFE] transition-colors"
-                >
-                  Live Demo
-                </Link>
-              </li>
-              <li>
                 <button 
-                  onClick={() => scrollToSection('roadmap')}
-                  className="text-[#9DCCED] hover:text-[#49ABFE] transition-colors"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  className="text-[#9DCCED] hover:text-[#49ABFE] transition-colors text-left"
                 >
-                  Roadmap
+                  Hero
                 </button>
               </li>
               <li>
-                <Link 
-                  href="/user-profile"
-                  className="text-[#9DCCED] hover:text-[#49ABFE] transition-colors"
+                <button 
+                  onClick={() => scrollToSection('how-it-works')}
+                  className="text-[#9DCCED] hover:text-[#49ABFE] transition-colors text-left"
                 >
-                  User Profile
-                </Link>
+                  How It Works
+                </button>
               </li>
               <li>
                 <button 
-                  onClick={() => scrollToSection('market')}
-                  className="text-[#9DCCED] hover:text-[#49ABFE] transition-colors"
+                  onClick={() => scrollToSection('problem')}
+                  className="text-[#9DCCED] hover:text-[#49ABFE] transition-colors text-left"
                 >
-                  Market Opportunity
+                  The Problem
                 </button>
               </li>
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Resources</h3>
-            <ul className="space-y-2 text-sm">
               <li>
-                <a 
-                  href="https://github.com/thebabalola/manna"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-gray-300 hover:text-[#EFAC20] transition-colors"
+                <button 
+                  onClick={() => scrollToSection('solution')}
+                  className="text-[#9DCCED] hover:text-[#49ABFE] transition-colors text-left"
                 >
-                  <Github size={16} />
-                  <span>GitHub Repository</span>
-                </a>
+                  Our Solution
+                </button>
               </li>
               <li>
-                <a 
-                  href="https://docs.google.com/presentation/d/1qKJidCy1NT8JviqDgs9dH36ehSE499nY/edit?usp=sharing&ouid=100528488557506058575&rtpof=true&sd=true"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-gray-300 hover:text-[#EFAC20] transition-colors"
+                <button 
+                  onClick={() => scrollToSection('features')}
+                  className="text-[#9DCCED] hover:text-[#49ABFE] transition-colors text-left"
                 >
-                  <FileText size={16} />
-                  <span>Pitch Deck</span>
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="https://docs.google.com/document/d/1I5fVrMsMLdSgmz3cI8YoEI8o7y8vWkBMGKT31-908u8/edit?usp=sharing"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-gray-300 hover:text-[#EFAC20] transition-colors"
-                >
-                  <BookOpen size={16} />
-                  <span>Concept Document</span>
-                </a>
+                  Why Choose Us
+                </button>
               </li>
             </ul>
           </div>

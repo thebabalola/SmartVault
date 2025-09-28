@@ -264,7 +264,7 @@ export default function SmartVaultLandingPage() {
                 <h3 className="text-2xl font-bold text-[#213046] mb-4">Ready to Start Earning?</h3>
                 <p className="text-gray-600 mb-6">Join other users already earning passive yield with Smart Vault</p>
                 <Link 
-                  href="/vault"
+                  href="/user-acct"
                   className="inline-flex items-center bg-[#213046] text-white px-8 py-3 rounded-xl font-bold text-lg hover:bg-[#213046]/90 hover:shadow-lg transition-all duration-300 transform hover:scale-105"
                 >
                   Get Started Now 
@@ -325,7 +325,7 @@ export default function SmartVaultLandingPage() {
       </section>
 
       {/* Solution Section */}
-      <section className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-br from-[#213046] to-[#49ABFE] text-white">
+      <section id="solution" className="py-20 px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 bg-gradient-to-br from-[#213046] to-[#49ABFE] text-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
