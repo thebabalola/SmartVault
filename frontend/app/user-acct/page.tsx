@@ -21,6 +21,7 @@ const UserProfile = () => {
   const [userProfile, setUserProfile] = useState<{username: string, bio: string} | null>(null);
   const [isProfileSetupComplete, setIsProfileSetupComplete] = useState(false);
   const [selectedVault, setSelectedVault] = useState<`0x${string}` | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<'shareTransfer' | 'vaultManagement' | null>(null);
 
   // Helper function to format timestamp
   const formatRegistrationDate = (timestamp: number) => {
@@ -496,14 +497,59 @@ const UserProfile = () => {
                           vaultAddress={selectedVault} 
                           vaultIndex={userVaults.indexOf(selectedVault)} 
                         />
-                        <VaultManagement 
-                          vaultAddress={selectedVault} 
-                          vaultIndex={userVaults.indexOf(selectedVault)} 
-                        />
-                        <ShareTransfer 
-                          vaultAddress={selectedVault} 
-                          vaultIndex={userVaults.indexOf(selectedVault)} 
-                        />
+                        
+                        {/* Share Transfers - First Priority */}
+                        <div className="bg-white rounded-2xl shadow-lg">
+                          <div className="p-6">
+                            <div className="flex items-center justify-between mb-4">
+                              <h3 className="text-xl font-bold text-[#213046] flex items-center">
+                                <span className="mr-2">🔄</span>
+                                Share Transfers - Vault #{userVaults.indexOf(selectedVault) + 1}
+                              </h3>
+                              <button
+                                onClick={() => setActiveDropdown(activeDropdown === 'shareTransfer' ? null : 'shareTransfer')}
+                                className="px-4 py-2 bg-[#49ABFE] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors"
+                              >
+                                {activeDropdown === 'shareTransfer' ? 'Hide' : 'Show'} Share Transfers
+                              </button>
+                            </div>
+                            {activeDropdown === 'shareTransfer' && (
+                              <ShareTransfer 
+                                vaultAddress={selectedVault} 
+                                vaultIndex={userVaults.indexOf(selectedVault)} 
+                              />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Vault Management - Optional */}
+                        <div className="bg-white rounded-2xl shadow-lg">
+                          <div className="p-6">
+                            <div className="flex items-center justify-between mb-4">
+                              <div>
+                                <h3 className="text-xl font-bold text-[#213046] flex items-center">
+                                  <span className="mr-2">⚙️</span>
+                                  Vault Management - Vault #{userVaults.indexOf(selectedVault) + 1}
+                                </h3>
+                                <p className="text-sm text-gray-600 mt-1">
+                                  Optional: Advanced vault configuration and control
+                                </p>
+                              </div>
+                              <button
+                                onClick={() => setActiveDropdown(activeDropdown === 'vaultManagement' ? null : 'vaultManagement')}
+                                className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                              >
+                                {activeDropdown === 'vaultManagement' ? 'Hide' : 'Show'} Management
+                              </button>
+                            </div>
+                            {activeDropdown === 'vaultManagement' && (
+                              <VaultManagement 
+                                vaultAddress={selectedVault} 
+                                vaultIndex={userVaults.indexOf(selectedVault)} 
+                              />
+                            )}
+                          </div>
+                        </div>
                       </div>
                     )}
                   </>

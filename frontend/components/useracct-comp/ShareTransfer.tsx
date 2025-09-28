@@ -75,15 +75,7 @@ const ShareTransfer: React.FC<ShareTransferProps> = ({ vaultAddress, vaultIndex 
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6">
-      <div className="mb-6">
-        <h3 className="text-xl font-bold text-[#213046] flex items-center mb-2">
-          <span className="mr-2">🔄</span>
-          Share Transfers - {name} #{vaultIndex + 1}
-        </h3>
-        <p className="text-gray-600">Transfer and manage vault share tokens</p>
-      </div>
-
+    <div>
       <div className="grid md:grid-cols-2 gap-6">
         {/* Transfer Type Selection */}
         <div className="space-y-4">

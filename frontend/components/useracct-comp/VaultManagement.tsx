@@ -63,12 +63,8 @@ const VaultManagement: React.FC<VaultManagementProps> = ({ vaultAddress, vaultIn
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6">
+    <div>
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold text-[#213046] flex items-center">
-          <span className="mr-2">⚙️</span>
-          Vault #{vaultIndex + 1} Management
-        </h3>
         <div className="flex items-center gap-3">
           <span className={`px-3 py-1 rounded-full text-sm font-medium ${
             isPaused 
