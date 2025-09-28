@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useAccount } from "wagmi";
+import { Building2, DollarSign, Users, TrendingUp, BarChart3, Link, Shield, User } from 'lucide-react';
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { useVaultFactory } from "../../hooks/useVaultFactory";
@@ -178,10 +179,10 @@ const AdminDashboard = () => {
     }
   };
 
-  const TabButton = ({ id, label, icon, isActive, onClick }: { 
+  const TabButton = ({ id, label, icon: Icon, isActive, onClick }: { 
     id: string; 
     label: string; 
-    icon: string; 
+    icon: any; 
     isActive: boolean; 
     onClick: (id: string) => void 
   }) => (
@@ -193,7 +194,7 @@ const AdminDashboard = () => {
           : 'text-gray-600 hover:text-[#213046] hover:bg-gray-100 hover:scale-102'
       }`}
     >
-      <span className="mr-2">{icon}</span>
+      <Icon className="mr-2 w-4 h-4" />
       {label}
     </button>
   );
@@ -250,12 +251,12 @@ const AdminDashboard = () => {
 
         {/* Tab Navigation */}
         <div className="flex flex-wrap gap-2 sm:gap-3 mb-8 p-2 sm:p-3 bg-white rounded-2xl shadow-sm">
-          <TabButton id="overview" label="Overview" icon="📊" isActive={activeTab === 'overview'} onClick={setActiveTab} />
-          <TabButton id="protocols" label="Protocols" icon="🔗" isActive={activeTab === 'protocols'} onClick={setActiveTab} />
-          <TabButton id="admins" label="Admins" icon="👥" isActive={activeTab === 'admins'} onClick={setActiveTab} />
-          <TabButton id="vaults" label="Vaults" icon="🏦" isActive={activeTab === 'vaults'} onClick={setActiveTab} />
-          <TabButton id="users" label="Users" icon="👥" isActive={activeTab === 'users'} onClick={setActiveTab} />
-          <TabButton id="settings" label="Settings" icon="⚙️" isActive={activeTab === 'settings'} onClick={setActiveTab} />
+          <TabButton id="overview" label="Overview" icon={BarChart3} isActive={activeTab === 'overview'} onClick={setActiveTab} />
+          <TabButton id="protocols" label="Protocols" icon={Link} isActive={activeTab === 'protocols'} onClick={setActiveTab} />
+          <TabButton id="admins" label="Admins" icon={User} isActive={activeTab === 'admins'} onClick={setActiveTab} />
+          <TabButton id="vaults" label="Vaults" icon={Building2} isActive={activeTab === 'vaults'} onClick={setActiveTab} />
+          <TabButton id="users" label="Users" icon={Users} isActive={activeTab === 'users'} onClick={setActiveTab} />
+          <TabButton id="settings" label="Settings" icon={Shield} isActive={activeTab === 'settings'} onClick={setActiveTab} />
         </div>
 
         {/* Overview Tab */}
@@ -270,7 +271,7 @@ const AdminDashboard = () => {
                     <p className="text-3xl font-bold text-[#213046]">{adminStats.totalVaults}</p>
                   </div>
                   <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                    <span className="text-2xl">🏦</span>
+                    <Building2 className="w-6 h-6 text-blue-600" />
                   </div>
                 </div>
               </div>
@@ -282,7 +283,7 @@ const AdminDashboard = () => {
                     <p className="text-3xl font-bold text-[#213046]">${adminStats.totalAssets}</p>
                   </div>
                   <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                    <span className="text-2xl">💰</span>
+                    <DollarSign className="w-6 h-6 text-green-600" />
                   </div>
                 </div>
               </div>
@@ -294,7 +295,7 @@ const AdminDashboard = () => {
                     <p className="text-3xl font-bold text-[#213046]">{adminStats.totalUsers}</p>
                   </div>
                   <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                    <span className="text-2xl">👥</span>
+                    <Users className="w-6 h-6 text-purple-600" />
                   </div>
                 </div>
               </div>
@@ -306,7 +307,7 @@ const AdminDashboard = () => {
                     <p className="text-3xl font-bold text-green-600">${adminStats.totalYield}</p>
                   </div>
                   <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-                    <span className="text-2xl">📈</span>
+                    <TrendingUp className="w-6 h-6 text-yellow-600" />
                   </div>
                 </div>
               </div>
@@ -524,7 +525,6 @@ const AdminDashboard = () => {
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-2xl font-bold text-[#213046] mb-6">User Management</h2>
               <div className="text-center py-12">
-                <div className="text-6xl mb-4">👥</div>
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">User Management</h3>
                 <p className="text-gray-600">User management features coming soon...</p>
               </div>
