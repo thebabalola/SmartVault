@@ -1,6 +1,6 @@
-# Smart Vault (DeFi Smart Vault) Project
+# Smart Vault - Complete DeFi Platform
 
-A comprehensive implementation of a DeFi Smart Vault system, providing automated yield generation and standardized asset management through ERC-4626 compliance. This project includes both a Rust smart contract for Arbitrum Stylus and a modern Next.js frontend interface.
+A comprehensive DeFi platform featuring a factory-based vault system with ERC-4626 compliance, multi-protocol yield generation, and a modern web interface. Built with Rust smart contracts on Arbitrum Stylus and a Next.js frontend.
 
 ## 📍 Contract Address
 
@@ -9,6 +9,15 @@ A comprehensive implementation of a DeFi Smart Vault system, providing automated
 **Contract Size**: 18.6 KiB (19,027 bytes)
 
 > **Note**: Contract addresses are centrally managed in `frontend/constants/contractAddresses.ts`
+
+## 🎯 Platform Overview
+
+Smart Vault is a complete DeFi platform that allows users to:
+- **Create Personal Vaults**: Each user gets their own ERC-4626 compliant vault
+- **Deploy to DeFi Protocols**: Automatically invest in Aave, Compound, and Uniswap
+- **Manage Allocations**: Configure how assets are distributed across protocols
+- **Earn Automated Yield**: Passive income generation without manual management
+- **Transfer Vault Shares**: ERC-20 compliant share tokens for maximum composability
 
 ## 🎯 The Problem Smart Vaults Solve
 
@@ -146,45 +155,78 @@ That means you can:
 - **Retail Savers**: Better returns than traditional savings accounts
 - **DeFi Developers**: Building on standardized vault infrastructure
 
+## 🏗️ System Architecture
+
+### **Smart Contract Layer**
+- **VaultFactory**: Lightweight factory that deploys individual UserVault contracts
+- **UserVault**: ERC-4626 compliant vault with direct DeFi protocol integration
+- **Admin System**: Multi-admin management with protocol address configuration
+- **User Registration**: On-chain user profiles with username and bio
+
+### **Frontend Layer**
+- **User Dashboard**: Complete vault management interface with 5 main tabs
+- **Admin Panel**: Protocol management and platform monitoring
+- **Real-time Integration**: Live data from smart contracts
+- **Responsive Design**: Works on desktop and mobile
+
 ## 📁 Project Structure
 
 ```
-Smart-Vault/
-├── README.md                 # This comprehensive project overview
-├── smartvault-contract/      # ERC-4626 Smart Vault for Arbitrum Stylus
-│   ├── README.md            # Contract documentation with deployment details
-│   ├── src/                 # Rust source code
-│   │   ├── lib.rs          # Main Smart Vault contract
-│   │   ├── main.rs         # Entry point
-│   │   └── erc20.rs        # ERC-20 implementation
-│   ├── Cargo.toml          # Rust dependencies
-│   ├── rust-toolchain.toml # Rust toolchain configuration
-│   └── .env                 # Environment variables
-└── frontend/                # Next.js frontend application
-    ├── README.md           # Frontend-specific documentation
-    ├── app/                # Next.js app directory
-    ├── components/         # React components
-    ├── hooks/              # Custom React hooks
-    ├── constants/          # Contract ABIs and helpers
-    └── package.json        # Node.js dependencies
+SmartVault/
+├── README.md                    # This comprehensive project overview
+├── smartvault-contract/         # Rust smart contracts for Arbitrum Stylus
+│   ├── README.md               # Contract documentation and deployment
+│   ├── src/                    # Rust source code
+│   │   ├── lib.rs             # Main contract exports
+│   │   ├── vault_factory.rs   # Factory contract for deploying vaults
+│   │   ├── user_vault.rs      # Individual user vault implementation
+│   │   └── tests.rs           # Test suite
+│   ├── Cargo.toml             # Rust dependencies
+│   ├── gig1.json              # Deployed contract ABI
+│   └── user_vault_abi.json    # UserVault contract ABI
+└── frontend/                   # Next.js frontend application
+    ├── README.md              # Frontend documentation
+    ├── app/                   # Next.js app directory
+    │   ├── page.tsx           # Landing page
+    │   ├── user-acct/         # User dashboard
+    │   └── admin/             # Admin panel
+    ├── components/            # React components
+    │   ├── useracct-comp/     # User account components
+    │   ├── admin-comp/        # Admin components
+    │   ├── Header/            # Navigation
+    │   └── Footer/            # Site footer
+    ├── hooks/                 # Custom React hooks
+    │   ├── useVaultFactory.ts # VaultFactory integration
+    │   └── useUserVault.ts    # UserVault integration
+    ├── constants/             # Contract ABIs and addresses
+    └── package.json           # Node.js dependencies
 ```
 
 ## 🚀 Quick Start
 
-### Smart Contract (Rust)
+### 1. Smart Contract Deployment
 ```bash
 cd smartvault-contract
 cargo check
-cargo stylus export-abi
-cargo stylus deploy --private-key-path=./private_key.txt
+cargo stylus deploy -e $(TESTNET_RPC_URL) --no-verify --private-key $(PRIVATE_KEY)
+cargo stylus export-abi --json --output gig1.json
 ```
 
-### Frontend (Next.js)
+### 2. Initialize Contract
+```bash
+cast send --rpc-url $(TESTNET_RPC_URL) --private-key $(PRIVATE_KEY) 0x013afa35ae6860a0ff04b00ee20f3332523fca82 "init()"
+```
+
+### 3. Frontend Setup
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+
+### 4. Access the Platform
+- **User Dashboard**: Navigate to `/user-acct` after connecting wallet
+- **Admin Panel**: Click "SmartVault" in footer (admin access required)
 
 ## 🔧 Technology Stack
 

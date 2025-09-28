@@ -137,20 +137,20 @@ const ProtocolAllocationManager: React.FC<ProtocolAllocationManagerProps> = ({ v
             <h5 className="font-semibold text-blue-800 mb-2">Allocation Summary</h5>
             <div className="space-y-1 text-sm">
               <div className="flex justify-between">
-                <span>Current Total:</span>
-                <span className="font-medium">
+                <span className="text-gray-700 font-medium">Current Total:</span>
+                <span className="font-semibold text-gray-900">
                   {(parseFloat(aaveAllocation) + parseFloat(compoundAllocation) + parseFloat(uniswapAllocation)).toFixed(2)} tokens
                 </span>
               </div>
               <div className="flex justify-between">
-                <span>New Allocations:</span>
-                <span className="font-medium">
+                <span className="text-gray-700 font-medium">New Allocations:</span>
+                <span className="font-semibold text-gray-900">
                   {(parseFloat(allocations.aave || '0') + parseFloat(allocations.compound || '0') + parseFloat(allocations.uniswap || '0')).toFixed(2)} tokens
                 </span>
               </div>
               <div className="flex justify-between border-t pt-1">
-                <span className="font-semibold">Total After Update:</span>
-                <span className="font-bold">
+                <span className="font-semibold text-gray-800">Total After Update:</span>
+                <span className="font-bold text-gray-900">
                   {calculateTotalAllocation().toFixed(2)} tokens
                 </span>
               </div>

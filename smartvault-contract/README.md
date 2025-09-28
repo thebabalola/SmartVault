@@ -1,6 +1,6 @@
-# Smart Vault Smart Contract
+# Smart Vault Smart Contracts
 
-A comprehensive ERC-4626 compliant Smart Vault implementation for Arbitrum Stylus, providing automated yield generation through DeFi strategies.
+A comprehensive DeFi platform with factory-based vault deployment, ERC-4626 compliance, and direct DeFi protocol integration. Built with Rust for Arbitrum Stylus.
 
 ## 📍 Contract Address
 
@@ -12,49 +12,102 @@ A comprehensive ERC-4626 compliant Smart Vault implementation for Arbitrum Stylu
 
 ## 🎯 Overview
 
-This smart contract implements a fully compliant ERC-4626 vault that automatically invests user deposits into yield-generating strategies. Users receive vault shares (ERC-20 tokens) representing their proportional ownership of the vault's assets and yield.
+This smart contract system implements a complete DeFi platform featuring:
+- **VaultFactory**: Lightweight factory for deploying individual user vaults
+- **UserVault**: ERC-4626 compliant vaults with direct DeFi protocol integration
+- **Admin System**: Multi-admin management with protocol address configuration
+- **User Registration**: On-chain user profiles and vault management
 
 ## 🏗️ Contract Architecture
 
-### **Core Components**
+### **1. VaultFactory Contract** (`vault_factory.rs`)
 
-#### 1. **Storage Structure**
+**Purpose**: Lightweight factory that deploys individual UserVault contracts and manages global settings.
+
+**Key Features**:
+- **Vault Deployment**: Creates new UserVault contracts for each user
+- **Protocol Management**: Stores addresses of DeFi protocols (Aave, Compound, Uniswap, WETH)
+- **Admin System**: Multi-admin management with deployer as initial admin
+- **User Registration**: Manages user profiles (username, bio, registration timestamp)
+
+**Core Functions**:
+```rust
+// Admin Functions
+createVault() -> deploys new UserVault
+setAaveAddress(address) -> sets Aave protocol address
+addAdmin(address) -> adds new admin
+removeAdmin(address) -> removes admin
+
+// User Functions  
+registerUser(username, bio) -> registers user profile
+getUserVaults(user) -> returns user's vault addresses
+```
+
+**Storage Structure**:
 ```rust
 sol_storage! {
-    #[entrypoint]
-    struct Vault { 
-        address asset;                    // Underlying asset (USDC, DAI, etc.)
-        uint totalSupply;                 // Total supply of vault shares
-        #[borrow]        			
-        Erc20<VaultParams> erc20;        // ERC-20 token functionality
+    pub struct VaultFactory {
+        address deployer_admin;                    // Deployer admin address
+        mapping(address => bool) admin_list;       // Admin addresses
+        uint256 admin_count;                       // Total admin count
+        mapping(address => address[]) user_vaults; // User's vault addresses
+        mapping(string => address) protocol_addresses; // DeFi protocol addresses
+        mapping(address => bool) registered_users; // Registered users
+        mapping(address => bytes32) user_username_hashes; // Username hashes
+        mapping(address => bytes32) user_bio_hashes; // Bio hashes
+        mapping(address => uint256) user_registration_timestamps; // Registration times
     }
 }
 ```
 
-#### 2. **ERC-20 Token Integration**
-The vault inherits ERC-20 functionality through the `Erc20<VaultParams>` module:
-- **Token Name**: "Vault Example"
-- **Token Symbol**: "VAULT" 
-- **Decimals**: 18
-- **Standard ERC-20 Functions**: `transfer`, `approve`, `transferFrom`, `balanceOf`, `allowance`
+### **2. UserVault Contract** (`user_vault.rs`)
 
-#### 3. **Core Vault Functions**
-- `setAsset(address asset)` → `address` - Set the underlying asset
-- `deposit(uint256 amount)` → `()` - Deposit assets and receive shares
-- `withdraw(uint256 amount)` → `()` - Withdraw assets by burning shares
-- `asset()` → `address` - Get the underlying asset address
-- `totalAssets()` → `uint256` - Get total assets in the vault
+**Purpose**: Individual vault for each user that implements ERC-4626 standard and integrates with DeFi protocols.
 
-#### 4. **ERC-20 Token Functions (Inherited)**
-- `name()` → `string` - Token name ("Vault Example")
-- `symbol()` → `string` - Token symbol ("VAULT")
-- `decimals()` → `uint8` - Token decimals (18)
-- `totalSupply()` → `uint256` - Total supply of vault shares
-- `balanceOf(address account)` → `uint256` - Balance of shares for account
-- `transfer(address to, uint256 amount)` → `bool` - Transfer shares
-- `approve(address spender, uint256 amount)` → `bool` - Approve spending
-- `transferFrom(address from, address to, uint256 amount)` → `bool` - Transfer from
-- `allowance(address owner, address spender)` → `uint256` - Check allowance
+**Key Features**:
+- **ERC-4626 Compliance**: Standard vault interface for deposits/withdrawals
+- **ERC-20 Shares**: Vault shares as transferable tokens
+- **DeFi Integration**: Direct calls to Aave, Compound, Uniswap
+- **Protocol Allocations**: User-defined asset distribution across protocols
+- **Vault Management**: Pause/unpause, configuration updates
+
+**Core Functions**:
+```rust
+// ERC-4626 Functions
+deposit(amount) -> deposits assets, mints shares
+withdraw(amount) -> burns shares, withdraws assets
+totalAssets() -> returns total assets in vault
+convertToShares(assets) -> converts assets to shares
+
+// DeFi Integration
+deployToAave(amount) -> deploys assets to Aave
+deployToCompound(amount) -> deploys assets to Compound  
+harvestFromProtocol(protocol) -> harvests rewards
+
+// Vault Management
+setProtocolAllocation(protocol, amount) -> sets allocation
+pause() / unpause() -> controls vault operations
+```
+
+**Storage Structure**:
+```rust
+sol_storage! {
+    pub struct UserVault {
+        address owner;                              // Vault owner
+        address asset;                              // Underlying asset
+        address factory;                            // Vault factory address
+        uint256 total_assets;                       // Total assets in vault
+        uint256 total_supply;                       // Total shares issued
+        mapping(address => uint256) balances;       // User share balances
+        mapping(string => uint256) protocol_allocations; // Protocol allocations
+        mapping(string => address) protocol_addresses; // Cached protocol addresses
+        bool paused;                                // Vault pause status
+        bytes32 vault_name_hash;                    // Vault name
+        bytes32 vault_symbol_hash;                  // Vault symbol
+        uint8 vault_decimals;                       // Vault decimals
+    }
+}
+```
 
 ## 🔧 Implementation Details
 

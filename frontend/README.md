@@ -1,22 +1,30 @@
-# Smart Vault Frontend - DeFi Yield Generation Platform
+# Smart Vault Frontend - Complete DeFi Platform
 
-A modern Next.js application for the Smart Vault platform, enabling users to deposit assets and earn automated yield through ERC-4626 compliant vaults on Arbitrum Stylus. This frontend provides an intuitive interface for interacting with the deployed Smart Vault contract.
+A comprehensive Next.js application for the Smart Vault platform, featuring user vault management, admin controls, and real-time DeFi integration. Built with modern web technologies and optimized for Arbitrum Stylus.
 
 ## 🚀 Features
 
-### Core Functionality
-- **Asset Deposits**: Deposit ERC-20 tokens into Smart Vaults
-- **Automated Yield**: Earn passive returns through automated DeFi strategies
-- **Vault Shares**: Receive ERC-20 tokens representing vault ownership
-- **Multi-wallet Support**: Connect with MetaMask, WalletConnect, and other Web3 wallets
-- **Network Integration**: Optimized for Arbitrum Sepolia testnet
+### User Dashboard (`/user-acct`)
+- **Profile Management**: User registration with username and bio
+- **Vault Creation**: Create personal ERC-4626 compliant vaults
+- **Asset Management**: Deposit, withdraw, mint, and redeem vault shares
+- **Strategy Configuration**: Set protocol allocations (Aave, Compound, Uniswap)
+- **Vault Operations**: Complete vault management and monitoring
+- **Share Trading**: Transfer and approve vault share transactions
 
-### User Experience
-- **Fixed Header Navigation**: Always accessible wallet connection and navigation
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **Professional UI**: Clean, modern interface with Smart Vault brand colors
-- **Transaction Feedback**: Real-time status updates and success confirmations
-- **Yield Tracking**: Monitor your vault performance and returns
+### Admin Panel (`/admin`)
+- **Protocol Management**: Configure DeFi protocol addresses
+- **Admin System**: Multi-admin management and access control
+- **Platform Monitoring**: Real-time platform statistics and health
+- **User Management**: Monitor registered users and vault activity
+- **System Settings**: Contract configuration and network management
+
+### Core Functionality
+- **Real-time Data**: Live integration with smart contracts
+- **Multi-wallet Support**: MetaMask, WalletConnect, and other Web3 wallets
+- **Network Integration**: Optimized for Arbitrum Sepolia testnet
+- **Responsive Design**: Works seamlessly on desktop and mobile
+- **Transaction Feedback**: Real-time status updates and confirmations
 
 ## 🎨 Design System
 
@@ -45,18 +53,35 @@ A modern Next.js application for the Smart Vault platform, enabling users to dep
 frontend/
 ├── app/                    # Next.js app directory
 │   ├── page.tsx           # Smart Vault landing page
-│   ├── user-profile/      # User dashboard and vault management
+│   ├── user-acct/         # User dashboard and vault management
+│   │   └── page.tsx       # Main user interface with 5 tabs
+│   ├── admin/             # Admin panel
+│   │   └── page.tsx       # Admin dashboard with 6 tabs
 │   └── layout.tsx         # Root layout
 ├── components/            # Reusable components
+│   ├── useracct-comp/     # User account components
+│   │   ├── ProfileCard.tsx
+│   │   ├── UserProfileSetup.tsx
+│   │   ├── VaultCard.tsx
+│   │   ├── VaultManagement.tsx
+│   │   ├── VaultOperations.tsx
+│   │   ├── ProtocolAllocationManager.tsx
+│   │   ├── ShareTransfer.tsx
+│   │   └── VaultInfo.tsx
+│   ├── admin-comp/        # Admin components
+│   │   ├── ProtocolManager.tsx
+│   │   └── SystemSettings.tsx
 │   ├── Header/           # Navigation and wallet connection
 │   │   ├── Header.tsx
 │   │   ├── NetworkSwitcher.tsx
 │   │   └── WalletOptions.tsx
 │   └── Footer/           # Site footer
+├── hooks/                # Custom React hooks
+│   ├── useVaultFactory.ts # VaultFactory contract integration
+│   └── useUserVault.ts   # UserVault contract integration
 ├── constants/            # Contract ABIs and helpers
+│   ├── contractAddresses.ts # Centralized contract addresses
 │   └── ABIs/            # Smart contract ABIs
-├── hooks/               # Custom React hooks
-├── modals/              # Modal components
 ├── public/              # Static assets
 ├── config.ts            # Wagmi configuration
 └── provider.tsx         # Web3 provider setup
@@ -98,40 +123,56 @@ frontend/
 
 ### Contract Details
 - **Network**: Arbitrum Sepolia Testnet (Chain ID: 421614)
-- **Contract**: SmartVault (ERC-4626 compliant)
-- **Address**: `0x89a2c29b55fb31e5739682f5b9ae3a004e7a1a54`
-- **Explorer**: [Arbiscan](https://sepolia.arbiscan.io/address/0x89a2c29b55fb31e5739682f5b9ae3a004e7a1a54)
+- **VaultFactory**: `0x013afa35ae6860a0ff04b00ee20f3332523fca82`
+- **Explorer**: [Arbiscan](https://sepolia.arbiscan.io/address/0x013afa35ae6860a0ff04b00ee20f3332523fca82)
 
-### Key Functions
+### VaultFactory Functions
+- `createVault()`: Deploy new UserVault for user
+- `registerUser(username, bio)`: Register user profile
+- `setAaveAddress(address)`: Configure Aave protocol
+- `addAdmin(address)`: Add new admin
+- `getUserVaults(user)`: Get user's vault addresses
+
+### UserVault Functions (ERC-4626)
 - `deposit(amount)`: Deposit assets and receive vault shares
 - `withdraw(amount)`: Withdraw assets by burning shares
-- `balanceOf(address)`: Check vault share balance
-- `totalAssets()`: Get total assets managed by vault
-- `convertToShares(assets)`: Convert assets to shares
-- `convertToAssets(shares)`: Convert shares to assets
+- `mint(shares)`: Mint shares for assets
+- `redeem(shares)`: Redeem shares for assets
+- `deployToAave(amount)`: Deploy assets to Aave
+- `setProtocolAllocation(protocol, amount)`: Set protocol allocation
 
 ## 💰 How to Use
 
 ### For Users
 1. **Connect Wallet**: Use the header to connect your Web3 wallet
-2. **Switch Network**: Ensure you're on Arbitrum Sepolia testnet
-3. **Deposit Assets**: Choose amount and deposit ERC-20 tokens
-4. **Earn Yield**: Your assets automatically generate returns
-5. **Withdraw**: Redeem shares for assets + yield anytime
+2. **Register Profile**: Set username and bio (one-time setup)
+3. **Create Vault**: Deploy your personal ERC-4626 vault
+4. **Deposit Assets**: Choose amount and deposit ERC-20 tokens
+5. **Configure Strategy**: Set allocations for Aave, Compound, Uniswap
+6. **Monitor Performance**: Track vault performance and yield generation
+7. **Manage Vault**: Pause/unpause, update settings, transfer shares
 
-### For Vault Managers
-1. **Monitor Performance**: Track vault performance and yield generation
-2. **Manage Strategies**: Configure automated yield strategies
-3. **Harvest Yield**: Collect and distribute generated returns
+### For Admins
+1. **Access Admin Panel**: Click "SmartVault" in footer (admin access required)
+2. **Configure Protocols**: Set addresses for DeFi protocols
+3. **Manage Admins**: Add/remove administrators
+4. **Monitor Platform**: Track total vaults, users, and platform health
+5. **System Settings**: Manage contract configuration and network settings
 
 ## 🔧 Configuration
 
 ### Environment Variables
 Create a `.env.local` file in the frontend directory:
 ```env
-NEXT_PUBLIC_CONTRACT_ADDRESS=0x89a2c29b55fb31e5739682f5b9ae3a004e7a1a54
+NEXT_PUBLIC_VAULT_FACTORY_ADDRESS=0x013afa35ae6860a0ff04b00ee20f3332523fca82
 NEXT_PUBLIC_CHAIN_ID=421614
 NEXT_PUBLIC_RPC_URL=https://arbitrum-sepolia-rpc.publicnode.com
+```
+
+### Contract Address Management
+Contract addresses are centrally managed in `constants/contractAddresses.ts`:
+```typescript
+export const VAULT_FACTORY_ADDRESS = "0x013afa35ae6860a0ff04b00ee20f3332523fca82" as `0x${string}`;
 ```
 
 ### Network Configuration
