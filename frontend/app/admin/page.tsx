@@ -223,10 +223,10 @@ const AdminDashboard = () => {
           {!isConnected ? (
             <p className="text-sm text-gray-500">Please connect your wallet first</p>
           ) : (
-            <div className="text-sm text-gray-500 space-y-1">
-              <p>Connected as: {address?.slice(0, 6)}...{address?.slice(-4)}</p>
-              <p>Deployer Admin: {deployerAdmin?.slice(0, 6)}...{deployerAdmin?.slice(-4)}</p>
-              <p>Total Admins: {adminCount}</p>
+            <div className="text-sm text-gray-600 space-y-1">
+              <p className="font-medium">Connected as: <span className="text-gray-800 font-mono">{address?.slice(0, 6)}...{address?.slice(-4)}</span></p>
+              <p className="font-medium">Deployer Admin: <span className="text-gray-800 font-mono">{deployerAdmin?.slice(0, 6)}...{deployerAdmin?.slice(-4)}</span></p>
+              <p className="font-medium">Total Admins: <span className="text-gray-800">{adminCount}</span></p>
             </div>
           )}
         </div>
@@ -320,18 +320,18 @@ const AdminDashboard = () => {
                   <div className="flex items-center">
                     <div className="w-4 h-4 bg-blue-500 rounded mr-3"></div>
                     <div>
-                      <span className="font-medium">Aave (Lending)</span>
-                      <p className="text-xs text-gray-500 font-mono">
+                      <span className="font-semibold text-gray-800">Aave (Lending)</span>
+                      <p className="text-xs text-gray-700 font-mono font-medium">
                         {contractProtocolAddresses.aave === "0x0000000000000000000000000000000000000000" 
                           ? "Not configured" 
                           : `${contractProtocolAddresses.aave.slice(0, 6)}...${contractProtocolAddresses.aave.slice(-4)}`}
                       </p>
                     </div>
                   </div>
-                  <span className={`px-2 py-1 rounded-full text-xs ${
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                     contractProtocolAddresses.aave === "0x0000000000000000000000000000000000000000" 
-                      ? "bg-red-100 text-red-600" 
-                      : "bg-green-100 text-green-600"
+                      ? "bg-red-100 text-red-700" 
+                      : "bg-green-100 text-green-700"
                   }`}>
                     {contractProtocolAddresses.aave === "0x0000000000000000000000000000000000000000" ? "Not Set" : "Active"}
                   </span>
@@ -341,18 +341,18 @@ const AdminDashboard = () => {
                   <div className="flex items-center">
                     <div className="w-4 h-4 bg-green-500 rounded mr-3"></div>
                     <div>
-                      <span className="font-medium">Compound (Lending)</span>
-                      <p className="text-xs text-gray-500 font-mono">
+                      <span className="font-semibold text-gray-800">Compound (Lending)</span>
+                      <p className="text-xs text-gray-700 font-mono font-medium">
                         {contractProtocolAddresses.compound === "0x0000000000000000000000000000000000000000" 
                           ? "Not configured" 
                           : `${contractProtocolAddresses.compound.slice(0, 6)}...${contractProtocolAddresses.compound.slice(-4)}`}
                       </p>
                     </div>
                   </div>
-                  <span className={`px-2 py-1 rounded-full text-xs ${
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                     contractProtocolAddresses.compound === "0x0000000000000000000000000000000000000000" 
-                      ? "bg-red-100 text-red-600" 
-                      : "bg-green-100 text-green-600"
+                      ? "bg-red-100 text-red-700" 
+                      : "bg-green-100 text-green-700"
                   }`}>
                     {contractProtocolAddresses.compound === "0x0000000000000000000000000000000000000000" ? "Not Set" : "Active"}
                   </span>
@@ -362,18 +362,18 @@ const AdminDashboard = () => {
                   <div className="flex items-center">
                     <div className="w-4 h-4 bg-purple-500 rounded mr-3"></div>
                     <div>
-                      <span className="font-medium">Uniswap (Liquidity Pools)</span>
-                      <p className="text-xs text-gray-500 font-mono">
+                      <span className="font-semibold text-gray-800">Uniswap (Liquidity Pools)</span>
+                      <p className="text-xs text-gray-700 font-mono font-medium">
                         {contractProtocolAddresses.uniswap === "0x0000000000000000000000000000000000000000" 
                           ? "Not configured" 
                           : `${contractProtocolAddresses.uniswap.slice(0, 6)}...${contractProtocolAddresses.uniswap.slice(-4)}`}
                       </p>
                     </div>
                   </div>
-                  <span className={`px-2 py-1 rounded-full text-xs ${
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                     contractProtocolAddresses.uniswap === "0x0000000000000000000000000000000000000000" 
-                      ? "bg-red-100 text-red-600" 
-                      : "bg-green-100 text-green-600"
+                      ? "bg-red-100 text-red-700" 
+                      : "bg-green-100 text-green-700"
                   }`}>
                     {contractProtocolAddresses.uniswap === "0x0000000000000000000000000000000000000000" ? "Not Set" : "Active"}
                   </span>
@@ -392,10 +392,10 @@ const AdminDashboard = () => {
                 {Object.entries(contractProtocolAddresses).map(([protocol, address]) => (
                   <div key={protocol} className="p-4 bg-gray-50 rounded-lg">
                     <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-lg font-semibold text-gray-800 capitalize">{protocol} Protocol</h3>
+                      <h3 className="text-lg font-bold text-gray-900 capitalize">{protocol} Protocol</h3>
                       <div className="text-right">
-                        <span className="text-sm text-gray-500">Current:</span>
-                        <code className="block text-xs bg-gray-200 px-2 py-1 rounded mt-1">
+                        <span className="text-sm text-gray-600 font-medium">Current:</span>
+                        <code className="block text-xs bg-gray-200 px-2 py-1 rounded mt-1 text-gray-800 font-medium">
                           {address === "0x0000000000000000000000000000000000000000" ? "Not set" : `${address.slice(0, 6)}...${address.slice(-4)}`}
                         </code>
                       </div>
@@ -439,7 +439,7 @@ const AdminDashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm text-gray-600">Deployer Admin</p>
-                    <p className="font-mono text-sm">{deployerAdmin}</p>
+                    <p className="font-mono text-sm text-gray-800 font-medium">{deployerAdmin}</p>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Total Admins</p>
@@ -509,9 +509,9 @@ const AdminDashboard = () => {
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <h2 className="text-2xl font-bold text-[#213046] mb-6">Recent Vaults</h2>
               <div className="space-y-4">
-                <div className="text-center py-8 text-gray-500">
-                  <p>No vaults created yet</p>
-                  <p className="text-sm">Vaults will appear here once users start creating them</p>
+                <div className="text-center py-8 text-gray-600">
+                  <p className="font-medium">No vaults created yet</p>
+                  <p className="text-sm text-gray-500">Vaults will appear here once users start creating them</p>
                 </div>
               </div>
             </div>
@@ -541,7 +541,7 @@ const AdminDashboard = () => {
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <h3 className="text-lg font-semibold text-gray-800 mb-3">Factory Contract</h3>
                   <p className="text-sm text-gray-600 mb-2">VaultFactory Address:</p>
-                  <code className="block bg-gray-200 px-3 py-2 rounded text-sm font-mono">{VAULT_FACTORY_ADDRESS}</code>
+                  <code className="block bg-gray-200 px-3 py-2 rounded text-sm font-mono text-gray-800 font-medium">{VAULT_FACTORY_ADDRESS}</code>
                 </div>
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <h3 className="text-lg font-semibold text-gray-800 mb-3">Network</h3>
