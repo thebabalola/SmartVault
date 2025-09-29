@@ -296,4 +296,4 @@ MIT License - see individual component READMEs for specific licensing informatio
 
 ---
 
-**Smart Vault** - Your Digital Piggy Bank That Actually Grows Your Money 🏦💰
+**Smart Vault** - Your Digital Piggy Bank That Actually Grows Your Money 🏦💰🏦💰
