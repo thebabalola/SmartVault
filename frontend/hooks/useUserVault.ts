@@ -222,7 +222,10 @@ export const useUserVault = (vaultAddress: `0x${string}` | undefined) => {
 
   return {
     // Vault Information
-    vaultInfo: { owner: vaultOwner, balance: vaultBalance },
+    vaultInfo: { 
+      owner: vaultOwner ? vaultOwner.toString() : null, 
+      balance: vaultBalance ? vaultBalance.toString() : null 
+    },
     name: "Vault",
     symbol: "VAULT",
     decimals: 18,
