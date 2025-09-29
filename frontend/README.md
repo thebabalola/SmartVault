@@ -123,8 +123,8 @@ frontend/
 
 ### Contract Details
 - **Network**: Arbitrum Sepolia Testnet (Chain ID: 421614)
-- **VaultFactory**: `0x013afa35ae6860a0ff04b00ee20f3332523fca82`
-- **Explorer**: [Arbiscan](https://sepolia.arbiscan.io/address/0x013afa35ae6860a0ff04b00ee20f3332523fca82)
+- **VaultFactory**: `0x797d8cccc849588032d4490dad4ec9e4fde09c53`
+- **Explorer**: [Arbiscan](https://sepolia.arbiscan.io/address/0x797d8cccc849588032d4490dad4ec9e4fde09c53)
 
 ### VaultFactory Functions
 - `createVault()`: Deploy new UserVault for user
@@ -164,7 +164,7 @@ frontend/
 ### Environment Variables
 Create a `.env.local` file in the frontend directory:
 ```env
-NEXT_PUBLIC_VAULT_FACTORY_ADDRESS=0x013afa35ae6860a0ff04b00ee20f3332523fca82
+NEXT_PUBLIC_VAULT_FACTORY_ADDRESS=0x797d8cccc849588032d4490dad4ec9e4fde09c53
 NEXT_PUBLIC_CHAIN_ID=421614
 NEXT_PUBLIC_RPC_URL=https://arbitrum-sepolia-rpc.publicnode.com
 ```
@@ -172,7 +172,7 @@ NEXT_PUBLIC_RPC_URL=https://arbitrum-sepolia-rpc.publicnode.com
 ### Contract Address Management
 Contract addresses are centrally managed in `constants/contractAddresses.ts`:
 ```typescript
-export const VAULT_FACTORY_ADDRESS = "0x013afa35ae6860a0ff04b00ee20f3332523fca82" as `0x${string}`;
+export const VAULT_FACTORY_ADDRESS = "0x797d8cccc849588032d4490dad4ec9e4fde09c53" as `0x${string}`;
 ```
 
 ### Network Configuration

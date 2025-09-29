@@ -4,7 +4,7 @@ A comprehensive DeFi platform featuring a factory-based vault system with ERC-46
 
 ## 📍 Contract Address
 
-**VaultFactory Contract**: `0x013afa35ae6860a0ff04b00ee20f3332523fca82`  
+**VaultFactory Contract**: `0x797d8cccc849588032d4490dad4ec9e4fde09c53`  
 **Network**: Arbitrum Sepolia Testnet  
 **Contract Size**: 18.6 KiB (19,027 bytes)
 
@@ -208,13 +208,14 @@ SmartVault/
 ```bash
 cd smartvault-contract
 cargo check
+source .env 
 cargo stylus deploy -e $(TESTNET_RPC_URL) --no-verify --private-key $(PRIVATE_KEY)
 cargo stylus export-abi --json --output gig1.json
 ```
 
 ### 2. Initialize Contract
 ```bash
-cast send --rpc-url $(TESTNET_RPC_URL) --private-key $(PRIVATE_KEY) 0x013afa35ae6860a0ff04b00ee20f3332523fca82 "init()"
+cast send --rpc-url $(TESTNET_RPC_URL) --private-key $(PRIVATE_KEY) 0x797d8cccc849588032d4490dad4ec9e4fde09c53 "init()"
 ```
 
 ### 3. Frontend Setup
