@@ -170,6 +170,9 @@ impl UserVault {
         // Calculate shares to mint
         let shares = self._calculate_shares(amount)?;
         
+        // Transfer assets from user to vault
+        self._transfer_assets_from_user(user, amount)?;
+        
         // Update balances
         let mut user_balance = self.balances.setter(user);
         let current_balance = user_balance.get();
@@ -212,6 +215,9 @@ impl UserVault {
         if shares_to_burn > user_balance {
             return Err("Insufficient shares".into());
         }
+
+        // Transfer assets from vault to user
+        self._transfer_assets_to_user(user, amount)?;
 
         // Update balances
         let mut user_balance_setter = self.balances.setter(user);
@@ -703,6 +709,41 @@ impl UserVault {
         let data = [
             &selector[..],
             &protocol.into_array(),
+            &amount.to_be_bytes::<32>(),
+        ].concat();
+
+        unsafe {
+            let _ = RawCall::new().call(self.asset.get(), &data);
+        }
+
+        Ok(())
+    }
+
+    /// Internal function to transfer assets from user to vault
+    fn _transfer_assets_from_user(&mut self, user: Address, amount: U256) -> Result<(), Vec<u8>> {
+        // Call asset's transferFrom function
+        let selector = function_selector!("transferFrom(address,address,uint256)");
+        let data = [
+            &selector[..],
+            &user.into_array(),
+            &self.vm().contract_address().into_array(),
+            &amount.to_be_bytes::<32>(),
+        ].concat();
+
+        unsafe {
+            let _ = RawCall::new().call(self.asset.get(), &data);
+        }
+
+        Ok(())
+    }
+
+    /// Internal function to transfer assets from vault to user
+    fn _transfer_assets_to_user(&mut self, user: Address, amount: U256) -> Result<(), Vec<u8>> {
+        // Call asset's transfer function
+        let selector = function_selector!("transfer(address,uint256)");
+        let data = [
+            &selector[..],
+            &user.into_array(),
             &amount.to_be_bytes::<32>(),
         ].concat();
 
