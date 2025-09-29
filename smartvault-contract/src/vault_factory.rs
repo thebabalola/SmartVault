@@ -14,6 +14,10 @@ sol_storage! {
         mapping(address => address) vault_owners;
         /// Vault creation timestamps
         mapping(address => uint256) vault_created_at;
+        /// Vault IDs
+        mapping(address => uint256) vault_ids;
+        /// Vault balances
+        mapping(address => uint256) vault_balances;
         /// Vault usernames (as hashes)
         mapping(address => bytes32) vault_username_hashes;
         /// Vault bios (as hashes)
@@ -61,6 +65,16 @@ sol! {
     event UserRegistered(
         address indexed user,
         uint256 timestamp
+    );
+    event VaultDeposit(
+        address indexed vault,
+        address indexed user,
+        uint256 amount
+    );
+    event VaultWithdraw(
+        address indexed vault,
+        address indexed user,
+        uint256 amount
     );
 }
 
@@ -115,6 +129,8 @@ impl VaultFactory {
     }
 
     /// Creates a new vault for a registered user
+    /// Note: This creates a vault entry in the factory, not a separate contract
+    /// The vault functionality is handled by the factory itself
     pub fn create_vault(&mut self) -> Result<Address, Vec<u8>> {
         let user = self.vm().msg_sender();
         
@@ -123,14 +139,16 @@ impl VaultFactory {
             return Err("User not registered".into());
         }
 
-        // Generate vault address (simplified - in production, use CREATE2)
-        let vault_address = self._generate_vault_address();
+        // Generate a unique vault ID for this user
+        let vault_id = self.total_vaults.get() + U256::ONE;
+        let vault_address = self._generate_vault_address(user, vault_id);
         
         // Store vault info
         let timestamp = U256::from(self.vm().block_timestamp());
         
         self.vault_owners.setter(vault_address).set(user);
         self.vault_created_at.setter(vault_address).set(timestamp);
+        self.vault_ids.setter(vault_address).set(vault_id);
         
         // Get user's profile data from registration
         let username_hash = self.user_username_hashes.get(user);
@@ -143,7 +161,7 @@ impl VaultFactory {
         vaults.push(vault_address);
         
         // Update total vaults
-        self.total_vaults.set(self.total_vaults.get() + U256::ONE);
+        self.total_vaults.set(vault_id);
         
         // Emit event
         log(self.vm(), VaultCreated {
@@ -323,6 +341,63 @@ impl VaultFactory {
         Ok(self.deployer_admin.get())
     }
 
+    // ===== VAULT MANAGEMENT FUNCTIONS =====
+
+    /// Deposits assets into a vault
+    pub fn deposit_to_vault(&mut self, vault_address: Address, amount: U256) -> Result<U256, Vec<u8>> {
+        let user = self.vm().msg_sender();
+        
+        // Check if user owns this vault
+        if self.vault_owners.get(vault_address) != user {
+            return Err("Not vault owner".into());
+        }
+
+        // For now, we'll implement a simplified deposit that just tracks the amount
+        // In a real implementation, this would interact with the actual vault contract
+        let current_balance = self.vault_balances.getter(vault_address).get();
+        self.vault_balances.setter(vault_address).set(current_balance + amount);
+        
+        // Emit deposit event
+        log(self.vm(), VaultDeposit {
+            vault: vault_address,
+            user,
+            amount,
+        });
+
+        Ok(amount)
+    }
+
+    /// Withdraws assets from a vault
+    pub fn withdraw_from_vault(&mut self, vault_address: Address, amount: U256) -> Result<U256, Vec<u8>> {
+        let user = self.vm().msg_sender();
+        
+        // Check if user owns this vault
+        if self.vault_owners.get(vault_address) != user {
+            return Err("Not vault owner".into());
+        }
+
+        let current_balance = self.vault_balances.getter(vault_address).get();
+        if current_balance < amount {
+            return Err("Insufficient balance".into());
+        }
+
+        self.vault_balances.setter(vault_address).set(current_balance - amount);
+        
+        // Emit withdraw event
+        log(self.vm(), VaultWithdraw {
+            vault: vault_address,
+            user,
+            amount,
+        });
+
+        Ok(amount)
+    }
+
+    /// Gets vault balance
+    pub fn get_vault_balance(&self, vault_address: Address) -> Result<U256, Vec<u8>> {
+        Ok(self.vault_balances.getter(vault_address).get())
+    }
+
     /// Check if address is admin
     pub fn check_is_admin(&self, addr: Address) -> Result<bool, Vec<u8>> {
         Ok(self.is_admin(addr))
@@ -366,12 +441,13 @@ impl VaultFactory {
 
     // ===== INTERNAL FUNCTIONS =====
 
-    /// Generates a vault address (simplified - in production, use CREATE2)
-    fn _generate_vault_address(&self) -> Address {
+    /// Generates a deterministic vault address for a user
+    fn _generate_vault_address(&self, user: Address, vault_id: U256) -> Address {
         let mut data = Vec::new();
-        data.extend_from_slice(self.vm().msg_sender().as_slice());
-        data.extend_from_slice(&self.total_vaults.get().to_be_bytes::<32>());
+        data.extend_from_slice(user.as_slice());
+        data.extend_from_slice(&vault_id.to_be_bytes::<32>());
         data.extend_from_slice(&self.vm().block_timestamp().to_be_bytes());
+        data.extend_from_slice(b"UserVault");
         
         use stylus_sdk::crypto::keccak;
         let hash = keccak(&data);
