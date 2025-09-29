@@ -13,7 +13,7 @@ const AdminDashboard = () => {
   const { isConnected, address } = useAccount();
   const [activeTab, setActiveTab] = useState('overview');
   const [isPending, setIsPending] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  // const [isAdmin, setIsAdmin] = useState(false); // Removed - admin access restriction disabled
   const [isCheckingAdmin, setIsCheckingAdmin] = useState(true);
   
   // VaultFactory integration
@@ -57,7 +57,6 @@ const AdminDashboard = () => {
     // Check if connected address is admin
     const checkAdminStatus = async () => {
       if (!isConnected || !address) {
-        setIsAdmin(false);
         setIsCheckingAdmin(false);
         return;
       }
@@ -69,10 +68,10 @@ const AdminDashboard = () => {
           return;
         }
 
-        setIsAdmin(Boolean(isCurrentUserAdmin));
+        // Admin status is now available via isCurrentUserAdmin from useVaultFactory
+        // No need to store in local state since access restriction is disabled
       } catch (error) {
         console.error('Error checking admin status:', error);
-        setIsAdmin(false);
       } finally {
         setIsCheckingAdmin(false);
       }

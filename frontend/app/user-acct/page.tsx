@@ -370,10 +370,10 @@ const UserProfile = () => {
                           key={index} 
                           vaultAddress={vault} 
                           vaultIndex={index}
-                          onManageClick={(vaultAddress, vaultIndex) => {
-                            setActiveTab('manage');
-                            setSelectedVault(vaultAddress);
-                          }}
+            onManageClick={(vaultAddress) => {
+              setActiveTab('manage');
+              setSelectedVault(vaultAddress);
+            }}
                         />
                       ))}
                     </div>

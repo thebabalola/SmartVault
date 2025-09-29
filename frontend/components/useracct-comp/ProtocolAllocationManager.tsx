@@ -16,7 +16,7 @@ const ProtocolAllocationManager: React.FC<ProtocolAllocationManagerProps> = ({ v
     uniswapAllocation,
     totalAssets,
     userValue,
-    setProtocolAllocation,
+    // setProtocolAllocation, // Disabled in VaultFactory mode
     isPending
   } = useUserVault(vaultAddress);
 
@@ -43,18 +43,10 @@ const ProtocolAllocationManager: React.FC<ProtocolAllocationManagerProps> = ({ v
   };
 
   const handleSaveAllocations = async () => {
-    try {
-      for (const [protocol, amount] of Object.entries(allocations)) {
-        if (amount && parseFloat(amount) > 0) {
-          await setProtocolAllocation(protocol, amount);
-        }
-      }
-      setIsEditing(false);
-      setAllocations({ aave: '', compound: '', uniswap: '' });
-    } catch (error) {
-      console.error('Error updating allocations:', error);
-      alert(`Error updating allocations: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
+    // In VaultFactory mode, protocol allocations are not yet implemented
+    alert('Protocol allocations are not yet available in VaultFactory mode. This feature will be added in a future update.');
+    setIsEditing(false);
+    setAllocations({ aave: '', compound: '', uniswap: '' });
   };
 
   const calculateTotalAllocation = () => {
@@ -75,9 +67,14 @@ const ProtocolAllocationManager: React.FC<ProtocolAllocationManagerProps> = ({ v
           <div className="flex items-center">
             <Target className="mr-3 w-5 h-5 text-[#49ABFE]" />
             <div>
-              <h3 className="text-xl font-bold text-[#213046]">
-                Vault #{vaultIndex + 1} - Protocol Allocations
-              </h3>
+              <div className="flex items-center gap-2">
+                <h3 className="text-xl font-bold text-[#213046]">
+                  Vault #{vaultIndex + 1} - Protocol Allocations
+                </h3>
+                <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs font-medium rounded-full">
+                  Coming Soon
+                </span>
+              </div>
               <p className="text-sm text-gray-600 mt-1">
                 Balance: <span className="font-semibold text-[#49ABFE]">${userValue}</span>
               </p>
@@ -107,6 +104,28 @@ const ProtocolAllocationManager: React.FC<ProtocolAllocationManagerProps> = ({ v
       {/* Collapsible Content */}
       {isExpanded && (
         <div className="p-6">
+          {/* Feature Notice */}
+          <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div className="flex items-start">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-yellow-800">
+                  Protocol Allocations Coming Soon
+                </h3>
+                <div className="mt-2 text-sm text-yellow-700">
+                  <p>
+                    Protocol allocation management is not yet available in VaultFactory mode. 
+                    This feature will allow you to automatically distribute your vault assets across 
+                    multiple DeFi protocols (Aave, Compound, Uniswap) for optimal yield generation.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
 
       {/* Current Allocations */}
       <div className="mb-6">

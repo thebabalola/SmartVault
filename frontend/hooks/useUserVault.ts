@@ -7,7 +7,7 @@ import { VAULT_FACTORY_ADDRESS } from "../constants/contractAddresses";
 
 export const useUserVault = (vaultAddress: `0x${string}` | undefined) => {
   const { address, isConnected } = useAccount();
-  const { writeContract, isPending } = useWriteContract();
+  const { writeContract, isPending, data: writeData } = useWriteContract();
 
   // Vault Information
   const { data: vaultOwner } = useReadContract({
@@ -41,19 +41,19 @@ export const useUserVault = (vaultAddress: `0x${string}` | undefined) => {
   const asset = "0x0000000000000000000000000000000000000000" as `0x${string}`;
 
   // Protocol Allocations - using static values for now
-  const aaveAllocation = 0n;
-  const compoundAllocation = 0n;
-  const uniswapAllocation = 0n;
+  const aaveAllocation = BigInt(0);
+  const compoundAllocation = BigInt(0);
+  const uniswapAllocation = BigInt(0);
 
   // Additional Read Functions - using static values for now
   const isPaused = false;
-  const maxDeposit = 0n;
-  const maxWithdraw = 0n;
-  const maxMint = 0n;
-  const maxRedeem = 0n;
+  const maxDeposit = BigInt(0);
+  const maxWithdraw = BigInt(0);
+  const maxMint = BigInt(0);
+  const maxRedeem = BigInt(0);
 
   // Write Functions
-  const deposit = async (amount: string) => {
+  const deposit = async (amount: string): Promise<string> => {
     if (!isConnected || !vaultAddress) {
       throw new Error("Please connect your wallet first");
     }
@@ -61,17 +61,20 @@ export const useUserVault = (vaultAddress: `0x${string}` | undefined) => {
     const decimalsValue = decimals ? Number(decimals) : 18;
     const amountWei = parseUnits(amount, decimalsValue);
 
-    const hash = await writeContract({
-      address: VAULT_FACTORY_ADDRESS,
-      abi: VaultFactoryABI,
-      functionName: 'depositToVault',
-      args: [vaultAddress as `0x${string}`, amountWei],
+    return new Promise((resolve, reject) => {
+      writeContract({
+        address: VAULT_FACTORY_ADDRESS,
+        abi: VaultFactoryABI,
+        functionName: 'depositToVault',
+        args: [vaultAddress as `0x${string}`, amountWei],
+      }, {
+        onSuccess: (hash) => resolve(hash),
+        onError: (error) => reject(error)
+      });
     });
-
-    return hash;
   };
 
-  const withdraw = async (amount: string) => {
+  const withdraw = async (amount: string): Promise<string> => {
     if (!isConnected || !vaultAddress) {
       throw new Error("Please connect your wallet first");
     }
@@ -79,17 +82,20 @@ export const useUserVault = (vaultAddress: `0x${string}` | undefined) => {
     const decimalsValue = decimals ? Number(decimals) : 18;
     const amountWei = parseUnits(amount, decimalsValue);
 
-    const hash = await writeContract({
-      address: VAULT_FACTORY_ADDRESS,
-      abi: VaultFactoryABI,
-      functionName: 'withdrawFromVault',
-      args: [vaultAddress as `0x${string}`, amountWei],
+    return new Promise((resolve, reject) => {
+      writeContract({
+        address: VAULT_FACTORY_ADDRESS,
+        abi: VaultFactoryABI,
+        functionName: 'withdrawFromVault',
+        args: [vaultAddress as `0x${string}`, amountWei],
+      }, {
+        onSuccess: (hash) => resolve(hash),
+        onError: (error) => reject(error)
+      });
     });
-
-    return hash;
   };
 
-  const mint = async (shares: string) => {
+  const mint = async (shares: string): Promise<string> => {
     if (!isConnected || !vaultAddress) {
       throw new Error("Please connect your wallet first");
     }
@@ -98,17 +104,20 @@ export const useUserVault = (vaultAddress: `0x${string}` | undefined) => {
     const sharesWei = parseUnits(shares, decimalsValue);
 
     // Mint is not directly supported in VaultFactory, using deposit instead
-    const hash = await writeContract({
-      address: VAULT_FACTORY_ADDRESS,
-      abi: VaultFactoryABI,
-      functionName: 'depositToVault',
-      args: [vaultAddress as `0x${string}`, sharesWei],
+    return new Promise((resolve, reject) => {
+      writeContract({
+        address: VAULT_FACTORY_ADDRESS,
+        abi: VaultFactoryABI,
+        functionName: 'depositToVault',
+        args: [vaultAddress as `0x${string}`, sharesWei],
+      }, {
+        onSuccess: (hash) => resolve(hash),
+        onError: (error) => reject(error)
+      });
     });
-
-    return hash;
   };
 
-  const redeem = async (shares: string) => {
+  const redeem = async (shares: string): Promise<string> => {
     if (!isConnected || !vaultAddress) {
       throw new Error("Please connect your wallet first");
     }
@@ -117,14 +126,17 @@ export const useUserVault = (vaultAddress: `0x${string}` | undefined) => {
     const sharesWei = parseUnits(shares, decimalsValue);
 
     // Redeem is not directly supported in VaultFactory, using withdraw instead
-    const hash = await writeContract({
-      address: VAULT_FACTORY_ADDRESS,
-      abi: VaultFactoryABI,
-      functionName: 'withdrawFromVault',
-      args: [vaultAddress as `0x${string}`, sharesWei],
+    return new Promise((resolve, reject) => {
+      writeContract({
+        address: VAULT_FACTORY_ADDRESS,
+        abi: VaultFactoryABI,
+        functionName: 'withdrawFromVault',
+        args: [vaultAddress as `0x${string}`, sharesWei],
+      }, {
+        onSuccess: (hash) => resolve(hash),
+        onError: (error) => reject(error)
+      });
     });
-
-    return hash;
   };
 
   // DeFi Strategy Functions - Not available in VaultFactory
