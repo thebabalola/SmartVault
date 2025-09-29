@@ -22,6 +22,11 @@ sol_storage! {
         mapping(address => bytes32) vault_username_hashes;
         /// Vault bios (as hashes)
         mapping(address => bytes32) vault_bio_hashes;
+        
+        /// Protocol allocations for each vault
+        mapping(address => uint256) vault_aave_allocation;
+        mapping(address => uint256) vault_compound_allocation;
+        mapping(address => uint256) vault_uniswap_allocation;
         /// Total number of vaults created
         uint256 total_vaults;
         
@@ -75,6 +80,12 @@ sol! {
         address indexed vault,
         address indexed user,
         uint256 amount
+    );
+    event ProtocolAllocationSet(
+        address indexed vault,
+        address indexed user,
+        string protocol,
+        uint256 allocation
     );
 }
 
