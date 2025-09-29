@@ -211,29 +211,8 @@ const AdminDashboard = () => {
     );
   }
 
-  // Show access denied if not admin
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center max-w-md mx-auto px-6">
-          <div className="text-6xl mb-6">🔒</div>
-          <h1 className="text-3xl font-bold text-[#213046] mb-4">Access Denied</h1>
-          <p className="text-gray-600 mb-6">
-            You don&apos;t have admin privileges to access this dashboard.
-          </p>
-          {!isConnected ? (
-            <p className="text-sm text-gray-500">Please connect your wallet first</p>
-          ) : (
-            <div className="text-sm text-gray-600 space-y-1">
-              <p className="font-medium">Connected as: <span className="text-gray-800 font-mono">{address?.slice(0, 6)}...{address?.slice(-4)}</span></p>
-              <p className="font-medium">Deployer Admin: <span className="text-gray-800 font-mono">{deployerAdmin?.slice(0, 6)}...{deployerAdmin?.slice(-4)}</span></p>
-              <p className="font-medium">Total Admins: <span className="text-gray-800">{adminCount}</span></p>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
+  // Admin access restriction removed - anyone can view the admin page
+  // Only admin functions will be restricted based on isCurrentUserAdmin
 
   return (
     <div className="min-h-screen bg-gray-50">

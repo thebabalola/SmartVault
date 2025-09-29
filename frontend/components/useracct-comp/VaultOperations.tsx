@@ -37,31 +37,36 @@ const VaultOperations: React.FC<VaultOperationsProps> = ({ vaultAddress, vaultIn
     }
 
     try {
+      let txHash: string;
+      
       switch (operation) {
         case 'deposit':
-          await deposit(amount);
+          txHash = await deposit(amount);
           break;
         case 'withdraw':
-          await withdraw(amount);
+          txHash = await withdraw(amount);
           break;
         case 'mint':
           if (!receiver) {
             alert('Please enter receiver address for minting');
             return;
           }
-          await mint(amount);
+          txHash = await mint(amount);
           break;
         case 'redeem':
           if (!receiver) {
             alert('Please enter receiver address for redeeming');
             return;
           }
-          await redeem(amount);
+          txHash = await redeem(amount);
           break;
+        default:
+          throw new Error('Invalid operation');
       }
+      
       setAmount('');
       setReceiver('');
-      alert('Transaction submitted successfully!');
+      alert(`Transaction submitted successfully! Hash: ${txHash}`);
     } catch (error) {
       console.error('Error performing operation:', error);
       alert(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);

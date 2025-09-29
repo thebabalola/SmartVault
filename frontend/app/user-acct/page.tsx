@@ -32,9 +32,15 @@ const UserProfile = () => {
   const [animationClass, setAnimationClass] = useState('');
   const [userProfile, setUserProfile] = useState<{username: string, bio: string} | null>(null);
   const [isProfileSetupComplete, setIsProfileSetupComplete] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const [selectedVault, setSelectedVault] = useState<`0x${string}` | null>(null);
   const [activeDropdown, setActiveDropdown] = useState<'shareTransfer' | 'vaultManagement' | null>(null);
   const [showProTip, setShowProTip] = useState(false);
+
+  // Set client state to prevent hydration mismatch
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Helper function to format timestamp
   const formatRegistrationDate = (timestamp: number) => {
@@ -177,7 +183,7 @@ const UserProfile = () => {
 
 
   // Show profile setup if not completed
-  if (isConnected && !isProfileSetupComplete) {
+  if (isClient && isConnected && !isProfileSetupComplete) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
@@ -191,8 +197,24 @@ const UserProfile = () => {
     );
   }
 
-  // Show connect wallet message if not connected
-  if (!isConnected) {
+  // Show loading state during hydration
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <div className="max-w-6xl mx-auto px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-24">
+          <div className="text-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#49ABFE] mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading...</p>
+          </div>
+        </div>
+        <Footer scrollToSection={() => {}} />
+      </div>
+    );
+  }
+
+  // Show connect wallet message if not connected (only on client)
+  if (isClient && !isConnected) {
     return (
       <div className="min-h-screen bg-gray-50">
         <Header />
@@ -347,7 +369,11 @@ const UserProfile = () => {
                         <VaultCard 
                           key={index} 
                           vaultAddress={vault} 
-                          vaultIndex={index} 
+                          vaultIndex={index}
+                          onManageClick={(vaultAddress, vaultIndex) => {
+                            setActiveTab('manage');
+                            setSelectedVault(vaultAddress);
+                          }}
                         />
                       ))}
                     </div>

@@ -4,7 +4,7 @@ A comprehensive DeFi platform featuring a factory-based vault system with ERC-46
 
 ## 📍 Contract Address
 
-**VaultFactory Contract**: `0x797d8cccc849588032d4490dad4ec9e4fde09c53`  
+**VaultFactory Contract**: `0x4ba6482edb1d6a7a3b411a46b1573f427c81d0eb`  
 **Network**: Arbitrum Sepolia Testnet  
 **Contract Size**: 18.6 KiB (19,027 bytes)
 
@@ -215,7 +215,7 @@ cargo stylus export-abi --json --output gig1.json
 
 ### 2. Initialize Contract
 ```bash
-cast send --rpc-url $(TESTNET_RPC_URL) --private-key $(PRIVATE_KEY) 0x797d8cccc849588032d4490dad4ec9e4fde09c53 "init()"
+cast send --rpc-url $(TESTNET_RPC_URL) --private-key $(PRIVATE_KEY) 0x4ba6482edb1d6a7a3b411a46b1573f427c81d0eb "init()"
 ```
 
 ### 3. Frontend Setup

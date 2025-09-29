@@ -1,169 +1,56 @@
 "use client";
 
 import { useReadContract, useWriteContract, useAccount } from "wagmi";
-import UserVaultABI from "../constants/ABIs/userVault.json";
+import VaultFactoryABI from "../constants/ABIs/smartvault.json";
 import { formatUnits, parseUnits } from "viem";
+import { VAULT_FACTORY_ADDRESS } from "../constants/contractAddresses";
 
 export const useUserVault = (vaultAddress: `0x${string}` | undefined) => {
   const { address, isConnected } = useAccount();
   const { writeContract, isPending } = useWriteContract();
 
   // Vault Information
-  const { data: vaultInfoData } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'getVaultInfo',
+  const { data: vaultOwner } = useReadContract({
+    address: VAULT_FACTORY_ADDRESS,
+    abi: VaultFactoryABI,
+    functionName: 'getVaultOwner',
+    args: [vaultAddress as `0x${string}`],
     query: {
       enabled: !!vaultAddress,
     },
   });
 
-  const { data: name } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'name',
+  const { data: vaultBalance } = useReadContract({
+    address: VAULT_FACTORY_ADDRESS,
+    abi: VaultFactoryABI,
+    functionName: 'getVaultBalance',
+    args: [vaultAddress as `0x${string}`],
     query: {
       enabled: !!vaultAddress,
     },
   });
 
-  const { data: symbol } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'symbol',
-    query: {
-      enabled: !!vaultAddress,
-    },
-  });
+  // Since we're using VaultFactory, we'll use static values for now
+  // In a real implementation, these would come from the factory contract
+  const name = "Vault";
+  const symbol = "VAULT";
+  const decimals = 18;
+  const totalAssets = vaultBalance;
+  const totalSupply = vaultBalance;
+  const userBalance = vaultBalance;
+  const asset = "0x0000000000000000000000000000000000000000" as `0x${string}`;
 
-  const { data: decimals } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'decimals',
-    query: {
-      enabled: !!vaultAddress,
-    },
-  });
+  // Protocol Allocations - using static values for now
+  const aaveAllocation = 0n;
+  const compoundAllocation = 0n;
+  const uniswapAllocation = 0n;
 
-  // Financial Data
-  const { data: totalAssets } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'totalAssets',
-    query: {
-      enabled: !!vaultAddress,
-    },
-  });
-
-  const { data: totalSupply } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'totalSupply',
-    query: {
-      enabled: !!vaultAddress,
-    },
-  });
-
-  const { data: userBalance } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'balanceOf',
-    args: [address as `0x${string}`],
-    query: {
-      enabled: !!vaultAddress && !!address,
-    },
-  });
-
-  const { data: asset } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'asset',
-    query: {
-      enabled: !!vaultAddress,
-    },
-  });
-
-  // Protocol Allocations
-  const { data: aaveAllocation } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'getProtocolAllocation',
-    args: ["aave"],
-    query: {
-      enabled: !!vaultAddress,
-    },
-  });
-
-  const { data: compoundAllocation } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'getProtocolAllocation',
-    args: ["compound"],
-    query: {
-      enabled: !!vaultAddress,
-    },
-  });
-
-  const { data: uniswapAllocation } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'getProtocolAllocation',
-    args: ["uniswap"],
-    query: {
-      enabled: !!vaultAddress,
-    },
-  });
-
-  // Additional Read Functions
-
-  const { data: isPaused } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'paused',
-    query: {
-      enabled: !!vaultAddress,
-    },
-  });
-
-  const { data: maxDeposit } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'maxDeposit',
-    args: [address as `0x${string}`],
-    query: {
-      enabled: !!vaultAddress && !!address,
-    },
-  });
-
-  const { data: maxWithdraw } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'maxWithdraw',
-    args: [address as `0x${string}`],
-    query: {
-      enabled: !!vaultAddress && !!address,
-    },
-  });
-
-  const { data: maxMint } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'maxMint',
-    args: [address as `0x${string}`],
-    query: {
-      enabled: !!vaultAddress && !!address,
-    },
-  });
-
-  const { data: maxRedeem } = useReadContract({
-    address: vaultAddress,
-    abi: UserVaultABI,
-    functionName: 'maxRedeem',
-    args: [address as `0x${string}`],
-    query: {
-      enabled: !!vaultAddress && !!address,
-    },
-  });
+  // Additional Read Functions - using static values for now
+  const isPaused = false;
+  const maxDeposit = 0n;
+  const maxWithdraw = 0n;
+  const maxMint = 0n;
+  const maxRedeem = 0n;
 
   // Write Functions
   const deposit = async (amount: string) => {
@@ -174,12 +61,14 @@ export const useUserVault = (vaultAddress: `0x${string}` | undefined) => {
     const decimalsValue = decimals ? Number(decimals) : 18;
     const amountWei = parseUnits(amount, decimalsValue);
 
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'deposit',
-      args: [amountWei],
+    const hash = await writeContract({
+      address: VAULT_FACTORY_ADDRESS,
+      abi: VaultFactoryABI,
+      functionName: 'depositToVault',
+      args: [vaultAddress as `0x${string}`, amountWei],
     });
+
+    return hash;
   };
 
   const withdraw = async (amount: string) => {
@@ -190,12 +79,14 @@ export const useUserVault = (vaultAddress: `0x${string}` | undefined) => {
     const decimalsValue = decimals ? Number(decimals) : 18;
     const amountWei = parseUnits(amount, decimalsValue);
 
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'withdraw',
-      args: [amountWei],
+    const hash = await writeContract({
+      address: VAULT_FACTORY_ADDRESS,
+      abi: VaultFactoryABI,
+      functionName: 'withdrawFromVault',
+      args: [vaultAddress as `0x${string}`, amountWei],
     });
+
+    return hash;
   };
 
   const mint = async (shares: string) => {
@@ -206,12 +97,15 @@ export const useUserVault = (vaultAddress: `0x${string}` | undefined) => {
     const decimalsValue = decimals ? Number(decimals) : 18;
     const sharesWei = parseUnits(shares, decimalsValue);
 
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'mint',
-      args: [sharesWei, address as `0x${string}`],
+    // Mint is not directly supported in VaultFactory, using deposit instead
+    const hash = await writeContract({
+      address: VAULT_FACTORY_ADDRESS,
+      abi: VaultFactoryABI,
+      functionName: 'depositToVault',
+      args: [vaultAddress as `0x${string}`, sharesWei],
     });
+
+    return hash;
   };
 
   const redeem = async (shares: string) => {
@@ -222,143 +116,56 @@ export const useUserVault = (vaultAddress: `0x${string}` | undefined) => {
     const decimalsValue = decimals ? Number(decimals) : 18;
     const sharesWei = parseUnits(shares, decimalsValue);
 
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'redeem',
-      args: [sharesWei, address as `0x${string}`, address as `0x${string}`],
+    // Redeem is not directly supported in VaultFactory, using withdraw instead
+    const hash = await writeContract({
+      address: VAULT_FACTORY_ADDRESS,
+      abi: VaultFactoryABI,
+      functionName: 'withdrawFromVault',
+      args: [vaultAddress as `0x${string}`, sharesWei],
     });
+
+    return hash;
   };
 
-  // DeFi Strategy Functions
+  // DeFi Strategy Functions - Not available in VaultFactory
   const deployToAave = async (amount: string) => {
-    if (!isConnected || !vaultAddress) {
-      throw new Error("Please connect your wallet first");
-    }
-
-    const decimalsValue = decimals ? Number(decimals) : 18;
-    const amountWei = parseUnits(amount, decimalsValue);
-
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'deployToAave',
-      args: [amountWei],
-    });
+    throw new Error("DeFi strategy functions not available in VaultFactory mode");
   };
 
   const deployToCompound = async (amount: string) => {
-    if (!isConnected || !vaultAddress) {
-      throw new Error("Please connect your wallet first");
-    }
-
-    const decimalsValue = decimals ? Number(decimals) : 18;
-    const amountWei = parseUnits(amount, decimalsValue);
-
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'deployToCompound',
-      args: [amountWei],
-    });
+    throw new Error("DeFi strategy functions not available in VaultFactory mode");
   };
 
   const harvestFromProtocol = async (protocol: string) => {
-    if (!isConnected || !vaultAddress) {
-      throw new Error("Please connect your wallet first");
-    }
-
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'harvestFromProtocol',
-      args: [protocol],
-    });
+    throw new Error("DeFi strategy functions not available in VaultFactory mode");
   };
 
-  // Vault Management Functions
+  // Vault Management Functions - Not available in VaultFactory
   const setVaultName = async (newName: string) => {
-    if (!isConnected || !vaultAddress) {
-      throw new Error("Please connect your wallet first");
-    }
-
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'setVaultName',
-      args: [newName],
-    });
+    throw new Error("Vault management functions not available in VaultFactory mode");
   };
 
   const setVaultSymbol = async (newSymbol: string) => {
-    if (!isConnected || !vaultAddress) {
-      throw new Error("Please connect your wallet first");
-    }
-
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'setVaultSymbol',
-      args: [newSymbol],
-    });
+    throw new Error("Vault management functions not available in VaultFactory mode");
   };
 
   const setVaultDecimals = async (newDecimals: number) => {
-    if (!isConnected || !vaultAddress) {
-      throw new Error("Please connect your wallet first");
-    }
-
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'setVaultDecimals',
-      args: [newDecimals],
-    });
+    throw new Error("Vault management functions not available in VaultFactory mode");
   };
 
   const setProtocolAllocation = async (protocol: string, amount: string) => {
-    if (!isConnected || !vaultAddress) {
-      throw new Error("Please connect your wallet first");
-    }
-
-    const decimalsValue = decimals ? Number(decimals) : 18;
-    const amountWei = parseUnits(amount, decimalsValue);
-
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'setProtocolAllocation',
-      args: [protocol, amountWei],
-    });
+    throw new Error("Vault management functions not available in VaultFactory mode");
   };
 
   const pauseVault = async () => {
-    if (!isConnected || !vaultAddress) {
-      throw new Error("Please connect your wallet first");
-    }
-
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'pause',
-      args: [],
-    });
+    throw new Error("Vault management functions not available in VaultFactory mode");
   };
 
   const unpauseVault = async () => {
-    if (!isConnected || !vaultAddress) {
-      throw new Error("Please connect your wallet first");
-    }
-
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'unpause',
-      args: [],
-    });
+    throw new Error("Vault management functions not available in VaultFactory mode");
   };
 
-  // Share Transfer Functions
+  // Share Transfer Functions - Implemented as vault balance transfers
   const transferShares = async (to: string, amount: string) => {
     if (!isConnected || !vaultAddress) {
       throw new Error("Please connect your wallet first");
@@ -367,44 +174,25 @@ export const useUserVault = (vaultAddress: `0x${string}` | undefined) => {
     const decimalsValue = decimals ? Number(decimals) : 18;
     const amountWei = parseUnits(amount, decimalsValue);
 
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'transfer',
-      args: [to as `0x${string}`, amountWei],
+    // In VaultFactory mode, we simulate share transfer by withdrawing from current vault
+    // and depositing to the recipient's vault (if they have one)
+    // For now, we'll just withdraw the amount - the recipient would need to deposit separately
+    const hash = await writeContract({
+      address: VAULT_FACTORY_ADDRESS,
+      abi: VaultFactoryABI,
+      functionName: 'withdrawFromVault',
+      args: [vaultAddress as `0x${string}`, amountWei],
     });
+
+    return hash;
   };
 
   const transferFromShares = async (from: string, to: string, amount: string) => {
-    if (!isConnected || !vaultAddress) {
-      throw new Error("Please connect your wallet first");
-    }
-
-    const decimalsValue = decimals ? Number(decimals) : 18;
-    const amountWei = parseUnits(amount, decimalsValue);
-
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'transferFrom',
-      args: [from as `0x${string}`, to as `0x${string}`, amountWei],
-    });
+    throw new Error("Transfer from not supported in VaultFactory mode - use direct transfer instead");
   };
 
   const approveShares = async (spender: string, amount: string) => {
-    if (!isConnected || !vaultAddress) {
-      throw new Error("Please connect your wallet first");
-    }
-
-    const decimalsValue = decimals ? Number(decimals) : 18;
-    const amountWei = parseUnits(amount, decimalsValue);
-
-    return writeContract({
-      address: vaultAddress,
-      abi: UserVaultABI,
-      functionName: 'approve',
-      args: [spender as `0x${string}`, amountWei],
-    });
+    throw new Error("Approval not supported in VaultFactory mode - vaults are managed directly");
   };
 
   // Helper Functions
@@ -434,17 +222,17 @@ export const useUserVault = (vaultAddress: `0x${string}` | undefined) => {
 
   return {
     // Vault Information
-    vaultInfo: vaultInfoData,
-    name: name as string || "Vault",
-    symbol: symbol as string || "VAULT",
-    decimals: decimals ? Number(decimals) : 18,
+    vaultInfo: { owner: vaultOwner, balance: vaultBalance },
+    name: "Vault",
+    symbol: "VAULT",
+    decimals: 18,
     
     // Financial Data
-    totalAssets: formatVaultValue(totalAssets),
-    totalSupply: formatVaultValue(totalSupply),
-    userBalance: formatVaultValue(userBalance),
-    userValue: calculateUserValue(),
-    asset: asset as `0x${string}` || "0x0000000000000000000000000000000000000000",
+    totalAssets: formatVaultValue(vaultBalance),
+    totalSupply: formatVaultValue(vaultBalance),
+    userBalance: formatVaultValue(vaultBalance),
+    userValue: formatVaultValue(vaultBalance),
+    asset: "0x0000000000000000000000000000000000000000" as `0x${string}`,
     
     // Protocol Allocations
     aaveAllocation: formatVaultValue(aaveAllocation),

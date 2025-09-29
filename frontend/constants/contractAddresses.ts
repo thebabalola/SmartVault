@@ -1,7 +1,7 @@
 // Smart Vault Contract Addresses
 export const CONTRACT_ADDRESSES = {
   // VaultFactory Contract on Arbitrum Sepolia Testnet
-  VAULT_FACTORY: "0x797d8cccc849588032d4490dad4ec9e4fde09c53" as `0x${string}`,
+  VAULT_FACTORY: "0x4ba6482edb1d6a7a3b411a46b1573f427c81d0eb" as `0x${string}`,
   
   // Add other contract addresses here as needed
   // USER_VAULT: "0x..." as `0x${string}`,

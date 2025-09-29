@@ -3,7 +3,7 @@
 import React from 'react';
 import { 
   Copy, 
-  Check,
+  Check, 
   User
 } from 'lucide-react';
 
@@ -77,8 +77,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
         <div className="p-3 bg-gray-50 rounded-lg">
           <p className="text-sm font-medium text-gray-700">Total Vaults</p>
           <p className="text-2xl font-bold text-[#213046]">{userVaults.length}</p>
-        </div>
-        
+      </div>
+
         {userVaults.length > 0 && (
           <div className="p-3 bg-blue-50 rounded-lg">
             <p className="text-sm font-medium text-blue-700">Recent Vaults</p>
@@ -86,12 +86,12 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
               {userVaults.slice(0, 3).map((vault, index) => (
                 <div key={index} className="text-xs text-blue-600 font-mono">
                   {formatAddress(vault)}
-                </div>
+            </div>
               ))}
             </div>
           </div>
         )}
-      </div>
+        </div>
     </div>
   );
 };

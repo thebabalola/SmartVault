@@ -6,9 +6,10 @@ import { useUserVault } from '../../hooks/useUserVault';
 interface VaultCardProps {
   vaultAddress: `0x${string}`;
   vaultIndex: number;
+  onManageClick?: (vaultAddress: `0x${string}`, vaultIndex: number) => void;
 }
 
-const VaultCard: React.FC<VaultCardProps> = ({ vaultAddress, vaultIndex }) => {
+const VaultCard: React.FC<VaultCardProps> = ({ vaultAddress, vaultIndex, onManageClick }) => {
   const {
     name,
     userValue,
@@ -21,8 +22,14 @@ const VaultCard: React.FC<VaultCardProps> = ({ vaultAddress, vaultIndex }) => {
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
   };
 
+  const handleManageClick = () => {
+    if (onManageClick) {
+      onManageClick(vaultAddress, vaultIndex);
+    }
+  };
+
   return (
-    <div className="p-4 bg-gray-50 rounded-lg hover:shadow-md transition-all">
+    <div className="p-4 bg-gray-50 rounded-lg hover:shadow-md transition-all cursor-pointer" onClick={handleManageClick}>
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div className="w-12 h-12 bg-[#49ABFE] rounded-full flex items-center justify-center mr-4">
@@ -40,7 +47,7 @@ const VaultCard: React.FC<VaultCardProps> = ({ vaultAddress, vaultIndex }) => {
           <p className="text-sm text-green-600">
             {isPending ? "Loading yield..." : `+${apy} APY`}
           </p>
-          <p className="text-xs text-gray-500">Click Manage to view details</p>
+          <p className="text-xs text-[#49ABFE] hover:text-[#1a5ba8] transition-colors">Click Manage to view details</p>
         </div>
       </div>
     </div>

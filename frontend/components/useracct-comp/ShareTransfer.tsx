@@ -36,7 +36,17 @@ const ShareTransfer: React.FC<ShareTransferProps> = ({ vaultAddress }) => {
     try {
       switch (transferType) {
         case 'transfer':
+          // In VaultFactory mode, this withdraws from your vault
+          const confirmTransfer = confirm(
+            `This will withdraw ${transferData.amount} ${symbol} from your vault. ` +
+            `The recipient (${transferData.to}) will need to deposit this amount to their own vault. ` +
+            `Continue?`
+          );
+          
+          if (!confirmTransfer) return;
+          
           await transferShares(transferData.to, transferData.amount);
+          alert('Amount withdrawn from your vault. Recipient can now deposit to their vault.');
           break;
         case 'transferFrom':
           if (!transferData.from) {
@@ -54,7 +64,6 @@ const ShareTransfer: React.FC<ShareTransferProps> = ({ vaultAddress }) => {
           break;
       }
       setTransferData({ to: '', from: '', amount: '', spender: '' });
-      alert('Transaction submitted successfully!');
     } catch (error) {
       console.error('Error performing transfer:', error);
       alert(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -64,11 +73,11 @@ const ShareTransfer: React.FC<ShareTransferProps> = ({ vaultAddress }) => {
   const getTransferDescription = () => {
     switch (transferType) {
       case 'transfer':
-        return 'Transfer your vault shares to another address';
+        return 'Withdraw from your vault (recipient needs to deposit to their vault)';
       case 'transferFrom':
-        return 'Transfer shares on behalf of another address (requires approval)';
+        return 'Not supported in VaultFactory mode - use direct transfer instead';
       case 'approve':
-        return 'Approve another address to spend your shares';
+        return 'Not supported in VaultFactory mode - vaults are managed directly';
       default:
         return '';
     }
@@ -98,34 +107,26 @@ const ShareTransfer: React.FC<ShareTransferProps> = ({ vaultAddress }) => {
               </div>
             </button>
             <button
-              onClick={() => setTransferType('transferFrom')}
-              className={`w-full p-3 rounded-lg border-2 transition-all text-left ${
-                transferType === 'transferFrom'
-                  ? 'border-[#49ABFE] bg-blue-50 text-[#49ABFE]'
-                  : 'border-gray-200 hover:border-gray-300 text-gray-800 hover:text-gray-900'
-              }`}
+              disabled
+              className="w-full p-3 rounded-lg border-2 border-gray-200 bg-gray-100 text-left cursor-not-allowed opacity-60"
             >
               <div className="flex items-center">
-                <Users className={`w-6 h-6 mr-3 ${transferType === 'transferFrom' ? 'text-[#49ABFE]' : 'text-gray-600'}`} />
+                <Users className="w-6 h-6 mr-3 text-gray-400" />
                 <div>
-                  <div className="font-medium">Transfer From</div>
-                  <div className={`text-sm ${transferType === 'transferFrom' ? 'text-blue-600' : 'text-gray-500'}`}>Transfer on behalf of others</div>
+                  <div className="font-medium text-gray-500">Transfer From</div>
+                  <div className="text-sm text-gray-400">Not supported in VaultFactory mode</div>
                 </div>
               </div>
             </button>
             <button
-              onClick={() => setTransferType('approve')}
-              className={`w-full p-3 rounded-lg border-2 transition-all text-left ${
-                transferType === 'approve'
-                  ? 'border-[#49ABFE] bg-blue-50 text-[#49ABFE]'
-                  : 'border-gray-200 hover:border-gray-300 text-gray-800 hover:text-gray-900'
-              }`}
+              disabled
+              className="w-full p-3 rounded-lg border-2 border-gray-200 bg-gray-100 text-left cursor-not-allowed opacity-60"
             >
               <div className="flex items-center">
-                <Check className={`w-6 h-6 mr-3 ${transferType === 'approve' ? 'text-[#49ABFE]' : 'text-gray-600'}`} />
+                <Check className="w-6 h-6 mr-3 text-gray-400" />
                 <div>
-                  <div className="font-medium">Approve</div>
-                  <div className={`text-sm ${transferType === 'approve' ? 'text-blue-600' : 'text-gray-500'}`}>Allow others to spend your shares</div>
+                  <div className="font-medium text-gray-500">Approve</div>
+                  <div className="text-sm text-gray-400">Not supported in VaultFactory mode</div>
                 </div>
               </div>
             </button>

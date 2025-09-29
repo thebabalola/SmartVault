@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useUserVault } from '../../hooks/useUserVault';
-import { Target } from 'lucide-react';
+import { Target, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface ProtocolAllocationManagerProps {
   vaultAddress: `0x${string}`;
@@ -15,6 +15,7 @@ const ProtocolAllocationManager: React.FC<ProtocolAllocationManagerProps> = ({ v
     compoundAllocation,
     uniswapAllocation,
     totalAssets,
+    userValue,
     setProtocolAllocation,
     isPending
   } = useUserVault(vaultAddress);
@@ -26,6 +27,7 @@ const ProtocolAllocationManager: React.FC<ProtocolAllocationManagerProps> = ({ v
   });
 
   const [isEditing, setIsEditing] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const protocols = [
     { key: 'aave', name: 'Aave (Lending)', color: 'blue', allocation: aaveAllocation },
@@ -66,19 +68,45 @@ const ProtocolAllocationManager: React.FC<ProtocolAllocationManagerProps> = ({ v
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-bold text-[#213046] flex items-center">
-          <Target className="mr-2 w-5 h-5 text-[#49ABFE]" />
-          Protocol Allocations - Vault #{vaultIndex + 1}
-        </h3>
-        <button
-          onClick={() => setIsEditing(!isEditing)}
-          className="px-4 py-2 bg-[#49ABFE] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors"
-        >
-          {isEditing ? 'Cancel' : 'Manage Allocations'}
-        </button>
+    <div className="bg-white rounded-2xl shadow-lg">
+      {/* Header with Vault Balance and Dropdown */}
+      <div className="p-6 border-b border-gray-100">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <Target className="mr-3 w-5 h-5 text-[#49ABFE]" />
+            <div>
+              <h3 className="text-xl font-bold text-[#213046]">
+                Vault #{vaultIndex + 1} - Protocol Allocations
+              </h3>
+              <p className="text-sm text-gray-600 mt-1">
+                Balance: <span className="font-semibold text-[#49ABFE]">${userValue}</span>
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setIsEditing(!isEditing)}
+              className="px-4 py-2 bg-[#49ABFE] text-white rounded-lg hover:bg-[#1a5ba8] transition-colors text-sm"
+            >
+              {isEditing ? 'Cancel' : 'Manage'}
+            </button>
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              {isExpanded ? (
+                <ChevronUp className="w-5 h-5 text-gray-600" />
+              ) : (
+                <ChevronDown className="w-5 h-5 text-gray-600" />
+              )}
+            </button>
+          </div>
+        </div>
       </div>
+
+      {/* Collapsible Content */}
+      {isExpanded && (
+        <div className="p-6">
 
       {/* Current Allocations */}
       <div className="mb-6">
@@ -171,6 +199,8 @@ const ProtocolAllocationManager: React.FC<ProtocolAllocationManagerProps> = ({ v
               ⚠️ Total allocations cannot exceed vault assets ({getTotalAssets().toFixed(2)} tokens)
             </p>
           )}
+        </div>
+      )}
         </div>
       )}
     </div>
