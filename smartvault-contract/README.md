@@ -4,7 +4,7 @@ A comprehensive DeFi platform with factory-based vault deployment, ERC-4626 comp
 
 ## 📍 Contract Address
 
-**VaultFactory Contract**: `0x797d8cccc849588032d4490dad4ec9e4fde09c53`  
+**VaultFactory Contract**: `0x4ba6482edb1d6a7a3b411a46b1573f427c81d0eb`  
 **Network**: Arbitrum Sepolia Testnet  
 **Contract Size**: 18.6 KiB (19,027 bytes)
 
