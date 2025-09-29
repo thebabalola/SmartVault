@@ -244,6 +244,13 @@ npm run dev
 - **Web3**: Wagmi v2 + Viem
 - **State Management**: React hooks
 
+## 👥 Team
+
+**Group 9**
+- Adesanoye Samson
+- Olamide Adebara
+- Babalola Taiwo J
+
 ## 🧑‍🦱 Alice's Smart Vault Journey
 
 ### Scene 1: The Old Piggy Bank
